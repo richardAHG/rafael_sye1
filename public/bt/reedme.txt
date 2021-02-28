@@ -1,0 +1,2 @@
+version de BootstrapTable v1.18.1 que usa bootstrap3,
+tambien se descargo un complemento de jquery para exportar tablas

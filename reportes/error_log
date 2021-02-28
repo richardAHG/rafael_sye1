@@ -1,0 +1,20 @@
+[08-Feb-2021 05:16:08 UTC] PHP Fatal error:  Uncaught Error: Call to a member function fetch_object() on bool in /home/appssoma/public_html/ATSV1_API/reportes/rptConsultaAts.php:261
+Stack trace:
+#0 {main}
+  thrown in /home/appssoma/public_html/ATSV1_API/reportes/rptConsultaAts.php on line 261
+[08-Feb-2021 05:28:59 UTC] PHP Fatal error:  Uncaught Error: Call to a member function fetch_object() on bool in /home/appssoma/public_html/ATSV1_API/reportes/rptConsultaAts.php:261
+Stack trace:
+#0 {main}
+  thrown in /home/appssoma/public_html/ATSV1_API/reportes/rptConsultaAts.php on line 261
+[08-Feb-2021 05:29:33 UTC] PHP Fatal error:  Uncaught Error: Call to a member function fetch_object() on bool in /home/appssoma/public_html/ATSV1_API/reportes/rptConsultaAts.php:261
+Stack trace:
+#0 {main}
+  thrown in /home/appssoma/public_html/ATSV1_API/reportes/rptConsultaAts.php on line 261
+[08-Feb-2021 05:29:59 UTC] PHP Fatal error:  Uncaught Error: Call to a member function fetch_object() on bool in /home/appssoma/public_html/ATSV1_API/reportes/rptConsultaAts.php:262
+Stack trace:
+#0 {main}
+  thrown in /home/appssoma/public_html/ATSV1_API/reportes/rptConsultaAts.php on line 262
+[08-Feb-2021 05:31:28 UTC] PHP Fatal error:  Uncaught Error: Call to a member function fetch_object() on bool in /home/appssoma/public_html/ATSV1_API/reportes/rptConsultaAts.php:262
+Stack trace:
+#0 {main}
+  thrown in /home/appssoma/public_html/ATSV1_API/reportes/rptConsultaAts.php on line 262
