@@ -42,7 +42,7 @@ class Ats
 			$fechaAts = $fecha->format('Y-m-d H:i:s');
 			$fechalogin = new DateTime($fecha_login);
 			$fecha_login = $fechalogin->format('Y-m-d H:i:s');
-			$horaFin = $fecha_login;
+			$horaFin = substr($horaFin,11,8);
 			
 			$sql = "INSERT INTO ats(personal_id, distrito_id, direccion, ubicacion, 
 					fecha_hora_inicio, hora_fin, firma_ruta, jefe_id,tipo_ats_id, 
