@@ -51,8 +51,7 @@ class Ats
 					REPLACE('$horaFin',': ',':'),'$firma','$jefe_id',$tipo_ats_id,REPLACE('$fecha_login',': ',':'),'$personal_id',
 					'$otros_peligros','$otros_riesgos','$otras_medidas')";
 			//return ejecutarConsulta($sql);
-			echo $sql;
-			die();
+		
 			$idats = ejecutarConsulta_retornarID($sql);
 			if ($idats == 0) {
 				throw new Exception('Error al guardar al personal');
