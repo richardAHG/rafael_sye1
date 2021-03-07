@@ -31,24 +31,29 @@ class Ats
 		$otras_medidas,
 		$fecha_login
 	) {
-		
-		$isCorrect=0;
-		$mensaje='AtS Registrada con exito';
+
+		$isCorrect = 0;
+		$mensaje = 'AtS Registrada con exito';
 		/* Desactivar la autoconsigna */
 		desableCommitAutomatic();
 		try {
 			$fecha = new DateTime('now');
 			$fechaCreacion = $fecha->format('Y-m-d H:i:s');
 			$fechaAts = $fecha->format('Y-m-d H:i:s');
+			$fechalogin = new DateTime($fecha_login);
+			$fecha_login = $fechalogin->format('Y-m-d H:i:s');
+			$horaFin = $fecha_login;
+			
 			$sql = "INSERT INTO ats(personal_id, distrito_id, direccion, ubicacion, 
 					fecha_hora_inicio, hora_fin, firma_ruta, jefe_id,tipo_ats_id, 
 					fecha_creacion, usuario_creacion,otros_peligros,otros_riesgos,otras_medidas) 
-					VALUES ('$personal_id','$distrito_id','$lugar','$ubicacion','$fecha_login',
-					'$horaFin','$firma','$jefe_id',$tipo_ats_id,'$fecha_login','$idusuario',
+					VALUES ('$personal_id','$distrito_id','$lugar','$ubicacion',REPLACE('$fecha_login',': ',':'),
+					REPLACE('$horaFin',': ',':'),'$firma','$jefe_id',$tipo_ats_id,REPLACE('$fecha_login',': ',':'),'$personal_id',
 					'$otros_peligros','$otros_riesgos','$otras_medidas')";
 			//return ejecutarConsulta($sql);
+			echo $sql;
+			die();
 			$idats = ejecutarConsulta_retornarID($sql);
-
 			if ($idats == 0) {
 				throw new Exception('Error al guardar al personal');
 			}
@@ -124,12 +129,12 @@ class Ats
 
 			commit();
 			enableCommitAutomatic();
-			$isCorrect=1;
+			$isCorrect = 1;
 		} catch (Exception $e) {
 			rollback();
 			enableCommitAutomatic();
 			// echo "Fallo: " . $e->getMessage();
-			$isCorrect=0;
+			$isCorrect = 0;
 			$mensaje = $e->getMessage();
 		}
 		return [
@@ -257,7 +262,7 @@ class Ats
 						WHERE ats_id = $ats_id";
 
 		$rsptaPG = ejecutarConsulta($sqlPeligroG);
-		
+
 		$sqlPeligroE = "SELECT a.id,s.nombre as subactividad, p.nombre as peligro,r.nombre as riesgo,m.nombre as medida 
 						FROM `ats_peligro_especifico` a
 						left join subactividad s on a.subactividad_id = s.id and s.estado=1
@@ -280,22 +285,22 @@ class Ats
 							INNER JOIN area ar on p.area_id=ar.id and ar.estado=1
 						WHERE
 							a.ats_id= $ats_id";
-   
+
 		$rsptatrb = ejecutarConsulta($sqlTrabajadores);
-		
+
 		$reporte = [
 			'ats' => $data,
 			'ep' => $dataEquipo,
 			'ee' => $dataEquipoE,
 			'pc' => $dataEquipoPC,
-			'peligroG'=> $rsptaPG,
-			'peligroE'=> $rsptaPE,
-			'trabajador'=>$rsptatrb
+			'peligroG' => $rsptaPG,
+			'peligroE' => $rsptaPE,
+			'trabajador' => $rsptatrb
 		];
 
 		return $reporte;
 	}
-	
+
 	public function getTipoAts()
 	{
 		$sql = "SELECT p.*,a.especifico from parametros p inner join ats_version a on p.valor=a.tipo_ats and grupo='TIPO_ATS' and p.estado=1";

@@ -22,7 +22,7 @@ if (!isset($_SESSION["nombre"])) {
 		$objE = new GestionPeligrosE();
 
 		
-		$idusuario=$_SESSION["idusuario"];
+		// $idusuario=$_SESSION["idusuario"];
 		switch ($_GET["op"]) {
 			case 'guardaryeditar':
 				// echo 'hola'; die();
@@ -51,7 +51,21 @@ if (!isset($_SESSION["nombre"])) {
 		// print_r($trabajadores); die();
 		$firma = isset($data["firma"]) ? limpiarCadena($data["firma"]) : "";
 		$ubicacion = isset($data["ubicacion"]) ? limpiarCadena($data["ubicacion"]) : "";
+		$idusuario=$personal_id;
 
+		// 		$fecha=new DateTime($fecha_login);
+		// 		$now =new DateTime('now'); 
+		// 		print_r($now->format('Y-m-d H:i:s'));
+		// 		echo substr(str_replace(' ',':',$now->format('Y-m-d H:i:s')),11,6);
+		// 		print_r($fecha->format('Y-m-d H:i:s')); die();
+
+
+		// print_r( str_replace(': ',':',$fecha_login));
+		// echo ' ********************** ';
+		// print_r($fecha_login);
+
+		// echo '*****************************';
+		// print_r($horaFin); die();
 				if (empty($id)) {
 					$rspta = $ats->insertar($personal_id,$tipo_ats_id,$jefe_id,$horaFin,$distrito_id,$lugar,
 					$equipoP,$equipoE,$equipoPC,$peligrosG,$peligrosE,$trabajadores,$firma,$ubicacion,$idusuario,$otros_peligros,
