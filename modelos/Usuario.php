@@ -12,9 +12,10 @@ class Usuario
 	//Implementamos un método para insertar registros
 	public function insertar($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos)
 	{
-		$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, fecha_cese, login, clave, imagen)
-		VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$fecha_cese', '$login', '$clave', '$imagen')";
+		$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen)
+		VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen')";
 		//return ejecutarConsulta($sql);
+		
 		$idusuarionew = ejecutarConsulta_retornarID($sql);
 
 		$num_elementos = 0;

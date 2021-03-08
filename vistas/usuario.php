@@ -84,11 +84,11 @@ if (!isset($_SESSION["nombre"])) {
 
                   <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Fecha de ingreso:</label>
-                    <input type="text" class="form-control" name="fecha_ingreso" id="fecha_ingreso" maxlength="20" placeholder="Fecha ingreso">
+                    <input type="date" class="form-control" name="fecha_ingreso" id="fecha_ingreso" maxlength="20" placeholder="Fecha ingreso">
                   </div>
                   <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Fecha de cese:</label>
-                    <input type="text" class="form-control" name="fecha_cese" id="fecha_cese" maxlength="20" placeholder="Fecha Cese">
+                    <input type="date" class="form-control" name="fecha_cese" id="fecha_cese" maxlength="20" placeholder="Fecha Cese">
                   </div>
                   <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Login (*):</label>
