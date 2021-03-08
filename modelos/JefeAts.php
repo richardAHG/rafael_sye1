@@ -63,7 +63,7 @@ class JefeAts
         $sql = "SELECT j.id, personal_id, tipoats_id, j.estado,concat(p.ape_pat,' ',p.ape_mat,' ',p.nombre) as empleado
                 from jefe_ats j 
                 INNER JOIN personal p on j.personal_id=p.id and p.estado=1
-                WHERE tipoats_id='$tipo_ats_id' and p.estado='1'";
+                WHERE tipoats_id='$tipo_ats_id' and j.estado='1'";
         
         return ejecutarConsulta($sql);
     }
