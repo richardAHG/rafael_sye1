@@ -29,6 +29,7 @@ $fecha_cese = isset($_POST["fecha_cese"]) ? limpiarCadena($_POST["fecha_cese"]) 
 $login = isset($_POST["login"]) ? limpiarCadena($_POST["login"]) : "";
 $clave = isset($_POST["clave"]) ? limpiarCadena($_POST["clave"]) : "";
 $imagen = isset($_POST["imagen"]) ? limpiarCadena($_POST["imagen"]) : "";
+$permiso = isset($_POST["permiso"]) ? limpiarCadena($_POST["permiso"]) : "";
 
 switch ($_GET["op"]) {
 	case 'guardaryeditar':
@@ -68,12 +69,12 @@ switch ($_GET["op"]) {
 						$login,
 						$clavehash,
 						$imagen,
-						$_POST['permiso']
+						$permiso
 					);
-					if ($rspta) {
-						Response::JSON(200, 'Usuario registrado');
+					if ($rspta['correcto']) {
+						Response::JSON(200, $rspta['mensaje']);
 					} else {
-						Response::JSON(400, 'No se pudieron registrar todos los datos del usuario');
+						Response::JSON(400, $rspta['mensaje'] . ' - Usuario no se registró');
 					}
 				} else {
 					$rspta = $usuario->editar(
@@ -95,12 +96,12 @@ switch ($_GET["op"]) {
 						$login,
 						$clavehash,
 						$imagen,
-						$_POST['permiso']
+						$permiso
 					);
-					if ($rspta) {
-						Response::JSON(200, 'Usuario actualizado');
+					if ($rspta['correcto']) {
+						Response::JSON(200, $rspta['mensaje']);
 					} else {
-						Response::JSON(400, 'Usuario no se puede actualizar');
+						Response::JSON(400, $rspta['mensaje'] . ' - Usuario no se puede actualizar');
 					}
 				}
 				//Fin de las validaciones de acceso

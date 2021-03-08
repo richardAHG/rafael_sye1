@@ -12,30 +12,63 @@ class Usuario
 	//Implementamos un método para insertar registros
 	public function insertar($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos)
 	{
-		$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen)
+		if (empty($permisos)) {
+			$permisos = [];
+		}
+		$isCorrect = 0;
+		$mensaje = 'Usuario Registrado';
+		desableCommitAutomatic();
+		try {
+			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen)
 		VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen')";
-		//return ejecutarConsulta($sql);
-		
-		$idusuarionew = ejecutarConsulta_retornarID($sql);
+			//return ejecutarConsulta($sql);
 
-		$num_elementos = 0;
-		$sw = true;
+			$idusuarionew = ejecutarConsulta_retornarID($sql);
+			if ($idusuarionew == 0) {
+				throw new Exception('Error al registrar al personal');
+			}
+			$num_elementos = 0;
+			$sw = true;
 
-		while ($num_elementos < count($permisos)) {
-			$sql_detalle = "INSERT INTO usuario_permiso(idpersonal, idpermiso) VALUES('$idusuarionew', '$permisos[$num_elementos]')";
-			ejecutarConsulta($sql_detalle) or $sw = false;
-			$num_elementos = $num_elementos + 1;
+			while ($num_elementos < count($permisos)) {
+				$sql_detalle = "INSERT INTO usuario_permiso(idpersonal, idpermiso) VALUES('$idusuarionew', '$permisos[$num_elementos]')";
+				$rspta = ejecutarConsulta($sql_detalle);
+				$num_elementos = $num_elementos + 1;
+				if ($rspta == 0) {
+					throw new Exception('Error al registrar los permisos');
+				}
+			}
+
+			commit();
+			enableCommitAutomatic();
+			$isCorrect = 1;
+		} catch (Exception $e) {
+			rollback();
+			enableCommitAutomatic();
+			// echo "Fallo: " . $e->getMessage();
+			$isCorrect = 0;
+			$mensaje = $e->getMessage();
 		}
 
-		return $sw;
+		return [
+			'correcto' => $isCorrect,
+			'mensaje' => $mensaje
+		];
 	}
 
 	//Implementamos un método para editar registros
 
 	public function editar($id, $nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos)
 	{
+		if (empty($permisos)) {
+			$permisos = [];
+		}
 		// print_r($clave); die();
-		$sql = "UPDATE
+		$isCorrect = 0;
+		$mensaje = 'Usuario Actualizado';
+		desableCommitAutomatic();
+		try {
+			$sql = "UPDATE
 					personal
 				SET
 					nombre = '$nombre',
@@ -51,28 +84,49 @@ class Usuario
 					area_id = '$area_id',
 					subarea_id = '$subarea_id',
 					fecha_ingreso = '$fecha_ingreso',
-					fecha_cese = '$fecha_cese',
 					login = '$login',
 					imagen = '$imagen'
 				WHERE
 					id = '$id'";
 
-		ejecutarConsulta($sql);
+			$result = ejecutarConsulta($sql);
+			if ($result == 0) {
+				throw new Exception('Error al editar al personal');
+			}
+			//Eliminamos todos los permisos asignados para volverlos a registrar
+			$sqldel = "DELETE FROM usuario_permiso WHERE idpersonal='$id'";
+			$result =  ejecutarConsulta($sqldel);
+			if ($result == 0) {
+				throw new Exception('Error al eliminar los permisos');
+			}
+			$num_elementos = 0;
+			$sw = true;
 
-		//Eliminamos todos los permisos asignados para volverlos a registrar
-		$sqldel = "DELETE FROM usuario_permiso WHERE idpersonal='$id'";
-		ejecutarConsulta($sqldel);
+			while ($num_elementos < count($permisos)) {
+				$sql_detalle = "INSERT INTO usuario_permiso(idpersonal, idpermiso) VALUES('$id', '$permisos[$num_elementos]')";
+				$result =  ejecutarConsulta($sql_detalle);
+				$num_elementos = $num_elementos + 1;
+				if ($result == 0) {
+					$sw = false;
+					throw new Exception('Error al registrar nuevos permisos');
+				}
+			}
 
-		$num_elementos = 0;
-		$sw = true;
-
-		while ($num_elementos < count($permisos)) {
-			$sql_detalle = "INSERT INTO usuario_permiso(idpersonal, idpermiso) VALUES('$id', '$permisos[$num_elementos]')";
-			ejecutarConsulta($sql_detalle) or $sw = false;
-			$num_elementos = $num_elementos + 1;
+			commit();
+			enableCommitAutomatic();
+			$isCorrect = 1;
+		} catch (Exception $e) {
+			rollback();
+			enableCommitAutomatic();
+			// echo "Fallo: " . $e->getMessage();
+			$isCorrect = 0;
+			$mensaje = $e->getMessage();
 		}
 
-		return $sw;
+		return [
+			'correcto' => $isCorrect,
+			'mensaje' => $mensaje
+		];
 	}
 
 	//Implementamos un método para desactivar categorías
@@ -89,7 +143,7 @@ class Usuario
 		return ejecutarConsulta($sql);
 	}
 
-//Implementamos un método para desactivar categorías
+	//Implementamos un método para desactivar categorías
 	public function bloquerATS($idusuario)
 	{
 		$sql = "UPDATE personal SET ats=0 WHERE id='$idusuario'";
@@ -147,7 +201,7 @@ class Usuario
 
 		return ejecutarConsulta($sql);
 	}
-	
+
 	//Función para verificar el acceso al sistema desde la app
 	public function verificarApp($clave)
 	{
@@ -173,9 +227,9 @@ class Usuario
 		}
 		return false;
 	}
-	
+
 	//carga masiva
-	
+
 	public function insertarPersonalMasivo($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $grupoSanguineo = null)
 	{
 		$sql = "SELECT id from personal  WHERE numero_documento='$numero_documento' and estado=1";
