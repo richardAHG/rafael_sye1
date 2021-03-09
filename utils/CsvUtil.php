@@ -95,7 +95,7 @@ class CsvUtil
             'NACIONALIDAD'
         ];
     }
-    
+
     public static function getDataCargo()
     {
         $obj = new Cargo();
@@ -156,6 +156,24 @@ class CsvUtil
             //     $data[$row][$col] = trim($valuex);
             // }
             foreach ($headers as $col => $value) {
+                // if (\PhpOffice\PhpSpreadsheet\Shared\Date::isDateTime($value)) {
+                //     echo $value->getCoordinate().',';
+                //     die();
+                // }
+
+                // if ($value == 'FECHA_INGRESO') {
+                //     print_r(gettype($value));
+                //     // $valuex = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                //     if (is_numeric($value)) {
+                //         $date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value);    
+                //         echo 'soy numeor '; 
+                //     }else{
+                //         $valuex = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                //         echo 'soy strign '; 
+                //     }
+                // }else{
+                //     $valuex = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                // }
                 $valuex = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
                 $data[$row][$value] = trim($valuex);
             }
@@ -233,7 +251,7 @@ class CsvUtil
             }
         }
 
-//Validacion de id para la tabla cargo,area y subarea
+        //Validacion de id para la tabla cargo,area y subarea
         $colums = ['CARGO', 'AREA', 'SUB_AREA'];
 
         foreach ($colums as $key => $value) {
@@ -259,10 +277,9 @@ class CsvUtil
                 $id = array_search($valuex, $dataT);
                 //sobre escribir el id en la columna correspondinet del array principal
                 $data[$key][$value] = $id;
-               
             }
         }
-        
+
         //sobre escribimos el archivo json, con los nuevos datos
         $rutaJson = self::RUTA_FINAL . $namefile . '.json';
         $fh = fopen($rutaJson, 'w');
@@ -281,7 +298,7 @@ class CsvUtil
     {
         //columans requeridas
         $required = self::fieldsRequired();
-    
+
         $errors = [];
         $errors['estado'] = true;
         foreach ($required as $key => $value) {
@@ -303,16 +320,16 @@ class CsvUtil
                 }
             }
         }
-        
-         $colums = ['CARGO', 'AREA', 'SUB_AREA'];
-        
+
+        $colums = ['CARGO', 'AREA', 'SUB_AREA'];
+
         foreach ($colums as $key => $value) {
             //obtenemos los ids 
-            
+
             switch ($value) {
                 case 'CARGO':
                     $dataT = self::getDataCargo();
-                    
+
                     break;
                 case 'AREA':
                     $dataT = self::getDataArea();
@@ -326,25 +343,24 @@ class CsvUtil
             }
             //obtenemos un array solo de una columna especifica
             $tabla = array_column($data, $value);
-            
+
             //obtengo solo datos unicos
             $tablaUnique = array_unique($tabla);
             foreach ($tablaUnique as $key => $valuex) {
                 //obtenemos el id de valor buscado
-                 //obtenemos el id de valor buscado
-                 if (!in_array($valuex, $dataT)) {
+                //obtenemos el id de valor buscado
+                if (!in_array($valuex, $dataT)) {
                     $errors['mensaje'] = 'No existe los siguientes valores';
                     $errors['error'][$value][] = $valuex;
                     $errors['estado'] = false;
                 }
- 
             }
         }
-        
+
         return $errors;
     }
 
-  
+
     public static function destroyFileTemp()
     {
         //obtenemos todos los nombres de los ficheros
@@ -356,14 +372,14 @@ class CsvUtil
                 unlink($file);
         }
     }
-    
+
     public static function createSheet()
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet
             ->getProperties()
-            ->setCreator("iWasi")
-            ->setLastModifiedBy('iWasi') // última vez modificado por
+            ->setCreator("sye")
+            ->setLastModifiedBy('sye') // última vez modificado por
             ->setTitle('Plantilla de carga masiva')
             ->setSubject('Plantilla')
             ->setDescription('Esta plantilla permite subir información ordenada al sistema')
@@ -377,8 +393,8 @@ class CsvUtil
         try {
             $fila = 0;
             foreach ($header as $fil => $row) {
-                $fila=$fil+1;
-                $columna=1;
+                $fila = $fil + 1;
+                $columna = 1;
                 foreach ($row as $col => $value) {
                     // $columna=
                     // print_r($columna); 
@@ -387,7 +403,7 @@ class CsvUtil
                     $sheet->setCellValueByColumnAndRow($columna, $fila, $value);
                     $columna++;
                 }
-                
+
                 // $fila = 1;
                 // $columna = ($key + 1);
                 // $sheet->setCellValueByColumnAndRow($columna, $fila, $value);
@@ -412,11 +428,27 @@ class CsvUtil
 
     public static function download_($spreadsheet, $nameSheet)
     {
+        // para windows
+        // $nameSheet = $nameSheet . '.xlsx';
+        // $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment;filename="' . $nameSheet . '"');
+        // header('Cache-Control: max-age=0');
+        // $writer->save('php://output');
+        // exit;
+
+        //para linux
         $nameSheet = $nameSheet . '.xlsx';
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Content-Type: application/force-download");
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="' . $nameSheet . '"');
-        header('Cache-Control: max-age=0');
+        // header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header('Content-Disposition: attachment;filename="'.$nameSheet.'"');
+        header("Content-Transfer-Encoding: binary ");
         $writer->save('php://output');
         exit;
     }
