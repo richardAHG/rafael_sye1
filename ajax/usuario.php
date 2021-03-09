@@ -29,7 +29,7 @@ $fecha_cese = isset($_POST["fecha_cese"]) ? limpiarCadena($_POST["fecha_cese"]) 
 $login = isset($_POST["login"]) ? limpiarCadena($_POST["login"]) : "";
 $clave = isset($_POST["clave"]) ? limpiarCadena($_POST["clave"]) : "";
 $imagen = isset($_POST["imagen"]) ? limpiarCadena($_POST["imagen"]) : "";
-$permiso = isset($_POST["permiso"]) ? limpiarCadena($_POST["permiso"]) : "";
+$permiso = isset($_POST["permiso"]) ? $_POST["permiso"] : "";
 
 switch ($_GET["op"]) {
 	case 'guardaryeditar':
