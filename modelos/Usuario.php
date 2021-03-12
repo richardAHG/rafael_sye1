@@ -197,7 +197,7 @@ class Usuario
 		$sql = "SELECT id, nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, 
 		tipo_documento, numero_documento, area_id, subarea_id, 
 		fecha_ingreso, fecha_cese, login, clave, imagen 
-		FROM personal WHERE login='$login' AND clave='$clave' AND estado=1 and ats=1";
+		FROM personal WHERE login='$login' AND clave='$clave' AND estado=1";
 
 		return ejecutarConsulta($sql);
 	}
