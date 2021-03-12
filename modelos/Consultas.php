@@ -85,11 +85,12 @@ Class Consultas
 
 public function rptCumplimiento($fecha_inicio, $fecha_fin)
 	{
-		$sql="SELECT  distinct numero_documento,ar.nombre as area,sa.nombre as subarea,c.nombre as cargo, concat(p.ape_pat,' ',p.ape_mat,' ',p.nombre)as nombre,ats.fecha FROM `personal` p 
+		$sql="SELECT numero_documento,area,subarea,cargo,nombre,GROUP_CONCAT(fecha) as fechas from 
+				(SELECT  distinct numero_documento,ar.nombre as area,sa.nombre as subarea,c.nombre as cargo, concat(p.ape_pat,' ',p.ape_mat,' ',p.nombre)as nombre,ats.fecha FROM `personal` p 
 				inner join area ar on p.area_id=ar.id and ar.tipo_id=1 and ar.estado=1 
 				inner join area sa on p.area_id=sa.id and sa.tipo_id=1 and sa.estado=1 
 				inner join cargo c on p.cargo_id=c.id and c.estado=1 
-				left join(
+				inner join(
 				SELECT id,personal_id,CAST(fecha_creacion AS DATE)as fecha FROM `ats` WHERE CAST(fecha_creacion AS DATE) BETWEEN '$fecha_inicio' and '$fecha_fin'
 				) ats  on ats.personal_id=p.id 
 				union
@@ -97,11 +98,13 @@ public function rptCumplimiento($fecha_inicio, $fecha_fin)
 				inner join area ar on p.area_id=ar.id and ar.tipo_id=1 and ar.estado=1 
 				inner join area sa on p.area_id=sa.id and sa.tipo_id=1 and sa.estado=1 
 				inner join cargo c on p.cargo_id=c.id and c.estado=1 
-				left join(
+				inner join(
 				SELECT distinct atr.personal_id,CAST(fecha_creacion AS DATE)as fecha FROM ats_trabajadores atr
 				inner join ats a on atr.ats_id=a.id
 				WHERE CAST(fecha_creacion AS DATE) BETWEEN '$fecha_inicio' and '$fecha_fin'
-				) atr  on atr.personal_id=p.id";
+				) atr  on atr.personal_id=p.id
+				)as t
+				group by numero_documento,area,subarea,cargo,nombre ";
 		return ejecutarConsulta($sql);
 	}
 }

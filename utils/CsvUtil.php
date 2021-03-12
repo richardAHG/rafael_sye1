@@ -428,27 +428,11 @@ class CsvUtil
 
     public static function download_($spreadsheet, $nameSheet)
     {
-        // para windows
-        // $nameSheet = $nameSheet . '.xlsx';
-        // $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        // header('Content-Disposition: attachment;filename="' . $nameSheet . '"');
-        // header('Cache-Control: max-age=0');
-        // $writer->save('php://output');
-        // exit;
-
-        //para linux
         $nameSheet = $nameSheet . '.xlsx';
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Content-Type: application/force-download");
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        // header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header('Content-Disposition: attachment;filename="'.$nameSheet.'"');
-        header("Content-Transfer-Encoding: binary ");
+        header('Content-Disposition: attachment;filename="' . $nameSheet . '"');
+        header('Cache-Control: max-age=0');
         $writer->save('php://output');
         exit;
     }
