@@ -1,7 +1,7 @@
 <?php
 //Incluímos inicialmente la conexión a la base de datos
 require "../config/Conexion.php";
-
+require "../helpers/log.php";
 class Ats
 {
 	//Implementamos nuestro constructor
@@ -114,6 +114,10 @@ class Ats
 				if (!$result) {
 					throw new Exception('Error al guardar dispositivo de protección');
 				}
+			}
+
+			if(empty($trabajadores)) {
+				new Log("error", "No se están enviando los trabajadores");
 			}
 
 			// $trabajadores=json_decode($trabajadores,true);
