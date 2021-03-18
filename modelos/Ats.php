@@ -259,19 +259,19 @@ class Ats
 
 		$sqlPeligroG = "SELECT a.id,p.nombre as peligro,r.nombre as riesgo,m.nombre as medida 
 						FROM `ats_peligro_general` a
-						left join peligro p on a.peligro_id = p.id and p.estado=1
-						left join riesgo r on a.riesgo_id = r.id and r.estado=1
-						left join medida_control m on a.peligro_id = m.id and m.estado=1
+						inner join peligro p on a.peligro_id = p.id and p.estado=1
+						inner join riesgo r on a.riesgo_id = r.id and r.estado=1
+						inner join medida_control m on a.medida_id = m.id and m.estado=1
 						WHERE ats_id = $ats_id";
 
 		$rsptaPG = ejecutarConsulta($sqlPeligroG);
 
 		$sqlPeligroE = "SELECT a.id,s.nombre as subactividad, p.nombre as peligro,r.nombre as riesgo,m.nombre as medida 
 						FROM `ats_peligro_especifico` a
-						left join subactividad s on a.subactividad_id = s.id and s.estado=1
-						left join peligro p on a.peligro_id = p.id and p.estado=1
-						left join riesgo r on a.riesgo_id = r.id and r.estado=1
-						left join medida_control m on a.peligro_id = m.id and m.estado=1
+						inner join subactividad s on a.subactividad_id = s.id and s.estado=1
+						inner join peligro p on a.peligro_id = p.id and p.estado=1
+						inner join riesgo r on a.riesgo_id = r.id and r.estado=1
+						inner join medida_control m on a.medida_id = m.id and m.estado=1
 						WHERE ats_id= $ats_id";
 
 		$rsptaPE = ejecutarConsulta($sqlPeligroE);
