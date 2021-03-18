@@ -28,9 +28,9 @@ if (!isset($_SESSION["nombre"])) {
 						"personal_id" => $reg->personal_id,
 						"empleado" => $reg->empleado,
 						"numero_documento" => $reg->numero_documento,
-						"firma_ruta" => $reg->firma_ruta,
 						"hora_fin" => $reg->hora_fin,
 						"fecha_creacion" => $reg->fecha_creacion,
+						"hora_creacion" => $reg->hora_creacion,
 					);
 				}
 

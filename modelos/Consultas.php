@@ -23,9 +23,9 @@ Class Consultas
 						p.nombre
 					) AS empleado,
 					p.numero_documento,
-					firma_ruta,
 					hora_fin,
-					DATE(fecha_creacion) AS fecha_creacion
+					DATE(fecha_creacion) AS fecha_creacion,
+					time(fecha_creacion) AS hora_creacion
 				FROM
 					`ats` a
 				INNER JOIN personal p ON
