@@ -69,7 +69,7 @@ if (!isset($_SESSION["nombre"])) {
 				if (empty($id)) {
 					$rspta = $ats->insertar($personal_id,$tipo_ats_id,$jefe_id,$horaFin,$distrito_id,$lugar,
 					$equipoP,$equipoE,$equipoPC,$peligrosG,$peligrosE,$trabajadores,$firma,$ubicacion,$idusuario,$otros_peligros,
-						$otros_peligros,
+						$otros_riesgos,
 						$otras_medidas,$fecha_login);
 					// echo $rspta ? "Area registrada" : "Area no se pudo registrar";
 					if ($rspta['correcto']) {
