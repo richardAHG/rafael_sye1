@@ -8,6 +8,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use PhpOffice\PhpSpreadsheet\Reader\Csv;
 
 class CsvUtil
 {
@@ -131,7 +132,7 @@ class CsvUtil
         return $data;
     }
 
-    public static function LoadFileCreateJson($name_archivo)
+    public static function LoadFileCreateJson_bk($name_archivo)
     {
         $archivo = self::load($name_archivo);
         // Separamos el string ruta, para obtener el nombre en microtime 
@@ -435,5 +436,167 @@ class CsvUtil
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
         exit;
+    }
+
+    public static function LoadFileCreateJson($archivoModel, $delimiter = ';', $codificacion = 'CP1252')
+    {
+        //leer csv
+        $filecsv = self::RUTA_FINAL . $archivoModel;
+        // print_r($filecsv); die();
+        $data = self::readCsv($filecsv, $delimiter, $codificacion);
+
+        [$nombre, $ext] = explode('.', $archivoModel);
+        //creamos el archivo JSON
+        $rutaArchivojson = self::createFileJSON(
+            $nombre,
+            json_encode($data)
+        );
+        return $rutaArchivojson;
+    }
+
+    public static function readCsv($path, $delimiter, $codificacion)
+    {
+        try {
+            //leer archivo
+            $reader = new Csv();
+            $reader->setInputEncoding($codificacion); // codificacion correcta de entrada
+            // $reader->setInputEncoding('utf-8');
+            $reader->setDelimiter("{$delimiter}"); //delimitador
+            $reader->setEnclosure('"');
+            $reader->setSheetIndex(0); //establece indice de la hoja a leer
+            $spreadsheet = $reader->load($path);
+            $worksheet = $spreadsheet->getActiveSheet();
+            // obteniendo numero de filas y columas de la hoja actual
+            $highestRow = $worksheet->getHighestRow(); // total de filas
+            $highestColumn = $worksheet->getHighestColumn(); // total de columnas en letras
+            $highestColumnIndex = Coordinate::columnIndexFromString($highestColumn); // total de columnas ne numeros
+            $data = [];
+            $headers = self::getHeaders($worksheet, $highestColumnIndex);
+            // print_r($headers); die();
+            for ($row = 1; $row <= $highestRow; ++$row) {
+                foreach ($headers as $col => $value) {
+                    $valuex = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                    $data[$row][$value] = trim($valuex);
+                }
+            }
+        } catch (Exception $e) {
+            throw  $e->getMessage();
+        }
+        $header = $data[1];
+        //eliminamos la cabezera
+        $data = array_splice($data, 1);
+        return [
+            'data' => $data,
+            'headers' => $header
+        ];
+    }
+
+    public static function validateTypeDate($Archivojson)
+    {
+        $errors = [];
+        $errors['estado'] = true;
+        [$nombre, $ext] = explode('.', $Archivojson);
+        $rutaArchivojson = self::RUTA_FINAL . $nombre . '.json';
+        $str_datos = file_get_contents($rutaArchivojson);
+        $datos = json_decode($str_datos, true);
+
+        foreach ($datos['data'] as $key => $row) {
+            $fechaI = explode('/', $row['FECHA_INGRESO']);
+            $fechaF = explode('/', $row['FECHA_NACIMIENTO']);
+            $fechaspp = explode('/', $row['FEHCA_SPP']);
+
+            if (
+                count($fechaI) < 3 || 
+                count($fechaI) > 3 || 
+                count($fechaF) < 3 || 
+                count($fechaF) > 3 || 
+                count($fechaspp) < 3 || 
+                count($fechaspp) > 3
+            ) {
+                $errors['estado'] = false;
+                $errors['data']['mensaje'] = 'no es una fecha valida';
+                $errors['data']['tipo'] = 1;
+                $errors['data']['response'][] = [
+                    'fila' => $key + 2,
+                    'FECHA_INGRESO' => $row['FECHA_INGRESO'],
+                    'FECHA_NACIMIENTO' => $row['FECHA_NACIMIENTO'],
+                    'FEHCA_SPP' => $row['FEHCA_SPP']
+                ];
+                continue;
+            }
+            if (
+                !is_numeric($fechaI[0])
+                || !is_numeric($fechaI[1])
+                || !is_numeric($fechaI[2])
+                || !is_numeric($fechaF[0])
+                || !is_numeric($fechaF[1])
+                || !is_numeric($fechaF[2])
+                || !is_numeric($fechaspp[0])
+                || !is_numeric($fechaspp[1])
+                || !is_numeric($fechaspp[2])
+            ) {
+                $errors['estado'] = false;
+                $errors['data']['mensaje'] = 'no es una fecha valida';
+                $errors['data']['tipo'] = 1;
+                $errors['data']['response'][] = [
+                    'fila' => $key + 2,
+                    'FECHA_INGRESO' => $row['FECHA_INGRESO'],
+                    'FECHA_NACIMIENTO' => $row['FECHA_NACIMIENTO'],
+                    'FEHCA_SPP' => $row['FEHCA_SPP']
+                ];
+                continue;
+            }
+
+            if (
+                !checkdate($fechaI[1], $fechaI[0], $fechaI[2])
+                || !checkdate($fechaF[1], $fechaF[0], $fechaF[2])
+                || !checkdate($fechaspp[1], $fechaspp[0], $fechaspp[2])
+            ) {
+                $errors['estado'] = false;
+                $errors['data']['mensaje'] = 'no es una fecha valida';
+                $errors['data']['tipo'] = 1;
+                $errors['data']['response'][] = [
+                    'fila' => $key + 2,
+                    'FECHA_INGRESO' => $row['FECHA_INGRESO'],
+                    'FECHA_NACIMIENTO' => $row['FECHA_NACIMIENTO'],
+                    'FEHCA_SPP' => $row['FEHCA_SPP']
+                ];
+            }
+        }
+        return $errors;
+    }
+
+    public static function setFormatterDateInFileJson($Archivojson)
+    {
+        [$nombre, $ext] = explode('.', $Archivojson);
+        $rutaArchivojson = self::RUTA_FINAL . $nombre . '.json';
+        $str_datos = file_get_contents($rutaArchivojson);
+        $datos = json_decode($str_datos, true);
+        foreach ($datos['data'] as $key => $row) {
+            $fecha_ingreso = str_replace('/', '-', $row['FECHA_INGRESO']);
+            $fecha_nacimiento = str_replace('/', '-', $row['FECHA_NACIMIENTO']);
+            $fecha_spp = str_replace('/', '-', $row['FEHCA_SPP']);
+            $fecha_ingreso = self::format($fecha_ingreso, 'Y-m-d');
+            $fecha_nacimiento = self::format($fecha_nacimiento, 'Y-m-d');
+            $fecha_spp = self::format($fecha_spp, 'Y-m-d');
+
+            $datos['data'][$key]["FECHA_INGRESO"] = $fecha_ingreso;
+            $datos['data'][$key]["FECHA_NACIMIENTO"] = $fecha_nacimiento;
+            $datos['data'][$key]["FEHCA_SPP"] = $fecha_spp;
+            // $datos['data'][$key]["FECHA_CESE"] = '0000-00-00';
+        }
+
+        $fh = fopen($rutaArchivojson, 'w');
+        if (!$fh) {
+            throw new Exception(404, "Error al abrir fichero de salida");
+        }
+        fwrite($fh, json_encode($datos, JSON_UNESCAPED_UNICODE));
+        fclose($fh);
+        return true;
+    }
+    public static function format($fecha = null, $nuevoFormato = null)
+    {
+        $fecha = new DateTime($fecha);
+        return $fecha->format($nuevoFormato);
     }
 }

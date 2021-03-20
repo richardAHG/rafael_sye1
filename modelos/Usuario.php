@@ -235,8 +235,8 @@ class Usuario
 		$sql = "SELECT id from personal  WHERE numero_documento='$numero_documento' and estado=1";
 		$rpta = ejecutarConsultaSimpleFila($sql);
 		if (!isset($rpta['id'])) {
-			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, fecha_cese, login, clave, imagen,grupo_sanguineo)
-			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$fecha_cese', '$login', '$clave', '$imagen','$grupoSanguineo')";
+			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,grupo_sanguineo)
+			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen','$grupoSanguineo')";
 			$idusuarionew = ejecutarConsulta_retornarID($sql);
 
 			return $idusuarionew;

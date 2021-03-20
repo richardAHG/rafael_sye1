@@ -18,7 +18,7 @@ if (!isset($_SESSION["nombre"])) {
 
 		switch ($_GET["op"]) {
 			case 'validar':
-
+				// print_r($_FILES['archivo']['type']); die();
 				if (!file_exists($_FILES['archivo']['tmp_name']) || !is_uploaded_file($_FILES['archivo']['tmp_name'])) {
 					return false;
 				} else {
@@ -37,9 +37,9 @@ if (!isset($_SESSION["nombre"])) {
 				$path = CsvUtil::RUTA_FINAL . $xls . '.json';
 				$file = file_get_contents($path);
 				$data = json_decode($file, true);
-				// print_r($data['header']);
+				// print_r($data);die();
 				//validar numero de columnas
-				$rpta = CsvUtil::validateTotalHeaders($data['header']);
+				$rpta = CsvUtil::validateTotalHeaders($data['headers']);
 				if (!$rpta['estado']) {
 					CsvUtil::destroyFileTemp();
 					$error = $rpta;
@@ -62,6 +62,20 @@ if (!isset($_SESSION["nombre"])) {
 					echo json_encode($error);
 					return;
 				}
+
+				$rpta = CsvUtil::validateTypeDate($name_archivo);
+				if (!$rpta['estado']) {
+					CsvUtil::destroyFileTemp();
+					$error = $rpta;
+					echo json_encode($error);
+					return;
+				}
+				CsvUtil::setFormatterDateInFileJson($name_archivo);
+
+				$path = CsvUtil::RUTA_FINAL . $xls . '.json';
+				$file = file_get_contents($path);
+				$data = json_decode($file, true);
+				
 				//validar campos obligatorios, y asignamos id correspondientes
 				$rpta = CsvUtil::validateRequiredFields($data['data'], $xls, $params);
 				if (!$rpta['estado']) {
