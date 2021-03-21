@@ -180,7 +180,7 @@ class Usuario
 				inner join cargo c on p.cargo_id=c.id
 				inner join parametros pa on p.regimen_id=pa.valor and pa.grupo='regimen_laboral'
 				inner join parametros pa2 on p.tipo_documento=pa2.valor and pa2.grupo='tipo_documento'
-				inner join parametros pa3 on p.grupo_sanguineo =pa3.valor and pa3.grupo='grupo_sanguineo'
+				left join parametros pa3 on p.grupo_sanguineo =pa3.valor and pa3.grupo='grupo_sanguineo'
 				inner join area a on p.area_id=a.id and a.tipo_id=1
 				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2";
 		return ejecutarConsulta($sql);
