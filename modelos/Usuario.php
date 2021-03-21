@@ -175,11 +175,12 @@ class Usuario
 	public function listar()
 	{
 		$sql = "SELECT p.id, p.nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, fecha_cese, login, clave, imagen, p.estado,p.ats, 
-					c.nombre as cargo, pa.nombre as regimen,pa2.nombre as tipoDocumento,a.nombre as area, sa.nombre as subarea
+					c.nombre as cargo, pa.nombre as regimen,pa2.nombre as tipoDocumento,a.nombre as area, sa.nombre as subarea,pa3.nombre as grupo_sanguineo 
 				FROM `personal` p 
 				inner join cargo c on p.cargo_id=c.id
 				inner join parametros pa on p.regimen_id=pa.valor and pa.grupo='regimen_laboral'
 				inner join parametros pa2 on p.tipo_documento=pa2.valor and pa2.grupo='tipo_documento'
+				inner join parametros pa3 on p.grupo_sanguineo =pa3.valor and pa3.grupo='grupo_sanguineo'
 				inner join area a on p.area_id=a.id and a.tipo_id=1
 				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2";
 		return ejecutarConsulta($sql);
@@ -234,11 +235,16 @@ class Usuario
 	{
 		$sql = "SELECT id from personal  WHERE numero_documento='$numero_documento' and estado=1";
 		$rpta = ejecutarConsultaSimpleFila($sql);
+		// if (!$rpta) {
+		// 	throw new Exception('Error al verificar la existencia del Numero de Doc: '.$numero_documento);
+		// }
 		if (!isset($rpta['id'])) {
 			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,grupo_sanguineo)
 			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen','$grupoSanguineo')";
 			$idusuarionew = ejecutarConsulta_retornarID($sql);
-
+			if (!$idusuarionew) {
+				throw new Exception('Error al guardar al personal. Numero Doc: '.$numero_documento);
+			}
 			return $idusuarionew;
 			// $idusuarionew=1;
 			// return $idusuarionew;
@@ -265,6 +271,10 @@ class Usuario
 		'$data[28]','$data[29]','$data[30]','$data[31]',
 		'$data[32]','$data[33]',$personal_id)";
 
-		return ejecutarConsulta($sql);
+		$rpta= ejecutarConsulta($sql);
+		if (!$rpta) {
+			throw new Exception('Error al guardar los datos complementarios del personal con Numero de Doc: '.$numero_documento);
+		}
+		return true;
 	}
 }

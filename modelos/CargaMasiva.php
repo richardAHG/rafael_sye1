@@ -15,6 +15,11 @@ class CargaMasiva
         $obj = new Usuario();
         $userNoregistrado = [];
         $userRegistrado = [];
+        $isCorrect = 0;
+		$mensaje = 'Proceso Finalizado con exito';
+        /* Desactivar la autoconsigna */
+		desableCommitAutomatic();
+		try {
         foreach ($data as $key => $value) {
             //insertar en tabla personal
              $usuario_id = $obj->insertarPersonalMasivo($value['NOMBRES'],$value['APEPAT'],$value['APEMAT'],$value['EMAIL'],$value['CARGO'],$value['REGIMEN_LABORAL'],$value['DIRECCION'],$value['CELULAR'],$value['TIPO_DOCUMENTO'],
@@ -34,15 +39,27 @@ class CargaMasiva
                     $value['ACTIVIDAD'], $value['TALLA_ZAPATOS'],  $value['TALLA_CAMISA'], $value['TALLA_PANTALON'],  $value['SCTR_SALUD'],
                     $value['SCTR_PENSION'],   $value['PLANILLA'], $value['EPS_PLAN']
                 ];
-                $detalle = $obj->insertarPersonalDetalle($paramDetalle, $usuario_id);
+                $obj->insertarPersonalDetalle($paramDetalle, $usuario_id);
                 $userRegistrado[]=$usuario_id;
             } else {
-                
                 $userNoregistrado[] = $value['NRO_DOC'];
             }
         }
+
+        commit();
+        enableCommitAutomatic();
+        $isCorrect = 1;
+    } catch (Exception $e) {
+        rollback();
+        enableCommitAutomatic();
+        // echo "Fallo: " . $e->getMessage();
+        $isCorrect = 0;
+        $mensaje = $e->getMessage();
+    }
+
         return [
-            'mensaje'=>'Proceso finalizado',
+            'correcto'=> $isCorrect,
+            'mensaje'=>$mensaje,
             'data'=>$userNoregistrado,
             'totalReg'=>count($data),
             'noInsertado'=>count($userNoregistrado),

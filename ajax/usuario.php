@@ -242,6 +242,7 @@ case 'bloquerATS':
 						'imagen'=>$reg->imagen,
 						'estado'=>$reg->estado,
 						'ats'=>$reg->ats,
+						'grupo_sanguineo'=>$reg->grupo_sanguineo,
 
 						'cargo'=>$reg->cargo,
 						'regimen'=>$reg->regimen,

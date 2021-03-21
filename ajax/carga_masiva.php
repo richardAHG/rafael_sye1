@@ -103,7 +103,12 @@ if (!isset($_SESSION["nombre"])) {
 
 				$rspta = $cargaMasiva->insertarCM($data);
 				CsvUtil::destroyFileTemp();
-				echo json_encode($rspta);
+				if ($rspta['correcto']) {
+					Response::JSON(200, $rspta['mensaje'],$rspta);
+				} else {
+					Response::JSON(400, $rspta['mensaje'],$rspta);
+				}
+				// echo json_encode($rspta);
 				break;
 			case 'guardaryeditar':
 				print_r($_FILES['archivo']);
