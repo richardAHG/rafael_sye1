@@ -72,7 +72,7 @@ if (!isset($_SESSION["nombre"])) {
 					'subarea',
 					'cargo',
 					'nombre',
-					'jefe'
+					// 'jefe'
 					// 'fecha'
 				];
 
@@ -93,7 +93,7 @@ if (!isset($_SESSION["nombre"])) {
 						'subarea' => $reg->subarea,
 						'cargo' => $reg->cargo,
 						'nombre' => $reg->nombre,
-						'jefe' => $reg->jefe,
+						// 'jefe' => $reg->jefe,
 						// 'fecha' => $reg->fecha,
 					];
 					$fechas = explode(',', $reg->fechas);
