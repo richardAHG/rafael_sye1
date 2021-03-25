@@ -73,7 +73,7 @@ class GestionPeligrosE
         return ejecutarConsulta($sql);
     }
 
-    //select Peligro general por tipo de ats
+    //select Peligro especifico por tipo de ats
     public function selectPGByAtsId($tipo_ats_id,$subactividad_id)
     {
         $sql = "SELECT DISTINCT peligro_id,p.nombre FROM gestion_peligros_especificos g
@@ -82,7 +82,7 @@ class GestionPeligrosE
         return ejecutarConsulta($sql);
     }
 
-    //select Riesgo general por tipo de ats
+    //select Riesgo especifico por tipo de ats
     public function selectRGByAtsId($tipo_ats_id,$peligroG_id,$subactividad_id)
     {
         $sql = "SELECT DISTINCT riesgo_id,r.nombre FROM gestion_peligros_especificos g
@@ -91,7 +91,7 @@ class GestionPeligrosE
         return ejecutarConsulta($sql);
     }
 
-    //select medida de control general por tipo de ats
+    //select medida de control especifico por tipo de ats
     public function selectMCByAtsId($tipo_ats_id,$riesgoG_id,$peligroG_id,$subactividad_id)
     {
         $sql = "SELECT DISTINCT medida_id,m.nombre FROM gestion_peligros_especificos g
@@ -100,7 +100,7 @@ class GestionPeligrosE
         return ejecutarConsulta($sql);
     }
 
-    //select respuesta general por tipo de ats
+    //select respuesta especifico por tipo de ats
     public function selectRByAtsId($tipo_ats_id,$medidaG_id,$riesgoG_id,$peligroG_id,$subactividad_id)
     {
         $sql = "SELECT distinct respuesta,case respuesta when 1 then 'Correcta'else 'incorrecta' end as nombre 

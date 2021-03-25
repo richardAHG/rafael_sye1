@@ -100,23 +100,6 @@ if (!isset($_SESSION["nombre"])) {
 			// 	}
 			// 	break;
 
-			case 'anular':
-				$rspta = $ats->anular($id);
-				// echo $rspta ? "Area activada" : "Area no se puede activar";
-				if ($rspta) {
-					Response::JSON(200, 'ATS Anulado');
-				} else {
-					Response::JSON(400, 'ATS no se pudo Anular');
-				}
-				break;
-
-			case 'mostrar':
-				$rspta = $ats->mostrar($id);
-				//Codificar el resultado utilizando json
-				// echo json_encode($rspta);
-				Response::JSON(200, 'Datos de area', $rspta);
-				break;
-
 			case 'listar':
 				$rspta = $ats->listar();
 				//Vamos a declarar un array
