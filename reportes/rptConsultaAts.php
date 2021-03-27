@@ -7,7 +7,7 @@ if (strlen(session_id()) < 1)
 if (!isset($_SESSION["nombre"])) {
   echo 'Debe ingresar al sistema correctamente para visualizar el reporte';
 } else {
-  if ($_SESSION['Administrar'] == 1) {
+  if ($_SESSION['Administrar'] == 1 || $_SESSION['Consulta_ats']==1) {
 ?>
     <html>
 
