@@ -347,7 +347,7 @@ case 'verificar_app':
 		// print_r($clavehash); die();
 		// $clavehash = $clavea;
 
-		$rspta = $usuario->verificarApp($clavehash);
+		$rspta = $usuario->verificarApp($clavea);
 
 		$fetch = $rspta->fetch_object();
 
