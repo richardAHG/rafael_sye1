@@ -343,7 +343,7 @@ case 'verificar_app':
 		$clavea = $data['clavea'];
 
 		//Hash SHA256 en la contraseña
-		$clavehash = hash("SHA256", $clavea);
+		// $clavehash = hash("SHA256", $clavea);
 		// print_r($clavehash); die();
 		// $clavehash = $clavea;
 

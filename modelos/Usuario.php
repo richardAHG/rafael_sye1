@@ -213,7 +213,7 @@ class Usuario
 		FROM personal p
 		INNER JOIN cargo c ON
     	p.cargo_id = c.id AND c.estado = 1
-		WHERE clave='$clave' AND p.estado=1 and ats=1";
+		WHERE login='$clave' AND p.estado=1 and ats=1";
 
 		return ejecutarConsulta($sql);
 	}
