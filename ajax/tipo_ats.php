@@ -11,14 +11,13 @@ if (!isset($_SESSION["nombre"])) {
 		require_once "../modelos/TipoAts.php";
 		require_once "../helper/response/Response.php";
 		$tipoAts = new TipoAts();
-
 		$id = isset($_POST["id"]) ? limpiarCadena($_POST["id"]) : "";
 		$codigo = isset($_POST["codigo"]) ? limpiarCadena($_POST["codigo"]) : "";
 		$version = isset($_POST["version"]) ? limpiarCadena($_POST["version"]) : "";
 		$fecha = isset($_POST["fecha"]) ? limpiarCadena($_POST["fecha"]) : "";
 		$actividad = isset($_POST["actividad"]) ? limpiarCadena($_POST["actividad"]) : "";
 		$tipo_id = isset($_POST["tipo"]) ? limpiarCadena($_POST["tipo"]) : "";
-$especifico = isset($_POST["especifico"]) ? limpiarCadena($_POST["especifico"]) : "";
+		$especifico = isset($_POST["especifico_"]) ? limpiarCadena($_POST["especifico_"]) : 0;
 
 		switch ($_GET["op"]) {
 			case 'guardaryeditar':

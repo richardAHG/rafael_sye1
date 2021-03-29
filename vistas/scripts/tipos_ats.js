@@ -38,7 +38,6 @@ function limpiar() {
     $("#especifico").val("");
 }
 
-
 //Función mostrar formulario
 function mostrarform(flag) {
     limpiar();
@@ -124,7 +123,14 @@ function listar() {
 function guardaryeditar(e) {
     e.preventDefault(); //No se activará la acción predeterminada del evento
     $("#btnGuardar").prop("disabled", true);
+    let valor = 0;
+    if (document.getElementById("especifico").checked == true) {
+        valor = 1;
+    }
+    // console.log(checkbox2);
+    // return;
     var formData = new FormData($("#formulario")[0]);
+    formData.append("especifico_", valor);
 
     $.ajax({
         url: "../ajax/tipo_ats.php?op=guardaryeditar",
@@ -137,27 +143,30 @@ function guardaryeditar(e) {
             data = JSON.parse(datos);
             bootbox.alert(data.mensaje);
             mostrarform(false);
-            $("#tbllistado").bootstrapTable('refresh');
+            $("#tbllistado").bootstrapTable("refresh");
         },
     });
     limpiar();
 }
 
 function mostrar(id) {
-    $.post("../ajax/tipo_ats.php?op=mostrar", { id: id }, function(data, status) {
-        data = JSON.parse(data);
-        data = data.data;
-        mostrarform(true);
+    $.post(
+        "../ajax/tipo_ats.php?op=mostrar", { id: id },
+        function(data, status) {
+            data = JSON.parse(data);
+            data = data.data;
+            mostrarform(true);
 
-        $("#codigo").val(data.codigo);
-        $("#version").val(data.version);
-        $("#fecha").val(data.fecha);
-        $("#actividad").val(data.actividad);
-        $("#especifico").attr("checked", data.especifico);
-        $("#tipo").val(data.tipo_ats);
-        $("#tipo").selectpicker("refresh");
-        $("#id").val(data.id);
-    });
+            $("#codigo").val(data.codigo);
+            $("#version").val(data.version);
+            $("#fecha").val(data.fecha);
+            $("#actividad").val(data.actividad);
+            $("#especifico").attr("checked", data.especifico);
+            $("#tipo").val(data.tipo_ats);
+            $("#tipo").selectpicker("refresh");
+            $("#id").val(data.id);
+        }
+    );
 }
 
 //Función para desactivar registros
@@ -167,7 +176,7 @@ function desactivar(id) {
             $.post("../ajax/tipo_ats.php?op=desactivar", { id: id }, function(e) {
                 data = JSON.parse(e);
                 bootbox.alert(data.mensaje);
-                $("#tbllistado").bootstrapTable('refresh');
+                $("#tbllistado").bootstrapTable("refresh");
             });
         }
     });
@@ -180,7 +189,7 @@ function activar(id) {
             $.post("../ajax/tipo_ats.php?op=activar", { id: id }, function(e) {
                 data = JSON.parse(e);
                 bootbox.alert(data.mensaje);
-                $("#tbllistado").bootstrapTable('refresh');
+                $("#tbllistado").bootstrapTable("refresh");
             });
         }
     });
