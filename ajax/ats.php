@@ -441,7 +441,7 @@ switch ($_GET["op"]) {
 		}
 		Response::JSON(200, 'Datos de tipo de area', $data);
 		break;
-	case "allUsuarios":
+	case "allU":
 		$rspta = $ats->allUsuairos();
 		$data = [];
 		while ($reg = $rspta->fetch_object()) {
@@ -458,7 +458,7 @@ switch ($_GET["op"]) {
 		}
 		Response::JSON(200, 'Datos de tipo de usuarios', $data);
 		break;
-	case "allJefes":
+	case "allJ":
 		$rspta = $ats->allJefes();
 		$data = [];
 		while ($reg = $rspta->fetch_object()) {
