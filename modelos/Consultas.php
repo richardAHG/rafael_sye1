@@ -99,19 +99,19 @@ public function rptCumplimiento($fecha_inicio, $fecha_fin)
 		// 		) ats  on ats.personal_id=p.id 
 		// 		where p.ats=1
 		// 		union
-				// SELECT  distinct numero_documento,ar.nombre as area,sa.nombre as subarea,c.nombre as cargo, concat(p.ape_pat,' ',p.ape_mat,' ',p.nombre)as nombre,atr.fecha,jefe FROM `personal` p 
-				// inner join area ar on p.area_id=ar.id and ar.tipo_id=1 and ar.estado=1 
-				// inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2 and sa.estado=1 
-				// inner join cargo c on p.cargo_id=c.id and c.estado=1 
-				// inner join(
-				// 	SELECT distinct atr.personal_id,CAST(fecha_creacion AS DATE)as fecha,concat(p.ape_pat,' ',p.ape_mat,' ',p.nombre)as jefe FROM ats_trabajadores atr
-				// left join ats a on atr.ats_id=a.id
-				// inner join personal p on a.jefe_id =p.id
-				// WHERE CAST(fecha_creacion AS DATE) BETWEEN '$fecha_inicio' and '$fecha_fin'
-				// ) atr  on atr.personal_id=p.id
-				// where p.ats=1
-				// )as t
-				// group by numero_documento,area,subarea,cargo,nombre,jefe ";
+		// 		SELECT  distinct numero_documento,ar.nombre as area,sa.nombre as subarea,c.nombre as cargo, concat(p.ape_pat,' ',p.ape_mat,' ',p.nombre)as nombre,atr.fecha,jefe FROM `personal` p 
+		// 		inner join area ar on p.area_id=ar.id and ar.tipo_id=1 and ar.estado=1 
+		// 		inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2 and sa.estado=1 
+		// 		inner join cargo c on p.cargo_id=c.id and c.estado=1 
+		// 		left join(
+		// 			SELECT distinct atr.personal_id,CAST(fecha_creacion AS DATE)as fecha,concat(p.ape_pat,' ',p.ape_mat,' ',p.nombre)as jefe FROM ats_trabajadores atr
+		// 		left join ats a on atr.ats_id=a.id
+		// 		inner join personal p on a.jefe_id =p.id
+		// 		WHERE CAST(fecha_creacion AS DATE) BETWEEN '$fecha_inicio' and '$fecha_fin'
+		// 		) atr  on atr.personal_id=p.id
+		// 		where p.ats=1
+		// 		)as t
+		// 		group by numero_documento,area,subarea,cargo,nombre,jefe ";
 		$sql="SELECT numero_documento,area,subarea,cargo,nombre,GROUP_CONCAT(fecha) as fechas from 
 				(SELECT  distinct numero_documento,ar.nombre as area,sa.nombre as subarea,c.nombre as cargo, 
 				concat(p.ape_pat,' ',p.ape_mat,' ',p.nombre)as nombre,ats.fecha FROM `personal` p 
@@ -130,7 +130,7 @@ public function rptCumplimiento($fecha_inicio, $fecha_fin)
 				inner join area ar on p.area_id=ar.id and ar.tipo_id=1 and ar.estado=1 
 				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2 and sa.estado=1 
 				inner join cargo c on p.cargo_id=c.id and c.estado=1 
-				inner join(
+				left join(
 					SELECT distinct atr.personal_id,CAST(fecha_creacion AS DATE)as fecha
 					FROM ats_trabajadores atr
 				left join ats a on atr.ats_id=a.id

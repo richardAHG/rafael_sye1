@@ -42,8 +42,8 @@ class Ats
 			$fechaAts = $fecha->format('Y-m-d H:i:s');
 			$fechalogin = new DateTime($fecha_login);
 			$fecha_login = $fechalogin->format('Y-m-d H:i:s');
-			$horaFin = substr($horaFin,11,8);
-			
+			$horaFin = substr($horaFin, 11, 8);
+
 			$sql = "INSERT INTO ats(personal_id, distrito_id, direccion, ubicacion, 
 					fecha_hora_inicio, hora_fin, firma_ruta, jefe_id,tipo_ats_id, 
 					fecha_creacion, usuario_creacion,otros_peligros,otros_riesgos,otras_medidas) 
@@ -51,7 +51,7 @@ class Ats
 					REPLACE('$horaFin',': ',':'),'$firma','$jefe_id',$tipo_ats_id,REPLACE('$fecha_login',': ',':'),'$personal_id',
 					'$otros_peligros','$otros_riesgos','$otras_medidas')";
 			//return ejecutarConsulta($sql);
-		
+
 			$idats = ejecutarConsulta_retornarID($sql);
 			if ($idats == 0) {
 				throw new Exception('Error al guardar al personal');
@@ -116,7 +116,7 @@ class Ats
 				}
 			}
 
-			if(empty($trabajadores)) {
+			if (empty($trabajadores)) {
 				new Log("error", "No se están enviando los trabajadores");
 			}
 
@@ -314,6 +314,14 @@ class Ats
 		$sql = "SELECT p.id, concat(numero_documento,' ',nombre,' ',ape_pat,' ',ape_mat,' ')as nombre FROM `ats_trabajadores` t 
 				inner join personal p on t.personal_id=p.id
 				group by p.id";
+		return ejecutarConsulta($sql);
+	}
+
+	public function allUsuairos()
+	{
+		$sql = "SELECT p.id,p.nombre, ape_pat ,ape_mat,cargo_id ,c.nombre as cargo,numero_documento ,login
+				from personal p
+				inner join cargo c on p.cargo_id =c.id and c.estado =1";
 		return ejecutarConsulta($sql);
 	}
 }
