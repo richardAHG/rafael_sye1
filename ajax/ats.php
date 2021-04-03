@@ -456,7 +456,19 @@ switch ($_GET["op"]) {
 				'login' => $reg->login
 			];
 		}
-		Response::JSON(200, 'Datos de tipo de area', $data);
+		Response::JSON(200, 'Datos de tipo de usuarios', $data);
+		break;
+	case "allJefes":
+		$rspta = $ats->allJefes();
+		$data = [];
+		while ($reg = $rspta->fetch_object()) {
+			$data[] = [
+				'id' => $reg->id,
+				'personal_id' => $reg->personal_id,
+				'tipoats_id' => $reg->tipoats_id
+			];
+		}
+		Response::JSON(200, 'Datos de tipo de jefes', $data);
 		break;
 }
 

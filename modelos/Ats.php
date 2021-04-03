@@ -324,4 +324,10 @@ class Ats
 				inner join cargo c on p.cargo_id =c.id and c.estado =1";
 		return ejecutarConsulta($sql);
 	}
+
+	public function allJefes()
+	{
+		$sql = "SELECT id,personal_id ,tipoats_id from jefe_ats ja where estado =1";
+		return ejecutarConsulta($sql);
+	}
 }
