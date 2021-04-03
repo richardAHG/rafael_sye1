@@ -336,10 +336,34 @@ class Ats
 		$sql = "SELECT * from gestion_peligros_generales gpg where estado =1";
 		return ejecutarConsulta($sql);
 	}
-
 	public function allPE()
 	{
 		$sql = "SELECT * from gestion_peligros_especificos gpe where estado =1";
 		return ejecutarConsulta($sql);
 	}
+
+	public function allP()
+	{
+		$sql = "SELECT * from peligro p2 where estado =1";
+		return ejecutarConsulta($sql);
+	}
+
+	public function allR()
+	{
+		$sql = "SELECT * from riesgo r where estado =1";
+		return ejecutarConsulta($sql);
+	}
+
+	public function allMC()
+	{
+		$sql = "SELECT * from medida_control mc where estado =1";
+		return ejecutarConsulta($sql);
+	}
+
+	public function allS()
+	{
+		$sql = "SELECT * from subactividad s  where estado =1";
+		return ejecutarConsulta($sql);
+	}
+
 }

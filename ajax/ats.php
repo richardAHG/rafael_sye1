@@ -501,6 +501,53 @@ switch ($_GET["op"]) {
 		}
 		Response::JSON(200, 'Datos de peligros especificos', $data);
 		break;
+	case "allP":
+		$rspta = $ats->allP();
+		$data = [];
+		while ($reg = $rspta->fetch_object()) {
+			$data[] = [
+				'id' => $reg->id,
+				'nombre' => $reg->nombre,
+				'tipo_id' => $reg->tipo_id
+			];
+		}
+		Response::JSON(200, 'Datos de todos los peligros', $data);
+		break;
+	case "allR":
+		$rspta = $ats->allR();
+		$data = [];
+		while ($reg = $rspta->fetch_object()) {
+			$data[] = [
+				'id' => $reg->id,
+				'nombre' => $reg->nombre,
+				'tipo_id' => $reg->tipo_id
+			];
+		}
+		Response::JSON(200, 'Datos de todos los riesgos', $data);
+		break;
+	case "allMC":
+		$rspta = $ats->allMC();
+		$data = [];
+		while ($reg = $rspta->fetch_object()) {
+			$data[] = [
+				'id' => $reg->id,
+				'nombre' => $reg->nombre,
+				'tipo_id' => $reg->tipo_id
+			];
+		}
+		Response::JSON(200, 'Datos de todos los medios de comprobación', $data);
+		break;
+	case "allS":
+		$rspta = $ats->allS();
+		$data = [];
+		while ($reg = $rspta->fetch_object()) {
+			$data[] = [
+				'id' => $reg->id,
+				'nombre' => $reg->nombre,
+			];
+		}
+		Response::JSON(200, 'Datos de todas las subactividades', $data);
+		break;
 }
 
 //Fin de las validaciones de acceso
