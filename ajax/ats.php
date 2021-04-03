@@ -470,6 +470,37 @@ switch ($_GET["op"]) {
 		}
 		Response::JSON(200, 'Datos de tipo de jefes', $data);
 		break;
+	case "allPG":
+		$rspta = $ats->allPG();
+		$data = [];
+		while ($reg = $rspta->fetch_object()) {
+			$data[] = [
+				'id' => $reg->id,
+				'peligro_id' => $reg->peligro_id,
+				'riesgo_id' => $reg->riesgo_id,
+				'medida_id' => $reg->medida_id,
+				'respuesta' => $reg->respuesta,
+				'tipo_ats_id' => $reg->tipo_ats_id
+			];
+		}
+		Response::JSON(200, 'Datos de peligros generales', $data);
+		break;
+	case "allPE":
+		$rspta = $ats->allPE();
+		$data = [];
+		while ($reg = $rspta->fetch_object()) {
+			$data[] = [
+				'id' => $reg->id,
+				'subactividad_id' => $reg->subactividad_id,
+				'peligro_id' => $reg->peligro_id,
+				'riesgo_id' => $reg->riesgo_id,
+				'medida_id' => $reg->medida_id,
+				'respuesta' => $reg->respuesta,
+				'tipo_ats_id' => $reg->tipo_ats_id
+			];
+		}
+		Response::JSON(200, 'Datos de peligros especificos', $data);
+		break;
 }
 
 //Fin de las validaciones de acceso

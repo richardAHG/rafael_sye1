@@ -330,4 +330,16 @@ class Ats
 		$sql = "SELECT id,personal_id ,tipoats_id from jefe_ats ja where estado =1";
 		return ejecutarConsulta($sql);
 	}
+
+	public function allPG()
+	{
+		$sql = "SELECT * from gestion_peligros_generales gpg where estado =1";
+		return ejecutarConsulta($sql);
+	}
+
+	public function allPE()
+	{
+		$sql = "SELECT * from gestion_peligros_especificos gpe where estado =1";
+		return ejecutarConsulta($sql);
+	}
 }
