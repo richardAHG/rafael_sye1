@@ -82,8 +82,8 @@ if (!isset($_SESSION["nombre"])) {
                     <select id="subarea_id" name="subarea_id" class="form-control selectpicker" data-live-search="true" required></select>
                   </div>
                   <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <label>EPS(*):</label>
-                    <select id="eps" name="eps" class="form-control selectpicker" data-live-search="true" required></select>
+                    <label>Estado Empresa(*):</label>
+                    <select id="estado_empresa" name="estado_empresa" class="form-control selectpicker" data-live-search="true" required></select>
                   </div>
                   <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Fecha de ingreso:</label>

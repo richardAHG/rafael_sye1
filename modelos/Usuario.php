@@ -10,7 +10,7 @@ class Usuario
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos, $eps)
+	public function insertar($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos, $estado_empresa)
 	{
 		if (empty($permisos)) {
 			$permisos = [];
@@ -21,8 +21,8 @@ class Usuario
 		try {
 			$null = "NULL";
 			$fecha_ingreso = empty($fecha_ingreso) ? $null : "'$fecha_ingreso'";
-			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,eps)
-			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', $fecha_ingreso, '$login', '$clave', '$imagen','$eps')";
+			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,estado_empresa)
+			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', $fecha_ingreso, '$login', '$clave', '$imagen','$estado_empresa')";
 			//return ejecutarConsulta($sql);
 
 			$idusuarionew = ejecutarConsulta_retornarID($sql);
@@ -60,7 +60,7 @@ class Usuario
 
 	//Implementamos un método para editar registros
 
-	public function editar($id, $nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos, $eps)
+	public function editar($id, $nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos, $estado_empresa)
 	{
 		if (empty($permisos)) {
 			$permisos = [];
@@ -90,7 +90,7 @@ class Usuario
 					fecha_ingreso = $fecha_ingreso,
 					login = '$login',
 					imagen = '$imagen',
-					eps = '$eps'
+					estado_empresa = '$estado_empresa'
 				WHERE
 					id = '$id'";
 		
@@ -180,8 +180,8 @@ class Usuario
 	public function listar()
 	{
 		$sql = "SELECT p.id, p.nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, fecha_cese, login, clave, imagen, p.estado,p.ats, 
-					c.nombre as cargo, pa.nombre as regimen,pa2.nombre as tipoDocumento,a.nombre as area, sa.nombre as subarea,pa3.nombre as grupo_sanguineo, pd.ESTADO_EMPRESA as estado_empresa_id, p2.nombre as estado_empresa,
-					p.eps,p.jefe_cargo
+					c.nombre as cargo, pa.nombre as regimen,pa2.nombre as tipoDocumento,a.nombre as area, sa.nombre as subarea,pa3.nombre as grupo_sanguineo, p.estado_empresa as estado_empresa_id, p2.nombre as estado_empresa,
+					p.jefe_cargo
 				FROM `personal` p 
 				inner join cargo c on p.cargo_id=c.id
 				inner join parametros pa on p.regimen_id=pa.valor and pa.grupo='regimen_laboral'
@@ -189,8 +189,7 @@ class Usuario
 				left join parametros pa3 on p.grupo_sanguineo =pa3.valor and pa3.grupo='grupo_sanguineo'
 				inner join area a on p.area_id=a.id and a.tipo_id=1
 				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2
-				left join personal_detalle pd on p.id =pd.personal_id
-				left join parametros p2 on pd.ESTADO_EMPRESA =p2.valor and p2.grupo ='ESTADO_EMPRESA'";
+				left join parametros p2 on p.estado_empresa =p2.valor and p2.grupo ='ESTADO_EMPRESA'";
 		return ejecutarConsulta($sql);
 	}
 	//Implementar un método para listar los permisos marcados

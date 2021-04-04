@@ -75,7 +75,7 @@ function init() {
         $("#area_id").selectpicker("refresh");
     });
 
-    $.post("../ajax/usuario.php?op=selectEps", function(r) {
+    $.post("../ajax/usuario.php?op=selectEstadoEmpresa", function(r) {
         data = JSON.parse(r);
         options = data.data;
 
@@ -83,9 +83,9 @@ function init() {
             let option = document.createElement("option");
             option.value = element.id;
             option.textContent = element.nombre;
-            document.getElementById("eps").appendChild(option);
+            document.getElementById("estado_empresa").appendChild(option);
         });
-        $("#eps").selectpicker("refresh");
+        $("#estado_empresa").selectpicker("refresh");
     });
     // $.post("../ajax/usuario.php?op=selectSubArea",{ idarea: 1 },function (r) {
     //     data = JSON.parse(r);
@@ -168,7 +168,7 @@ function limpiar() {
     $("#numero_documento").val("");
     $("#area_id").val("");
     $("#subarea_id").val("");
-    $("#eps").val("");
+    $("#estado_empresa").val("");
     $("#fecha_ingreso").val("");
     $("#fecha_cese").val("");
     $("#login").val("");
@@ -348,8 +348,8 @@ function mostrar(idusuario) {
                 $("#subarea_id").selectpicker("refresh");
             }, 3000);
 
-            $("#eps").val(data.eps);
-            $("#eps").selectpicker("refresh");
+            $("#estado_empresa").val(data.estado_empresa);
+            $("#estado_empresa").selectpicker("refresh");
 
             $("#fecha_ingreso").val(data.fecha_ingreso);
             $("#fecha_cese").val(data.fecha_cese);
@@ -378,8 +378,8 @@ function mostrarDetails() {
             if (data === null || data === "") {
                 $("#personal_id").val(idusuario);
             } else {
-                $("#ESTADO_EMPRESA").val(data.ESTADO_EMPRESA);
-                $("#ESTADO_EMPRESA").selectpicker("refresh");
+                // $("#ESTADO_EMPRESA").val(data.ESTADO_EMPRESA);
+                // $("#ESTADO_EMPRESA").selectpicker("refresh");
                 $("#REMUNERACION_BASICA").val(data.REMUNERACION_BASICA);
                 $("#ASIG_FAMILIAR").val(data.ASIG_FAMILIAR);
                 $("#ASIG_FAMILIAR").selectpicker("refresh");

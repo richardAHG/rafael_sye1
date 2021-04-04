@@ -30,9 +30,10 @@ $login = isset($_POST["login"]) ? limpiarCadena($_POST["login"]) : "";
 $clave = isset($_POST["clave"]) ? limpiarCadena($_POST["clave"]) : "";
 $imagen = isset($_POST["imagen"]) ? limpiarCadena($_POST["imagen"]) : "";
 $permiso = isset($_POST["permiso"]) ? $_POST["permiso"] : "";
+$estado_empresa = isset($_POST["estado_empresa"]) ? limpiarCadena($_POST["estado_empresa"]) : "";
 
 // datos de personal detalle
-$ESTADO_EMPRESA = isset($_POST["ESTADO_EMPRESA"]) ? limpiarCadena($_POST["ESTADO_EMPRESA"]) : "";
+
 $REMUNERACION_BASICA = isset($_POST["REMUNERACION_BASICA"]) ? limpiarCadena($_POST["REMUNERACION_BASICA"]) : "";
 $ASIG_FAMILIAR = isset($_POST["ASIG_FAMILIAR"]) ? limpiarCadena($_POST["ASIG_FAMILIAR"]) : "";
 $CENTRO_COSTO = isset($_POST["CENTRO_COSTO"]) ? limpiarCadena($_POST["CENTRO_COSTO"]) : "";
@@ -109,7 +110,7 @@ switch ($_GET["op"]) {
 						$clavehash,
 						$imagen,
 						$permiso,
-						$eps
+						$estado_empresa
 					);
 					if ($rspta['correcto']) {
 						Response::JSON(200, $rspta['mensaje']);
@@ -137,7 +138,7 @@ switch ($_GET["op"]) {
 						$clavehash,
 						$imagen,
 						$permiso,
-						$eps
+						$estado_empresa
 					);
 					if ($rspta['correcto']) {
 						Response::JSON(200, $rspta['mensaje']);
@@ -293,7 +294,6 @@ switch ($_GET["op"]) {
 						'nombre_completo' => $reg->nombre . ' ' . $reg->ape_pat . ' ' . $reg->ape_mat,
 						'documento' => $reg->tipoDocumento . ' - ' . $reg->numero_documento,
 						'estado_empresa' => $reg->estado_empresa,
-						'eps' => $reg->eps,
 						'jefe_cargo' => $reg->jefe_cargo,
 					];
 				}
@@ -673,10 +673,10 @@ switch ($_GET["op"]) {
 		}
 		Response::JSON(200, 'Datos de tipo de peligro', $data);
 		break;
-	case "selectEps":
+	case "selectEstadoEmpresa":
 		require_once "../modelos/Parametro.php";
 		$obj = new Parametro();
-		$rspta = $obj->select('EPS');
+		$rspta = $obj->select('ESTADO_EMPRESA');
 
 		$data = [];
 		while ($reg = $rspta->fetch_object()) {
