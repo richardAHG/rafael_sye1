@@ -31,6 +31,44 @@ $clave = isset($_POST["clave"]) ? limpiarCadena($_POST["clave"]) : "";
 $imagen = isset($_POST["imagen"]) ? limpiarCadena($_POST["imagen"]) : "";
 $permiso = isset($_POST["permiso"]) ? $_POST["permiso"] : "";
 
+// datos de personal detalle
+$ESTADO_EMPRESA = isset($_POST["ESTADO_EMPRESA"]) ? limpiarCadena($_POST["ESTADO_EMPRESA"]) : "";
+$REMUNERACION_BASICA = isset($_POST["REMUNERACION_BASICA"]) ? limpiarCadena($_POST["REMUNERACION_BASICA"]) : "";
+$ASIG_FAMILIAR = isset($_POST["ASIG_FAMILIAR"]) ? limpiarCadena($_POST["ASIG_FAMILIAR"]) : "";
+$CENTRO_COSTO = isset($_POST["CENTRO_COSTO"]) ? limpiarCadena($_POST["CENTRO_COSTO"]) : "";
+$SEXO = isset($_POST["SEXO"]) ? limpiarCadena($_POST["SEXO"]) : "";
+$NACIONALIDAD = isset($_POST["NACIONALIDAD"]) ? limpiarCadena($_POST["NACIONALIDAD"]) : "";
+$FECHA_NACIMIENTO = isset($_POST["FECHA_NACIMIENTO"]) ? limpiarCadena($_POST["FECHA_NACIMIENTO"]) : "";
+$ESTADO_CIVIL = isset($_POST["ESTADO_CIVIL"]) ? limpiarCadena($_POST["ESTADO_CIVIL"]) : "";
+$TELEFONO_EMERGENCIA = isset($_POST["TELEFONO_EMERGENCIA"]) ? limpiarCadena($_POST["TELEFONO_EMERGENCIA"]) : "";
+$DEPARTAMENTO = isset($_POST["DEPARTAMENTO"]) ? limpiarCadena($_POST["DEPARTAMENTO"]) : "";
+$PROVINCIA = isset($_POST["PROVINCIA"]) ? limpiarCadena($_POST["PROVINCIA"]) : "";
+$DISTRITO = isset($_POST["DISTRITO"]) ? limpiarCadena($_POST["DISTRITO"]) : "";
+$NIVEL_EDUCATIVO = isset($_POST["NIVEL_EDUCATIVO"]) ? limpiarCadena($_POST["NIVEL_EDUCATIVO"]) : "";
+$SISTEMA_PENSION = isset($_POST["SISTEMA_PENSION"]) ? limpiarCadena($_POST["SISTEMA_PENSION"]) : "";
+$CUSPP = isset($_POST["CUSPP"]) ? limpiarCadena($_POST["CUSPP"]) : "";
+$TIPO_COMISION = isset($_POST["TIPO_COMISION"]) ? limpiarCadena($_POST["TIPO_COMISION"]) : "";
+$FEHCA_SPP = isset($_POST["FEHCA_SPP"]) ? limpiarCadena($_POST["FEHCA_SPP"]) : "";
+$BANCO_SUELDO = isset($_POST["BANCO_SUELDO"]) ? limpiarCadena($_POST["BANCO_SUELDO"]) : "";
+$CUENTA_SUELDO = isset($_POST["CUENTA_SUELDO"]) ? $_POST["CUENTA_SUELDO"] : "";
+$INTERBANCARIO_SUELDO = isset($_POST["INTERBANCARIO_SUELDO"]) ? limpiarCadena($_POST["INTERBANCARIO_SUELDO"]) : "";
+$BANCO_CTS = isset($_POST["BANCO_CTS"]) ? limpiarCadena($_POST["BANCO_CTS"]) : "";
+$CUENTA_CTS = isset($_POST["CUENTA_CTS"]) ? limpiarCadena($_POST["CUENTA_CTS"]) : "";
+$CUENTA_INTERBANCARIA_CTS = isset($_POST["CUENTA_INTERBANCARIA_CTS"]) ? limpiarCadena($_POST["CUENTA_INTERBANCARIA_CTS"]) : "";
+$TIPO_CONTRATO = isset($_POST["TIPO_CONTRATO"]) ? limpiarCadena($_POST["TIPO_CONTRATO"]) : "";
+$HIJOS_MENORES = isset($_POST["HIJOS_MENORES"]) ? limpiarCadena($_POST["HIJOS_MENORES"]) : "";
+$HIJOS_MAYORES = isset($_POST["HIJOS_MAYORES"]) ? limpiarCadena($_POST["HIJOS_MAYORES"]) : "";
+$ACTIVIDAD = isset($_POST["ACTIVIDAD"]) ? limpiarCadena($_POST["ACTIVIDAD"]) : "";
+$TALLA_ZAPATOS = isset($_POST["TALLA_ZAPATOS"]) ? limpiarCadena($_POST["TALLA_ZAPATOS"]) : "";
+$TALLA_CAMISA = isset($_POST["TALLA_CAMISA"]) ? limpiarCadena($_POST["TALLA_CAMISA"]) : "";
+$TALLA_PANTALON = isset($_POST["TALLA_PANTALON"]) ? limpiarCadena($_POST["TALLA_PANTALON"]) : "";
+$SCTR_SALUD = isset($_POST["SCTR_SALUD"]) ? limpiarCadena($_POST["SCTR_SALUD"]) : "";
+$SCTR_PENSION = isset($_POST["SCTR_PENSION"]) ? limpiarCadena($_POST["SCTR_PENSION"]) : "";
+$PLANILLA = isset($_POST["PLANILLA"]) ? limpiarCadena($_POST["PLANILLA"]) : "";
+$EPS_PLAN = isset($_POST["EPS_PLAN"]) ? limpiarCadena($_POST["EPS_PLAN"]) : "";
+$personal_id = isset($_POST["personal_id"]) ? limpiarCadena($_POST["personal_id"]) : "";
+$id_personal_detalle = isset($_POST["id_personal_detalle"]) ? limpiarCadena($_POST["id_personal_detalle"]) : "";
+
 switch ($_GET["op"]) {
 	case 'guardaryeditar':
 		if (!isset($_SESSION["nombre"])) {
@@ -153,46 +191,46 @@ switch ($_GET["op"]) {
 		}
 		break;
 
-case 'bloquerATS':
-			if (!isset($_SESSION["nombre"])) {
-				header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
-			} else {
-				//Validamos el acceso solo al usuario logueado y autorizado.
-				if ($_SESSION['Administrar'] == 1) {
-					$rspta = $usuario->bloquerATS($idusuario);
-					if ($rspta) {
-						Response::JSON(200, 'Usuario bloqueado para ATS');
-					} else {
-						Response::JSON(400, 'Usuario no se puede bloquear');
-					}
-					//Fin de las validaciones de acceso
+	case 'bloquerATS':
+		if (!isset($_SESSION["nombre"])) {
+			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
+		} else {
+			//Validamos el acceso solo al usuario logueado y autorizado.
+			if ($_SESSION['Administrar'] == 1) {
+				$rspta = $usuario->bloquerATS($idusuario);
+				if ($rspta) {
+					Response::JSON(200, 'Usuario bloqueado para ATS');
 				} else {
-					// require 'noacceso.php';
-					Response::JSON(400, 'No tiene acceso');
+					Response::JSON(400, 'Usuario no se puede bloquear');
 				}
-			}
-			break;
-	
-		case 'habilitarATS':
-			if (!isset($_SESSION["nombre"])) {
-				header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
+				//Fin de las validaciones de acceso
 			} else {
-				//Validamos el acceso solo al usuario logueado y autorizado.
-				if ($_SESSION['Administrar'] == 1) {
-					$rspta = $usuario->habilitarATS($idusuario);
-	
-					if ($rspta) {
-						Response::JSON(200, 'Usuario Habilitado para ATS');
-					} else {
-						Response::JSON(400, 'Usuario no se puede Habilitar');
-					}
-					//Fin de las validaciones de acceso
-				} else {
-					// require 'noacceso.php';
-					Response::JSON(400, 'No tiene acceso');
-				}
+				// require 'noacceso.php';
+				Response::JSON(400, 'No tiene acceso');
 			}
-			break;
+		}
+		break;
+
+	case 'habilitarATS':
+		if (!isset($_SESSION["nombre"])) {
+			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
+		} else {
+			//Validamos el acceso solo al usuario logueado y autorizado.
+			if ($_SESSION['Administrar'] == 1) {
+				$rspta = $usuario->habilitarATS($idusuario);
+
+				if ($rspta) {
+					Response::JSON(200, 'Usuario Habilitado para ATS');
+				} else {
+					Response::JSON(400, 'Usuario no se puede Habilitar');
+				}
+				//Fin de las validaciones de acceso
+			} else {
+				// require 'noacceso.php';
+				Response::JSON(400, 'No tiene acceso');
+			}
+		}
+		break;
 
 	case 'mostrar':
 		if (!isset($_SESSION["nombre"])) {
@@ -222,35 +260,35 @@ case 'bloquerATS':
 				//Vamos a declarar un array
 				$data = array();
 				while ($reg = $rspta->fetch_object()) {
-					$data[] =[
-						'id'=>$reg->id,
-						'nombre'=>$reg->nombre,
-						'apepat'=>$reg->ape_pat,
-						'apemat'=>$reg->ape_mat,
-						'email'=>$reg->email,
-						'cargo_id'=>$reg->cargo_id,
-						'regimen_id'=>$reg->regimen_id,
-						'direccion'=>$reg->direccion,
-						'cell'=>$reg->cell,
-						'tipo_documento'=>$reg->tipo_documento,
-						'numero_documento'=>$reg->numero_documento,
-						'area_id'=>$reg->area_id,
-						'subarea_id'=>$reg->subarea_id,
-						'fecha_ingreso'=>$reg->fecha_ingreso,
-						'fecha_cese'=>$reg->fecha_cese,
-						'login'=>$reg->login,
-						'imagen'=>$reg->imagen,
-						'estado'=>$reg->estado,
-						'ats'=>$reg->ats,
-						'grupo_sanguineo'=>$reg->grupo_sanguineo,
+					$data[] = [
+						'id' => $reg->id,
+						'nombre' => $reg->nombre,
+						'apepat' => $reg->ape_pat,
+						'apemat' => $reg->ape_mat,
+						'email' => $reg->email,
+						'cargo_id' => $reg->cargo_id,
+						'regimen_id' => $reg->regimen_id,
+						'direccion' => $reg->direccion,
+						'cell' => $reg->cell,
+						'tipo_documento' => $reg->tipo_documento,
+						'numero_documento' => $reg->numero_documento,
+						'area_id' => $reg->area_id,
+						'subarea_id' => $reg->subarea_id,
+						'fecha_ingreso' => $reg->fecha_ingreso,
+						'fecha_cese' => $reg->fecha_cese,
+						'login' => $reg->login,
+						'imagen' => $reg->imagen,
+						'estado' => $reg->estado,
+						'ats' => $reg->ats,
+						'grupo_sanguineo' => $reg->grupo_sanguineo,
 
-						'cargo'=>$reg->cargo,
-						'regimen'=>$reg->regimen,
-						'tipoDocumento'=>$reg->tipoDocumento,
-						'area'=>$reg->area,
-						'subarea'=>$reg->subarea,
-						'nombre_completo'=>$reg->nombre.' '.$reg->ape_pat.' '.$reg->ape_mat,
-						'documento'=>$reg->tipoDocumento.' - '.$reg->numero_documento,
+						'cargo' => $reg->cargo,
+						'regimen' => $reg->regimen,
+						'tipoDocumento' => $reg->tipoDocumento,
+						'area' => $reg->area,
+						'subarea' => $reg->subarea,
+						'nombre_completo' => $reg->nombre . ' ' . $reg->ape_pat . ' ' . $reg->ape_mat,
+						'documento' => $reg->tipoDocumento . ' - ' . $reg->numero_documento,
 					];
 				}
 				echo json_encode($data);
@@ -330,7 +368,6 @@ case 'bloquerATS':
 			in_array(4, $valores) ? $_SESSION['acceso'] = 1 : $_SESSION['acceso'] = 0;
 			in_array(5, $valores) ? $_SESSION['Consulta_ats'] = 1 : $_SESSION['Consulta_ats'] = 0;
 			in_array(6, $valores) ? $_SESSION['Consulta_fecha'] = 1 : $_SESSION['Consulta_fecha'] = 0;
-
 		} else {
 			$fetch = [];
 		}
@@ -338,8 +375,8 @@ case 'bloquerATS':
 		Response::JSON($status, $mensaje, $fetch, $acceso);
 		break;
 
-case 'verificar_app':
-    $data = json_decode(file_get_contents('php://input'), true);
+	case 'verificar_app':
+		$data = json_decode(file_get_contents('php://input'), true);
 		$clavea = $data['clavea'];
 
 		//Hash SHA256 en la contraseña
@@ -382,14 +419,13 @@ case 'verificar_app':
 			in_array(4, $valores) ? $_SESSION['acceso'] = 1 : $_SESSION['acceso'] = 0;
 			in_array(5, $valores) ? $_SESSION['Consulta_ats'] = 1 : $_SESSION['Consulta_ats'] = 0;
 			in_array(6, $valores) ? $_SESSION['Consulta_fecha'] = 1 : $_SESSION['Consulta_fecha'] = 0;
-
 		} else {
 			$fetch = [];
 		}
 
 		Response::JSON($status, $mensaje, $fetch, $acceso);
 		break;
-		
+
 	case 'salir':
 		//Limpiamos las variables de sesión   
 		session_unset();
@@ -412,7 +448,7 @@ case 'verificar_app':
 
 		//se captura el id del usuario q inicio sesion;
 		$id_usuario_login = $_SESSION['idusuario'];
-		
+
 		$rspta = $usuario->editClave($clavehash_Act, $clavehash_Nuev, $id_usuario_login);
 
 		// echo $rspta ? "Clave actualizada" : "Clave no se pudo actualizar";
@@ -421,6 +457,128 @@ case 'verificar_app':
 		} else {
 			Response::JSON(400, 'Clave no se pudo actualizar');
 		}
+		break;
+	case 'mostrarDetails':
+		if (!isset($_SESSION["nombre"])) {
+			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
+		} else {
+			//Validamos el acceso solo al usuario logueado y autorizado.
+			if ($_SESSION['Administrar'] == 1) {
+				$rspta = $usuario->mostrarDetails($idusuario);
+				//Codificar el resultado utilizando json
+				// echo json_encode($rspta);
+				Response::JSON(200, 'Datos de usuario', $rspta);
+				//Fin de las validaciones de acceso
+			} else {
+				// require 'noacceso.php';
+				Response::JSON(400, 'No tiene acceso');
+			}
+		}
+		break;
+	case 'guardaryeditarPersonalDetails':
+		if (!isset($_SESSION["nombre"])) {
+			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
+		} else {
+			//Validamos el acceso solo al usuario logueado y autorizado.
+			$HIJOS_MENORES=empty($HIJOS_MENORES)?0:$HIJOS_MENORES;
+			$HIJOS_MAYORES=empty($HIJOS_MAYORES)?0:$HIJOS_MAYORES;
+						
+			if ($_SESSION['Administrar'] == 1) {
+				if (empty($id_personal_detalle)) {
+					$rspta = $usuario->insertarPersonalDetail(
+						$ESTADO_EMPRESA,
+						$REMUNERACION_BASICA,
+						$ASIG_FAMILIAR,
+						$CENTRO_COSTO,
+						$SEXO,
+						$NACIONALIDAD,
+						$FECHA_NACIMIENTO,
+						$ESTADO_CIVIL,
+						$TELEFONO_EMERGENCIA,
+						$DEPARTAMENTO,
+						$PROVINCIA,
+						$DISTRITO,
+						$NIVEL_EDUCATIVO,
+						$SISTEMA_PENSION,
+						$CUSPP,
+						$TIPO_COMISION,
+						$FEHCA_SPP,
+						$BANCO_SUELDO,
+						$CUENTA_SUELDO,
+						$INTERBANCARIO_SUELDO,
+						$BANCO_CTS,
+						$CUENTA_CTS,
+						$CUENTA_INTERBANCARIA_CTS,
+						$TIPO_CONTRATO,
+						$HIJOS_MENORES,
+						$HIJOS_MAYORES,
+						$ACTIVIDAD,
+						$TALLA_ZAPATOS,
+						$TALLA_CAMISA,
+						$TALLA_PANTALON,
+						$SCTR_SALUD,
+						$SCTR_PENSION,
+						$PLANILLA,
+						$EPS_PLAN,
+						$personal_id
+					);
+					if ($rspta['correcto']) {
+						Response::JSON(200, $rspta['mensaje']);
+					} else {
+						Response::JSON(400, $rspta['mensaje'] . ' - Usuario no se registró');
+					}
+				} else {
+					$rspta = $usuario->editarPersonalDetail(
+						$ESTADO_EMPRESA,
+						$REMUNERACION_BASICA,
+						$ASIG_FAMILIAR,
+						$CENTRO_COSTO,
+						$SEXO,
+						$NACIONALIDAD,
+						$FECHA_NACIMIENTO,
+						$ESTADO_CIVIL,
+						$TELEFONO_EMERGENCIA,
+						$DEPARTAMENTO,
+						$PROVINCIA,
+						$DISTRITO,
+						$NIVEL_EDUCATIVO,
+						$SISTEMA_PENSION,
+						$CUSPP,
+						$TIPO_COMISION,
+						$FEHCA_SPP,
+						$BANCO_SUELDO,
+						$CUENTA_SUELDO,
+						$INTERBANCARIO_SUELDO,
+						$BANCO_CTS,
+						$CUENTA_CTS,
+						$CUENTA_INTERBANCARIA_CTS,
+						$TIPO_CONTRATO,
+						$HIJOS_MENORES,
+						$HIJOS_MAYORES,
+						$ACTIVIDAD,
+						$TALLA_ZAPATOS,
+						$TALLA_CAMISA,
+						$TALLA_PANTALON,
+						$SCTR_SALUD,
+						$SCTR_PENSION,
+						$PLANILLA,
+						$EPS_PLAN,
+						$personal_id,
+						$id_personal_detalle
+					);
+					if ($rspta['correcto']) {
+						Response::JSON(200, $rspta['mensaje']);
+					} else {
+						Response::JSON(400, $rspta['mensaje'] . ' - Usuario no se puede actualizar');
+					}
+				}
+				//Fin de las validaciones de acceso
+			} else {
+				// require 'noacceso.php';
+				Response::JSON(400, 'No tiene acceso');
+			}
+		}
+
 		break;
 	case "selectCargo":
 		require_once "../modelos/Cargo.php";
@@ -480,7 +638,7 @@ case 'verificar_app':
 		break;
 	case "selectSubArea":
 		require_once "../modelos/Area.php";
-		$idArea=$_POST['idarea'];
+		$idArea = $_POST['idarea'];
 		// print_r($idArea); die();
 		$obj = new Area();
 		$rspta = $obj->selectSubArea($idArea);
@@ -489,6 +647,21 @@ case 'verificar_app':
 		while ($reg = $rspta->fetch_object()) {
 			$data[] = [
 				'id' => $reg->id,
+				'nombre' => $reg->nombre
+			];
+		}
+		Response::JSON(200, 'Datos de tipo de peligro', $data);
+		break;
+	case "selectParameter":
+		require_once "../modelos/Parametro.php";
+		$grupo = $_POST['grupo'];
+		$obj = new Parametro();
+		$rspta = $obj->select($grupo);
+
+		$data = [];
+		while ($reg = $rspta->fetch_object()) {
+			$data[] = [
+				'id' => $reg->valor,
 				'nombre' => $reg->nombre
 			];
 		}

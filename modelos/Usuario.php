@@ -243,7 +243,7 @@ class Usuario
 			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen','$grupoSanguineo')";
 			$idusuarionew = ejecutarConsulta_retornarID($sql);
 			if (!$idusuarionew) {
-				throw new Exception('Error al guardar al personal. Numero Doc: '.$numero_documento);
+				throw new Exception('Error al guardar al personal. Numero Doc: ' . $numero_documento);
 			}
 			return $idusuarionew;
 			// $idusuarionew=1;
@@ -252,7 +252,7 @@ class Usuario
 		return 0;
 	}
 
-	public function insertarPersonalDetalle($data, $personal_id)
+	public function insertarPersonalDetalle($data, $personal_id, $numero_documento)
 	{
 		// print_r($data); die();
 		$sql = "INSERT INTO personal_detalle(ESTADO_EMPRESA, REMUNERACION_BASICA, ASIG_FAMILIAR, 
@@ -260,7 +260,7 @@ class Usuario
 		DEPARTAMENTO, PROVINCIA, DISTRITO, NIVEL_EDUCATIVO, SISTEMA_PENSIÓN, CUSPP, TIPO_COMISION, 
 		FEHCA_SPP, BANCO_SUELDO, CUENTA_SUELDO, INTERBANCARIO_SUELDO, BANCO_CTS, CUENTA_CTS, 
 		CUENTA_INTERBANCARIA_CTS, TIPO_CONTRATO, HIJOS_MENORES, HIJOS_MAYORES, ACTIVIDAD, 
-		TALLA_ZAPATOS, TALLA_CAMISA, TALLA_PANTALÓN, SCTR_SALUD, SCTR_PENSIÓN, 
+		TALLA_ZAPATOS, TALLA_CAMISA, TALLA_PANTALON, SCTR_SALUD, SCTR_PENSION, 
 		PLANILLA, EPS_PLAN, personal_id) values('$data[0]','$data[1]','$data[2]','$data[3]',
 		'$data[4]','$data[5]','$data[6]','$data[7]',
 		'$data[8]','$data[9]','$data[10]','$data[11]',
@@ -271,10 +271,157 @@ class Usuario
 		'$data[28]','$data[29]','$data[30]','$data[31]',
 		'$data[32]','$data[33]',$personal_id)";
 
-		$rpta= ejecutarConsulta($sql);
+		$rpta = ejecutarConsulta($sql);
 		if (!$rpta) {
-			throw new Exception('Error al guardar los datos complementarios del personal con Numero de Doc: '.$numero_documento);
+			throw new Exception('Error al guardar los datos complementarios del personal con Numero de Doc: ' . $numero_documento);
 		}
 		return true;
+	}
+
+	public function mostrarDetails($idusuario)
+	{
+		$sql = "SELECT id, ESTADO_EMPRESA, REMUNERACION_BASICA, ASIG_FAMILIAR, CENTRO_COSTO, SEXO, NACIONALIDAD, FECHA_NACIMIENTO, ESTADO_CIVIL, 
+				TELEFONO_EMERGENCIA, DEPARTAMENTO, PROVINCIA, DISTRITO, NIVEL_EDUCATIVO, SISTEMA_PENSION, CUSPP, TIPO_COMISION, FEHCA_SPP, BANCO_SUELDO, 
+				CUENTA_SUELDO, INTERBANCARIO_SUELDO, BANCO_CTS, CUENTA_CTS, CUENTA_INTERBANCARIA_CTS, TIPO_CONTRATO, HIJOS_MENORES, HIJOS_MAYORES, ACTIVIDAD, 
+				TALLA_ZAPATOS, TALLA_CAMISA, TALLA_PANTALON, SCTR_SALUD, SCTR_PENSION, PLANILLA, EPS_PLAN,personal_id
+				FROM personal_detalle p
+				WHERE p.personal_id='$idusuario'";
+		
+		return ejecutarConsultaSimpleFila($sql);
+	}
+
+	public function editarPersonalDetail(
+		$ESTADO_EMPRESA,
+		$REMUNERACION_BASICA,
+		$ASIG_FAMILIAR,
+		$CENTRO_COSTO,
+		$SEXO,
+		$NACIONALIDAD,
+		$FECHA_NACIMIENTO,
+		$ESTADO_CIVIL,
+		$TELEFONO_EMERGENCIA,
+		$DEPARTAMENTO,
+		$PROVINCIA,
+		$DISTRITO,
+		$NIVEL_EDUCATIVO,
+		$SISTEMA_PENSION,
+		$CUSPP,
+		$TIPO_COMISION,
+		$FEHCA_SPP,
+		$BANCO_SUELDO,
+		$CUENTA_SUELDO,
+		$INTERBANCARIO_SUELDO,
+		$BANCO_CTS,
+		$CUENTA_CTS,
+		$CUENTA_INTERBANCARIA_CTS,
+		$TIPO_CONTRATO,
+		$HIJOS_MENORES,
+		$HIJOS_MAYORES,
+		$ACTIVIDAD,
+		$TALLA_ZAPATOS,
+		$TALLA_CAMISA,
+		$TALLA_PANTALON,
+		$SCTR_SALUD,
+		$SCTR_PENSION,
+		$PLANILLA,
+		$EPS_PLAN,
+		$personal_id,
+		$id_personal_detalle
+	) {
+
+		$sql = "UPDATE personal_detalle
+				SET ESTADO_EMPRESA=$ESTADO_EMPRESA, REMUNERACION_BASICA='$REMUNERACION_BASICA', ASIG_FAMILIAR=$ASIG_FAMILIAR, CENTRO_COSTO=$CENTRO_COSTO, SEXO=$SEXO, NACIONALIDAD=$NACIONALIDAD, FECHA_NACIMIENTO='$FECHA_NACIMIENTO', 
+				ESTADO_CIVIL=$ESTADO_CIVIL, TELEFONO_EMERGENCIA='$TELEFONO_EMERGENCIA', DEPARTAMENTO='$DEPARTAMENTO', PROVINCIA='$PROVINCIA', DISTRITO='$DISTRITO', NIVEL_EDUCATIVO=$NIVEL_EDUCATIVO, SISTEMA_PENSION=$SISTEMA_PENSION, 
+				CUSPP='$CUSPP', TIPO_COMISION=$TIPO_COMISION, FEHCA_SPP='$FEHCA_SPP', BANCO_SUELDO=$BANCO_SUELDO, CUENTA_SUELDO='$CUENTA_SUELDO', INTERBANCARIO_SUELDO='$INTERBANCARIO_SUELDO', BANCO_CTS=$BANCO_CTS, CUENTA_CTS='$CUENTA_CTS', 
+				CUENTA_INTERBANCARIA_CTS='$CUENTA_INTERBANCARIA_CTS', TIPO_CONTRATO=$TIPO_CONTRATO, HIJOS_MENORES=$HIJOS_MENORES, HIJOS_MAYORES=$HIJOS_MAYORES, ACTIVIDAD='$ACTIVIDAD', TALLA_ZAPATOS='$TALLA_ZAPATOS', TALLA_CAMISA='$TALLA_CAMISA', 
+				TALLA_PANTALON='$TALLA_PANTALON', SCTR_SALUD=$SCTR_SALUD, SCTR_PENSION=$SCTR_PENSION, PLANILLA=$PLANILLA, EPS_PLAN='$EPS_PLAN'
+				WHERE personal_id=$personal_id and id=$id_personal_detalle";
+
+		$result = ejecutarConsulta($sql);
+
+		return $result;
+	}
+
+	public function insertarPersonalDetail(
+		$ESTADO_EMPRESA,
+		$REMUNERACION_BASICA,
+		$ASIG_FAMILIAR,
+		$CENTRO_COSTO,
+		$SEXO,
+		$NACIONALIDAD,
+		$FECHA_NACIMIENTO,
+		$ESTADO_CIVIL,
+		$TELEFONO_EMERGENCIA,
+		$DEPARTAMENTO,
+		$PROVINCIA,
+		$DISTRITO,
+		$NIVEL_EDUCATIVO,
+		$SISTEMA_PENSION,
+		$CUSPP,
+		$TIPO_COMISION,
+		$FEHCA_SPP,
+		$BANCO_SUELDO,
+		$CUENTA_SUELDO,
+		$INTERBANCARIO_SUELDO,
+		$BANCO_CTS,
+		$CUENTA_CTS,
+		$CUENTA_INTERBANCARIA_CTS,
+		$TIPO_CONTRATO,
+		$HIJOS_MENORES,
+		$HIJOS_MAYORES,
+		$ACTIVIDAD,
+		$TALLA_ZAPATOS,
+		$TALLA_CAMISA,
+		$TALLA_PANTALON,
+		$SCTR_SALUD,
+		$SCTR_PENSION,
+		$PLANILLA,
+		$EPS_PLAN,
+		$personal_id
+	) {
+
+		$sql = "INSERT INTO personal_detalle
+		(ESTADO_EMPRESA, REMUNERACION_BASICA, ASIG_FAMILIAR, CENTRO_COSTO, SEXO, NACIONALIDAD, FECHA_NACIMIENTO, ESTADO_CIVIL, TELEFONO_EMERGENCIA, 
+		DEPARTAMENTO, PROVINCIA, DISTRITO, NIVEL_EDUCATIVO, SISTEMA_PENSION, CUSPP, TIPO_COMISION, FEHCA_SPP, BANCO_SUELDO, CUENTA_SUELDO, 
+		INTERBANCARIO_SUELDO, BANCO_CTS, CUENTA_CTS, CUENTA_INTERBANCARIA_CTS, TIPO_CONTRATO, HIJOS_MENORES, HIJOS_MAYORES, ACTIVIDAD, 
+		TALLA_ZAPATOS, TALLA_CAMISA, TALLA_PANTALON, SCTR_SALUD, SCTR_PENSION, PLANILLA, EPS_PLAN, personal_id)
+		VALUES($ESTADO_EMPRESA,
+		'$REMUNERACION_BASICA',
+		$ASIG_FAMILIAR,
+		$CENTRO_COSTO,
+		$SEXO,
+		$NACIONALIDAD,
+		'$FECHA_NACIMIENTO',
+		$ESTADO_CIVIL,
+		'$TELEFONO_EMERGENCIA',
+		'$DEPARTAMENTO',
+		'$PROVINCIA',
+		'$DISTRITO',
+		$NIVEL_EDUCATIVO,
+		$SISTEMA_PENSION,
+		'$CUSPP',
+		$TIPO_COMISION,
+		'$FEHCA_SPP',
+		$BANCO_SUELDO,
+		'$CUENTA_SUELDO',
+		'$INTERBANCARIO_SUELDO',
+		$BANCO_CTS,
+		'$CUENTA_CTS',
+		'$CUENTA_INTERBANCARIA_CTS',
+		$TIPO_CONTRATO,
+		$HIJOS_MENORES,
+		$HIJOS_MAYORES,
+		'$ACTIVIDAD',
+		'$TALLA_ZAPATOS',
+		'$TALLA_CAMISA',
+		'$TALLA_PANTALON',
+		$SCTR_SALUD,
+		$SCTR_PENSION,
+		$PLANILLA,
+		'$EPS_PLAN',
+		$personal_id);";
+		$result = ejecutarConsulta($sql);
+		
+		return $result;
 	}
 }

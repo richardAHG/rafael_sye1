@@ -9,6 +9,10 @@ function init() {
         guardaryeditar(e);
     });
 
+    $("#frmEditDetails").on("submit", function(e) {
+        guardaryeditarDetails(e);
+    });
+
     $("#imagenmuestra").hide();
     //Mostramos los permisos
     $.post("../ajax/usuario.php?op=permisos&id=", function(r) {
@@ -169,6 +173,7 @@ function mostrarform(flag) {
         $("#formularioregistros").show();
         $("#btnGuardar").prop("disabled", false);
         $("#btnagregar").hide();
+        $("#frmEditDetails")[0].reset();
         //$("#clave").attr('disabled',false);
         //$("#btnEditClave").show();
     } else {
@@ -177,6 +182,7 @@ function mostrarform(flag) {
         $("#btnagregar").show();
         $("#clave").attr("disabled", false);
         $("#btnEditClave").hide();
+        // $("#frmEditDetails")[0].reset();
     }
 }
 
@@ -343,6 +349,85 @@ function mostrar(idusuario) {
     });
 }
 
+function mostrarDetails() {
+    let idusuario = document.querySelector("#idusuario").value;
+    getAllParameterDetails();
+    $.post(
+        "../ajax/usuario.php?op=mostrarDetails", { idusuario: idusuario },
+        function(data, status) {
+            data = JSON.parse(data);
+            data = data.data;
+            if (data === null || data === "") {
+                $("#personal_id").val(idusuario);
+            } else {
+                $("#ESTADO_EMPRESA").val(data.ESTADO_EMPRESA);
+                $("#ESTADO_EMPRESA").selectpicker("refresh");
+                $("#REMUNERACION_BASICA").val(data.REMUNERACION_BASICA);
+                $("#ASIG_FAMILIAR").val(data.ASIG_FAMILIAR);
+                $("#ASIG_FAMILIAR").selectpicker("refresh");
+                $("#CENTRO_COSTO").val(data.CENTRO_COSTO);
+                $("#CENTRO_COSTO").selectpicker("refresh");
+                $("#SEXO").val(data.SEXO);
+                $("#SEXO").selectpicker("refresh");
+                $("#NACIONALIDAD").val(data.NACIONALIDAD);
+                $("#NACIONALIDAD").selectpicker("refresh");
+                $("#FECHA_NACIMIENTO").val(data.FECHA_NACIMIENTO);
+                $("#ESTADO_CIVIL").val(data.ESTADO_CIVIL);
+                $("#ESTADO_CIVIL").selectpicker("refresh");
+                $("#TELEFONO_EMERGENCIA").val(data.TELEFONO_EMERGENCIA);
+                $("#DEPARTAMENTO").val(data.DEPARTAMENTO);
+                $("#DEPARTAMENTO").selectpicker("refresh");
+                $("#PROVINCIA").val(data.PROVINCIA);
+                $("#PROVINCIA").selectpicker("refresh");
+                $("#DISTRITO").val(data.DISTRITO);
+                $("#DISTRITO").selectpicker("refresh");
+                $("#NIVEL_EDUCATIVO").val(data.NIVEL_EDUCATIVO);
+                $("#NIVEL_EDUCATIVO").selectpicker("refresh");
+                $("#SISTEMA_PENSIÓN").val(data.SISTEMA_PENSIÓN);
+                $("#SISTEMA_PENSIÓN").selectpicker("refresh");
+                $("#CUSPP").val(data.CUSPP);
+                $("#TIPO_COMISION").val(data.TIPO_COMISION);
+                $("#TIPO_COMISION").selectpicker("refresh");
+                $("#FEHCA_SPP").val(data.FEHCA_SPP);
+                $("#BANCO_SUELDO").val(data.BANCO_SUELDO);
+                $("#BANCO_SUELDO").selectpicker("refresh");
+                $("#CUENTA_SUELDO").val(data.CUENTA_SUELDO);
+                $("#INTERBANCARIO_SUELDO").val(data.INTERBANCARIO_SUELDO);
+                $("#INTERBANCARIO_SUELDO").val(data.CUENTA_SUELDO);
+                $("#BANCO_CTS").val(data.BANCO_CTS);
+                $("#BANCO_CTS").selectpicker("refresh");
+                $("#CUENTA_CTS").val(data.CUENTA_CTS);
+                $("#CUENTA_INTERBANCARIA_CTS").val(data.CUENTA_INTERBANCARIA_CTS);
+                $("#TIPO_CONTRATO").val(data.TIPO_CONTRATO);
+                $("#TIPO_CONTRATO").selectpicker("refresh");
+                $("#HIJOS_MENORES").val(data.HIJOS_MENORES);
+                $("#HIJOS_MAYORES").val(data.HIJOS_MAYORES);
+                $("#ACTIVIDAD").val(data.ACTIVIDAD);
+                $("#TALLA_ZAPATOS").val(data.TALLA_ZAPATOS);
+                $("#TALLA_CAMISA").val(data.TALLA_CAMISA);
+                $("#TALLA_PANTALON").val(data.TALLA_PANTALON);
+                $("#SCTR_SALUD").val(data.SCTR_SALUD);
+                $("#SCTR_SALUD").selectpicker("refresh");
+                $("#SCTR_PENSION").val(data.SCTR_PENSION);
+                $("#SCTR_PENSION").selectpicker("refresh");
+                $("#PLANILLA").val(data.PLANILLA);
+                $("#PLANILLA").selectpicker("refresh");
+                $("#EPS_PLAN").val(data.EPS_PLAN);
+                $("#id_personal_detalle").val(data.id);
+                $("#personal_id").val(idusuario);
+            }
+        }
+    );
+
+    $("#myModaldetails").modal("show");
+}
+
+function resetModalDetails() {
+    let usuario_id = document.querySelector("#idusuario").value;
+    console.log(usuario_id);
+    $("#frmEditDetails")[0].reset();
+    $("#myModaldetails").modal("hide");
+}
 //Función para desactivar registros
 function desactivar(idusuario) {
     bootbox.confirm("¿Está Seguro de desactivar el usuario?", function(result) {
@@ -374,7 +459,6 @@ function activar(idusuario) {
         }
     });
 }
-
 
 function bloquerATS(idusuario) {
     bootbox.confirm(
@@ -412,7 +496,6 @@ function HabilitarATS(idusuario) {
     );
 }
 
-
 function editarClave(e) {
     e.preventDefault(); //No se activará la acción predeterminada del evento
     $("#EditClave").prop("disabled", true);
@@ -431,6 +514,75 @@ function editarClave(e) {
             $("#EditClave").prop("disabled", false);
             $("#myModal").modal("hide");
             mostrarform(false);
+        },
+    });
+    limpiar();
+    $("#clave").attr("disabled", false);
+}
+
+// funciones para cargar combo de datos complementarios del personal
+
+function getParameter(grupo, columna) {
+    //Cargamos los items al select de regimen
+    $.post(
+        "../ajax/usuario.php?op=selectParameter", { grupo: grupo },
+        function(r) {
+            data = JSON.parse(r);
+            options = data.data;
+
+            options.forEach((element) => {
+                let option = document.createElement("option");
+                option.value = element.id;
+                option.textContent = element.nombre;
+                document.getElementById(columna).appendChild(option);
+            });
+            $(`#${columna}`).selectpicker("refresh");
+        }
+    );
+}
+
+function getAllParameterDetails() {
+    let grupos = [
+        { grupo: "ESTADO_EMPRESA", columna: "ESTADO_EMPRESA" },
+        { grupo: "ASIG_FAMILIAR", columna: "ASIG_FAMILIAR" },
+        { grupo: "CENTRO_COSTO", columna: "CENTRO_COSTO" },
+        { grupo: "SEXO", columna: "SEXO" },
+        { grupo: "NACIONALIDAD", columna: "NACIONALIDAD" },
+        { grupo: "ESTADO_CIVIL", columna: "ESTADO_CIVIL" },
+        { grupo: "NIVEL_EDUCATIVO", columna: "NIVEL_EDUCATIVO" },
+        { grupo: "SISTEMA_PENSION", columna: "SISTEMA_PENSION" },
+        { grupo: "TIPO_COMISION", columna: "TIPO_COMISION" },
+        { grupo: "BANCO_SUELDO", columna: "BANCO_SUELDO" },
+        { grupo: "INTERBANCARIO_SUELDO", columna: "INTERBANCARIO_SUELDO" },
+        { grupo: "BANCO_CTS", columna: "BANCO_CTS" },
+        { grupo: "TIPO_CONTRATO", columna: "TIPO_CONTRATO" },
+        { grupo: "SCTR_SALUD", columna: "SCTR_SALUD" },
+        { grupo: "SCTR_PENSION", columna: "SCTR_PENSION" },
+        { grupo: "PLANILLA", columna: "PLANILLA" },
+    ];
+
+    grupos.forEach((element) => {
+        getParameter(element.grupo, element.columna);
+    });
+}
+
+function guardaryeditarDetails(e) {
+    e.preventDefault(); //No se activará la acción predeterminada del evento
+    $("#btnGuardar").prop("disabled", true);
+    var formData = new FormData($("#frmEditDetails")[0]);
+
+    $.ajax({
+        url: "../ajax/usuario.php?op=guardaryeditarPersonalDetails",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+
+        success: function(datos) {
+            data = JSON.parse(datos);
+            bootbox.alert(data.mensaje);
+            // mostrarform(false);
+            $("#tbllistado").bootstrapTable("refresh");
         },
     });
     limpiar();
