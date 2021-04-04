@@ -175,14 +175,16 @@ class Usuario
 	public function listar()
 	{
 		$sql = "SELECT p.id, p.nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, fecha_cese, login, clave, imagen, p.estado,p.ats, 
-					c.nombre as cargo, pa.nombre as regimen,pa2.nombre as tipoDocumento,a.nombre as area, sa.nombre as subarea,pa3.nombre as grupo_sanguineo 
+					c.nombre as cargo, pa.nombre as regimen,pa2.nombre as tipoDocumento,a.nombre as area, sa.nombre as subarea,pa3.nombre as grupo_sanguineo, pd.ESTADO_EMPRESA as estado_empresa_id, p2.nombre as estado_empresa
 				FROM `personal` p 
 				inner join cargo c on p.cargo_id=c.id
 				inner join parametros pa on p.regimen_id=pa.valor and pa.grupo='regimen_laboral'
 				inner join parametros pa2 on p.tipo_documento=pa2.valor and pa2.grupo='tipo_documento'
 				left join parametros pa3 on p.grupo_sanguineo =pa3.valor and pa3.grupo='grupo_sanguineo'
 				inner join area a on p.area_id=a.id and a.tipo_id=1
-				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2";
+				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2
+				left join personal_detalle pd on p.id =pd.personal_id
+				left join parametros p2 on pd.ESTADO_EMPRESA =p2.valor and p2.grupo ='ESTADO_EMPRESA'";
 		return ejecutarConsulta($sql);
 	}
 	//Implementar un método para listar los permisos marcados
@@ -286,7 +288,7 @@ class Usuario
 				TALLA_ZAPATOS, TALLA_CAMISA, TALLA_PANTALON, SCTR_SALUD, SCTR_PENSION, PLANILLA, EPS_PLAN,personal_id
 				FROM personal_detalle p
 				WHERE p.personal_id='$idusuario'";
-		
+
 		return ejecutarConsultaSimpleFila($sql);
 	}
 
@@ -339,7 +341,15 @@ class Usuario
 
 		$result = ejecutarConsulta($sql);
 
-		return $result;
+		if ($result == 0) {
+			$mensaje = 'Datos no se pudierón actualizar';
+		} else {
+			$mensaje = 'Datos actualizados con exito';
+		}
+		return [
+			'correcto' => $result,
+			'mensaje' => $mensaje
+		];
 	}
 
 	public function insertarPersonalDetail(
@@ -421,7 +431,14 @@ class Usuario
 		'$EPS_PLAN',
 		$personal_id);";
 		$result = ejecutarConsulta($sql);
-		
-		return $result;
+		if ($result == 0) {
+			$mensaje = 'Datos no se pudierón registrar';
+		} else {
+			$mensaje = 'Datos Registrados con exito';
+		}
+		return [
+			'correcto' => $result,
+			'mensaje' => $mensaje
+		];
 	}
 }

@@ -245,6 +245,7 @@ function listar() {
                         },
                     },
                 },
+                { field: "estado_empresa", title: "Estado empresa" },
                 { field: "nombre_completo", title: "Nombre" },
                 { field: "documento", title: "Documento" },
                 { field: "cargo", title: "Cargo" },

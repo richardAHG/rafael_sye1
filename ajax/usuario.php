@@ -289,6 +289,7 @@ switch ($_GET["op"]) {
 						'subarea' => $reg->subarea,
 						'nombre_completo' => $reg->nombre . ' ' . $reg->ape_pat . ' ' . $reg->ape_mat,
 						'documento' => $reg->tipoDocumento . ' - ' . $reg->numero_documento,
+						'estado_empresa' => $reg->estado_empresa,
 					];
 				}
 				echo json_encode($data);
@@ -525,7 +526,7 @@ switch ($_GET["op"]) {
 					if ($rspta['correcto']) {
 						Response::JSON(200, $rspta['mensaje']);
 					} else {
-						Response::JSON(400, $rspta['mensaje'] . ' - Usuario no se registró');
+						Response::JSON(400, $rspta['mensaje']);
 					}
 				} else {
 					$rspta = $usuario->editarPersonalDetail(
@@ -569,7 +570,7 @@ switch ($_GET["op"]) {
 					if ($rspta['correcto']) {
 						Response::JSON(200, $rspta['mensaje']);
 					} else {
-						Response::JSON(400, $rspta['mensaje'] . ' - Usuario no se puede actualizar');
+						Response::JSON(400, $rspta['mensaje']);
 					}
 				}
 				//Fin de las validaciones de acceso
