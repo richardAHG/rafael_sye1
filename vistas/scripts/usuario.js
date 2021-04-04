@@ -75,6 +75,18 @@ function init() {
         $("#area_id").selectpicker("refresh");
     });
 
+    $.post("../ajax/usuario.php?op=selectEps", function(r) {
+        data = JSON.parse(r);
+        options = data.data;
+
+        options.forEach((element) => {
+            let option = document.createElement("option");
+            option.value = element.id;
+            option.textContent = element.nombre;
+            document.getElementById("eps").appendChild(option);
+        });
+        $("#eps").selectpicker("refresh");
+    });
     // $.post("../ajax/usuario.php?op=selectSubArea",{ idarea: 1 },function (r) {
     //     data = JSON.parse(r);
     //     options = data.data;
@@ -156,6 +168,7 @@ function limpiar() {
     $("#numero_documento").val("");
     $("#area_id").val("");
     $("#subarea_id").val("");
+    $("#eps").val("");
     $("#fecha_ingreso").val("");
     $("#fecha_cese").val("");
     $("#login").val("");
@@ -245,7 +258,8 @@ function listar() {
                         },
                     },
                 },
-                { field: "estado_empresa", title: "Estado empresa" },
+                { field: "estado_empresa", title: "Est. Empresa" },
+                { field: "jefe_cargo", title: "Jef. a Cargo" },
                 { field: "nombre_completo", title: "Nombre" },
                 { field: "documento", title: "Documento" },
                 { field: "cargo", title: "Cargo" },
@@ -333,6 +347,9 @@ function mostrar(idusuario) {
                 $("#subarea_id").val(data.subarea_id);
                 $("#subarea_id").selectpicker("refresh");
             }, 3000);
+
+            $("#eps").val(data.eps);
+            $("#eps").selectpicker("refresh");
 
             $("#fecha_ingreso").val(data.fecha_ingreso);
             $("#fecha_cese").val(data.fecha_cese);

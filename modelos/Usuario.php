@@ -10,7 +10,7 @@ class Usuario
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos)
+	public function insertar($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos, $eps)
 	{
 		if (empty($permisos)) {
 			$permisos = [];
@@ -19,8 +19,10 @@ class Usuario
 		$mensaje = 'Usuario Registrado';
 		desableCommitAutomatic();
 		try {
-			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen)
-		VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen')";
+			$null = "NULL";
+			$fecha_ingreso = empty($fecha_ingreso) ? $null : "'$fecha_ingreso'";
+			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,eps)
+			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', $fecha_ingreso, '$login', '$clave', '$imagen','$eps')";
 			//return ejecutarConsulta($sql);
 
 			$idusuarionew = ejecutarConsulta_retornarID($sql);
@@ -58,7 +60,7 @@ class Usuario
 
 	//Implementamos un método para editar registros
 
-	public function editar($id, $nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos)
+	public function editar($id, $nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos, $eps)
 	{
 		if (empty($permisos)) {
 			$permisos = [];
@@ -68,6 +70,8 @@ class Usuario
 		$mensaje = 'Usuario Actualizado';
 		desableCommitAutomatic();
 		try {
+			$null = "NULL";
+			$fecha_ingreso = empty($fecha_ingreso) ? $null : "'$fecha_ingreso'";
 			$sql = "UPDATE
 					personal
 				SET
@@ -83,12 +87,13 @@ class Usuario
 					numero_documento = '$numero_documento',
 					area_id = '$area_id',
 					subarea_id = '$subarea_id',
-					fecha_ingreso = '$fecha_ingreso',
+					fecha_ingreso = $fecha_ingreso,
 					login = '$login',
-					imagen = '$imagen'
+					imagen = '$imagen',
+					eps = '$eps'
 				WHERE
 					id = '$id'";
-
+		
 			$result = ejecutarConsulta($sql);
 			if ($result == 0) {
 				throw new Exception('Error al editar al personal');
@@ -175,7 +180,8 @@ class Usuario
 	public function listar()
 	{
 		$sql = "SELECT p.id, p.nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, fecha_cese, login, clave, imagen, p.estado,p.ats, 
-					c.nombre as cargo, pa.nombre as regimen,pa2.nombre as tipoDocumento,a.nombre as area, sa.nombre as subarea,pa3.nombre as grupo_sanguineo, pd.ESTADO_EMPRESA as estado_empresa_id, p2.nombre as estado_empresa
+					c.nombre as cargo, pa.nombre as regimen,pa2.nombre as tipoDocumento,a.nombre as area, sa.nombre as subarea,pa3.nombre as grupo_sanguineo, pd.ESTADO_EMPRESA as estado_empresa_id, p2.nombre as estado_empresa,
+					p.eps,p.jefe_cargo
 				FROM `personal` p 
 				inner join cargo c on p.cargo_id=c.id
 				inner join parametros pa on p.regimen_id=pa.valor and pa.grupo='regimen_laboral'
@@ -233,7 +239,7 @@ class Usuario
 
 	//carga masiva
 
-	public function insertarPersonalMasivo($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $grupoSanguineo = null)
+	public function insertarPersonalMasivo($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $grupoSanguineo = null, $eps)
 	{
 		$sql = "SELECT id from personal  WHERE numero_documento='$numero_documento' and estado=1";
 		$rpta = ejecutarConsultaSimpleFila($sql);
@@ -241,8 +247,8 @@ class Usuario
 		// 	throw new Exception('Error al verificar la existencia del Numero de Doc: '.$numero_documento);
 		// }
 		if (!isset($rpta['id'])) {
-			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,grupo_sanguineo)
-			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen','$grupoSanguineo')";
+			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,grupo_sanguineo,eps)
+			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen','$grupoSanguineo','$eps')";
 			$idusuarionew = ejecutarConsulta_retornarID($sql);
 			if (!$idusuarionew) {
 				throw new Exception('Error al guardar al personal. Numero Doc: ' . $numero_documento);

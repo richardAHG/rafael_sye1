@@ -40,7 +40,8 @@ class CargaMasiva
                     $value['NRO_DOC'],
                     hash("SHA256", $value['NRO_DOC']),
                     null,
-                    $value['GRUPO_SANGUINEO']
+                    $value['GRUPO_SANGUINEO'],
+                    $value['EPS']
                 );
 
                 //insertar en tabla personal_detalle

@@ -68,7 +68,9 @@ class CsvUtil
             'SCTR_SALUD',
             'SCTR_PENSIÓN',
             'PLANILLA',
-            'EPS_PLAN'
+            'EPS_PLAN',
+            'EPS',
+            'JEFE_CARGO',
         ];
     }
 
@@ -93,7 +95,8 @@ class CsvUtil
             'PLAN',
             'BANCO_SUELDO',
             'BANCO_CTS',
-            'NACIONALIDAD'
+            'NACIONALIDAD',
+            'EPS'
         ];
     }
 

@@ -73,15 +73,18 @@ if (!isset($_SESSION["nombre"])) {
                     <label>Número(*):</label>
                     <input type="text" class="form-control" name="numero_documento" id="numero_documento" maxlength="20" placeholder="Documento" required>
                   </div>
-                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <label>Area(*):</label>
                     <select id="area_id" name="area_id" class="form-control selectpicker" data-live-search="true" required></select>
                   </div>
-                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <label>Sub Area(*):</label>
                     <select id="subarea_id" name="subarea_id" class="form-control selectpicker" data-live-search="true" required></select>
                   </div>
-
+                  <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <label>EPS(*):</label>
+                    <select id="eps" name="eps" class="form-control selectpicker" data-live-search="true" required></select>
+                  </div>
                   <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Fecha de ingreso:</label>
                     <input type="date" class="form-control" name="fecha_ingreso" id="fecha_ingreso" maxlength="20" placeholder="Fecha ingreso">

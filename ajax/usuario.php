@@ -66,6 +66,7 @@ $SCTR_SALUD = isset($_POST["SCTR_SALUD"]) ? limpiarCadena($_POST["SCTR_SALUD"]) 
 $SCTR_PENSION = isset($_POST["SCTR_PENSION"]) ? limpiarCadena($_POST["SCTR_PENSION"]) : "";
 $PLANILLA = isset($_POST["PLANILLA"]) ? limpiarCadena($_POST["PLANILLA"]) : "";
 $EPS_PLAN = isset($_POST["EPS_PLAN"]) ? limpiarCadena($_POST["EPS_PLAN"]) : "";
+$eps = isset($_POST["eps"]) ? limpiarCadena($_POST["eps"]) : "";
 $personal_id = isset($_POST["personal_id"]) ? limpiarCadena($_POST["personal_id"]) : "";
 $id_personal_detalle = isset($_POST["id_personal_detalle"]) ? limpiarCadena($_POST["id_personal_detalle"]) : "";
 
@@ -107,7 +108,8 @@ switch ($_GET["op"]) {
 						$login,
 						$clavehash,
 						$imagen,
-						$permiso
+						$permiso,
+						$eps
 					);
 					if ($rspta['correcto']) {
 						Response::JSON(200, $rspta['mensaje']);
@@ -134,7 +136,8 @@ switch ($_GET["op"]) {
 						$login,
 						$clavehash,
 						$imagen,
-						$permiso
+						$permiso,
+						$eps
 					);
 					if ($rspta['correcto']) {
 						Response::JSON(200, $rspta['mensaje']);
@@ -290,6 +293,8 @@ switch ($_GET["op"]) {
 						'nombre_completo' => $reg->nombre . ' ' . $reg->ape_pat . ' ' . $reg->ape_mat,
 						'documento' => $reg->tipoDocumento . ' - ' . $reg->numero_documento,
 						'estado_empresa' => $reg->estado_empresa,
+						'eps' => $reg->eps,
+						'jefe_cargo' => $reg->jefe_cargo,
 					];
 				}
 				echo json_encode($data);
@@ -481,9 +486,9 @@ switch ($_GET["op"]) {
 			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
 		} else {
 			//Validamos el acceso solo al usuario logueado y autorizado.
-			$HIJOS_MENORES=empty($HIJOS_MENORES)?0:$HIJOS_MENORES;
-			$HIJOS_MAYORES=empty($HIJOS_MAYORES)?0:$HIJOS_MAYORES;
-						
+			$HIJOS_MENORES = empty($HIJOS_MENORES) ? 0 : $HIJOS_MENORES;
+			$HIJOS_MAYORES = empty($HIJOS_MAYORES) ? 0 : $HIJOS_MAYORES;
+
 			if ($_SESSION['Administrar'] == 1) {
 				if (empty($id_personal_detalle)) {
 					$rspta = $usuario->insertarPersonalDetail(
@@ -668,5 +673,18 @@ switch ($_GET["op"]) {
 		}
 		Response::JSON(200, 'Datos de tipo de peligro', $data);
 		break;
+	case "selectEps":
+		require_once "../modelos/Parametro.php";
+		$obj = new Parametro();
+		$rspta = $obj->select('EPS');
+
+		$data = [];
+		while ($reg = $rspta->fetch_object()) {
+			$data[] = [
+				'id' => $reg->valor,
+				'nombre' => $reg->nombre
+			];
+		}
+		Response::JSON(200, 'Datos de tipo de peligro', $data);
 }
 ob_end_flush();
