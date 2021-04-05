@@ -22,6 +22,7 @@ class CargaMasiva
         try {
             foreach ($data as $key => $value) {
                 //insertar en tabla personal
+                $JEFE_CARGO = empty($value['JEFE_CARGO']) ? 0 : $value['JEFE_CARGO'];
                 $usuario_id = $obj->insertarPersonalMasivo(
                     $value['NOMBRES'],
                     $value['APEPAT'],
@@ -41,7 +42,8 @@ class CargaMasiva
                     hash("SHA256", $value['NRO_DOC']),
                     null,
                     $value['GRUPO_SANGUINEO'],
-                    $value['EPS']
+                    $value['ESTADO_EMPRESA'],
+                    $JEFE_CARGO
                 );
 
                 //insertar en tabla personal_detalle
@@ -49,7 +51,7 @@ class CargaMasiva
                     $hmenores = empty($value['HIJOS_MENORES']) ? 0 : $value['HIJOS_MENORES'];
                     $hmayores = empty($value['HIJOS_MAYORES']) ? 0 : $value['HIJOS_MAYORES'];
                     $paramDetalle = [
-                        $value['ESTADO_EMPRESA'], $value['REMUNERACION_BASICA'], $value['ASIG_FAMILIAR'], $value['CENTRO_COSTO'],
+                        $value['EPS'], $value['REMUNERACION_BASICA'], $value['ASIG_FAMILIAR'], $value['CENTRO_COSTO'],
                         $value['SEXO'], $value['NACIONALIDAD'], $value['FECHA_NACIMIENTO'], $value['ESTADO_CIVIL'],
                         $value['TELEFONO_EMERGENCIA'], $value['DEPARTAMENTO'],
                         $value['PROVINCIA'],  $value['DISTRITO'],   $value['NIVEL_EDUCATIVO'],  $value['SISTEMA_PENSION'],  $value['CUSPP'],  $value['TIPO_COMISION'],

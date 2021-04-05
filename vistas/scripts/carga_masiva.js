@@ -193,8 +193,9 @@ function validarFile(e) {
                 button.setAttribute("id", "btnGuardarFile");
                 document.querySelector(".seccion-botones").appendChild(button);
                 guardarFile();
+                $("#tbllistado").bootstrapTable("refresh");
             }
-            $("#tbllistado").bootstrapTable("refresh");
+
         },
     });
     limpiar();

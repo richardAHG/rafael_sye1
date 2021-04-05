@@ -34,7 +34,7 @@ $estado_empresa = isset($_POST["estado_empresa"]) ? limpiarCadena($_POST["estado
 $jefe_cargo = isset($_POST["jefe_cargo"]) ? limpiarCadena($_POST["jefe_cargo"]) : "";
 
 // datos de personal detalle
-
+$EPS = isset($_POST["EPS"]) ? limpiarCadena($_POST["EPS"]) : "";
 $REMUNERACION_BASICA = isset($_POST["REMUNERACION_BASICA"]) ? limpiarCadena($_POST["REMUNERACION_BASICA"]) : "";
 $ASIG_FAMILIAR = isset($_POST["ASIG_FAMILIAR"]) ? limpiarCadena($_POST["ASIG_FAMILIAR"]) : "";
 $CENTRO_COSTO = isset($_POST["CENTRO_COSTO"]) ? limpiarCadena($_POST["CENTRO_COSTO"]) : "";
@@ -68,7 +68,6 @@ $SCTR_SALUD = isset($_POST["SCTR_SALUD"]) ? limpiarCadena($_POST["SCTR_SALUD"]) 
 $SCTR_PENSION = isset($_POST["SCTR_PENSION"]) ? limpiarCadena($_POST["SCTR_PENSION"]) : "";
 $PLANILLA = isset($_POST["PLANILLA"]) ? limpiarCadena($_POST["PLANILLA"]) : "";
 $EPS_PLAN = isset($_POST["EPS_PLAN"]) ? limpiarCadena($_POST["EPS_PLAN"]) : "";
-$eps = isset($_POST["eps"]) ? limpiarCadena($_POST["eps"]) : "";
 $personal_id = isset($_POST["personal_id"]) ? limpiarCadena($_POST["personal_id"]) : "";
 $id_personal_detalle = isset($_POST["id_personal_detalle"]) ? limpiarCadena($_POST["id_personal_detalle"]) : "";
 
@@ -496,7 +495,7 @@ switch ($_GET["op"]) {
 			if ($_SESSION['Administrar'] == 1) {
 				if (empty($id_personal_detalle)) {
 					$rspta = $usuario->insertarPersonalDetail(
-						$ESTADO_EMPRESA,
+						$EPS,
 						$REMUNERACION_BASICA,
 						$ASIG_FAMILIAR,
 						$CENTRO_COSTO,
@@ -539,7 +538,7 @@ switch ($_GET["op"]) {
 					}
 				} else {
 					$rspta = $usuario->editarPersonalDetail(
-						$ESTADO_EMPRESA,
+						$EPS,
 						$REMUNERACION_BASICA,
 						$ASIG_FAMILIAR,
 						$CENTRO_COSTO,

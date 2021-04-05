@@ -241,7 +241,7 @@ class Usuario
 
 	//carga masiva
 
-	public function insertarPersonalMasivo($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $grupoSanguineo = null, $eps)
+	public function insertarPersonalMasivo($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $grupoSanguineo = null, $estado_empresa,$jefe_cargo)
 	{
 		$sql = "SELECT id from personal  WHERE numero_documento='$numero_documento' and estado=1";
 		$rpta = ejecutarConsultaSimpleFila($sql);
@@ -249,8 +249,9 @@ class Usuario
 		// 	throw new Exception('Error al verificar la existencia del Numero de Doc: '.$numero_documento);
 		// }
 		if (!isset($rpta['id'])) {
-			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,grupo_sanguineo,eps)
-			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen','$grupoSanguineo','$eps')";
+			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,grupo_sanguineo,estado_empresa,jefe_cargo)
+			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen','$grupoSanguineo','$estado_empresa','$jefe_cargo')";
+			
 			$idusuarionew = ejecutarConsulta_retornarID($sql);
 			if (!$idusuarionew) {
 				throw new Exception('Error al guardar al personal. Numero Doc: ' . $numero_documento);
@@ -265,9 +266,9 @@ class Usuario
 	public function insertarPersonalDetalle($data, $personal_id, $numero_documento)
 	{
 		// print_r($data); die();
-		$sql = "INSERT INTO personal_detalle(ESTADO_EMPRESA, REMUNERACION_BASICA, ASIG_FAMILIAR, 
+		$sql = "INSERT INTO personal_detalle(EPS, REMUNERACION_BASICA, ASIG_FAMILIAR, 
 		CENTRO_COSTO, SEXO, NACIONALIDAD, FECHA_NACIMIENTO, ESTADO_CIVIL, TELEFONO_EMERGENCIA, 
-		DEPARTAMENTO, PROVINCIA, DISTRITO, NIVEL_EDUCATIVO, SISTEMA_PENSIÓN, CUSPP, TIPO_COMISION, 
+		DEPARTAMENTO, PROVINCIA, DISTRITO, NIVEL_EDUCATIVO, SISTEMA_PENSION, CUSPP, TIPO_COMISION, 
 		FEHCA_SPP, BANCO_SUELDO, CUENTA_SUELDO, INTERBANCARIO_SUELDO, BANCO_CTS, CUENTA_CTS, 
 		CUENTA_INTERBANCARIA_CTS, TIPO_CONTRATO, HIJOS_MENORES, HIJOS_MAYORES, ACTIVIDAD, 
 		TALLA_ZAPATOS, TALLA_CAMISA, TALLA_PANTALON, SCTR_SALUD, SCTR_PENSION, 
@@ -280,7 +281,7 @@ class Usuario
 		'$data[24]','$data[25]','$data[26]','$data[27]',
 		'$data[28]','$data[29]','$data[30]','$data[31]',
 		'$data[32]','$data[33]',$personal_id)";
-
+		
 		$rpta = ejecutarConsulta($sql);
 		if (!$rpta) {
 			throw new Exception('Error al guardar los datos complementarios del personal con Numero de Doc: ' . $numero_documento);
@@ -290,7 +291,7 @@ class Usuario
 
 	public function mostrarDetails($idusuario)
 	{
-		$sql = "SELECT id, ESTADO_EMPRESA, REMUNERACION_BASICA, ASIG_FAMILIAR, CENTRO_COSTO, SEXO, NACIONALIDAD, FECHA_NACIMIENTO, ESTADO_CIVIL, 
+		$sql = "SELECT id, EPS, REMUNERACION_BASICA, ASIG_FAMILIAR, CENTRO_COSTO, SEXO, NACIONALIDAD, FECHA_NACIMIENTO, ESTADO_CIVIL, 
 				TELEFONO_EMERGENCIA, DEPARTAMENTO, PROVINCIA, DISTRITO, NIVEL_EDUCATIVO, SISTEMA_PENSION, CUSPP, TIPO_COMISION, FEHCA_SPP, BANCO_SUELDO, 
 				CUENTA_SUELDO, INTERBANCARIO_SUELDO, BANCO_CTS, CUENTA_CTS, CUENTA_INTERBANCARIA_CTS, TIPO_CONTRATO, HIJOS_MENORES, HIJOS_MAYORES, ACTIVIDAD, 
 				TALLA_ZAPATOS, TALLA_CAMISA, TALLA_PANTALON, SCTR_SALUD, SCTR_PENSION, PLANILLA, EPS_PLAN,personal_id
@@ -301,7 +302,7 @@ class Usuario
 	}
 
 	public function editarPersonalDetail(
-		$ESTADO_EMPRESA,
+		$EPS,
 		$REMUNERACION_BASICA,
 		$ASIG_FAMILIAR,
 		$CENTRO_COSTO,
@@ -340,7 +341,7 @@ class Usuario
 	) {
 
 		$sql = "UPDATE personal_detalle
-				SET ESTADO_EMPRESA=$ESTADO_EMPRESA, REMUNERACION_BASICA='$REMUNERACION_BASICA', ASIG_FAMILIAR=$ASIG_FAMILIAR, CENTRO_COSTO=$CENTRO_COSTO, SEXO=$SEXO, NACIONALIDAD=$NACIONALIDAD, FECHA_NACIMIENTO='$FECHA_NACIMIENTO', 
+				SET EPS=$EPS, REMUNERACION_BASICA='$REMUNERACION_BASICA', ASIG_FAMILIAR=$ASIG_FAMILIAR, CENTRO_COSTO=$CENTRO_COSTO, SEXO=$SEXO, NACIONALIDAD=$NACIONALIDAD, FECHA_NACIMIENTO='$FECHA_NACIMIENTO', 
 				ESTADO_CIVIL=$ESTADO_CIVIL, TELEFONO_EMERGENCIA='$TELEFONO_EMERGENCIA', DEPARTAMENTO='$DEPARTAMENTO', PROVINCIA='$PROVINCIA', DISTRITO='$DISTRITO', NIVEL_EDUCATIVO=$NIVEL_EDUCATIVO, SISTEMA_PENSION=$SISTEMA_PENSION, 
 				CUSPP='$CUSPP', TIPO_COMISION=$TIPO_COMISION, FEHCA_SPP='$FEHCA_SPP', BANCO_SUELDO=$BANCO_SUELDO, CUENTA_SUELDO='$CUENTA_SUELDO', INTERBANCARIO_SUELDO='$INTERBANCARIO_SUELDO', BANCO_CTS=$BANCO_CTS, CUENTA_CTS='$CUENTA_CTS', 
 				CUENTA_INTERBANCARIA_CTS='$CUENTA_INTERBANCARIA_CTS', TIPO_CONTRATO=$TIPO_CONTRATO, HIJOS_MENORES=$HIJOS_MENORES, HIJOS_MAYORES=$HIJOS_MAYORES, ACTIVIDAD='$ACTIVIDAD', TALLA_ZAPATOS='$TALLA_ZAPATOS', TALLA_CAMISA='$TALLA_CAMISA', 
@@ -361,7 +362,7 @@ class Usuario
 	}
 
 	public function insertarPersonalDetail(
-		$ESTADO_EMPRESA,
+		$EPS,
 		$REMUNERACION_BASICA,
 		$ASIG_FAMILIAR,
 		$CENTRO_COSTO,
@@ -399,11 +400,11 @@ class Usuario
 	) {
 
 		$sql = "INSERT INTO personal_detalle
-		(ESTADO_EMPRESA, REMUNERACION_BASICA, ASIG_FAMILIAR, CENTRO_COSTO, SEXO, NACIONALIDAD, FECHA_NACIMIENTO, ESTADO_CIVIL, TELEFONO_EMERGENCIA, 
+		(EPS, REMUNERACION_BASICA, ASIG_FAMILIAR, CENTRO_COSTO, SEXO, NACIONALIDAD, FECHA_NACIMIENTO, ESTADO_CIVIL, TELEFONO_EMERGENCIA, 
 		DEPARTAMENTO, PROVINCIA, DISTRITO, NIVEL_EDUCATIVO, SISTEMA_PENSION, CUSPP, TIPO_COMISION, FEHCA_SPP, BANCO_SUELDO, CUENTA_SUELDO, 
 		INTERBANCARIO_SUELDO, BANCO_CTS, CUENTA_CTS, CUENTA_INTERBANCARIA_CTS, TIPO_CONTRATO, HIJOS_MENORES, HIJOS_MAYORES, ACTIVIDAD, 
 		TALLA_ZAPATOS, TALLA_CAMISA, TALLA_PANTALON, SCTR_SALUD, SCTR_PENSION, PLANILLA, EPS_PLAN, personal_id)
-		VALUES($ESTADO_EMPRESA,
+		VALUES($EPS,
 		'$REMUNERACION_BASICA',
 		$ASIG_FAMILIAR,
 		$CENTRO_COSTO,

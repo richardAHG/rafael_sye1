@@ -137,7 +137,6 @@ function getSubArea() {
 getJefeCargo();
 
 function getJefeCargo() {
-
     let Csubarea = document.querySelector("#subarea_id");
     Csubarea.onchange = (e) => {
         // console.log(e.target.value);
@@ -262,6 +261,7 @@ function listar() {
         .bootstrapTable({
             url: url,
             search: true,
+            sidePagination: "server",
             exportTypes: ["json", "csv", "txt", "excel"],
             columns: [{
                     title: "Opciones",
@@ -431,8 +431,8 @@ function mostrarDetails() {
             if (data === null || data === "") {
                 $("#personal_id").val(idusuario);
             } else {
-                // $("#ESTADO_EMPRESA").val(data.ESTADO_EMPRESA);
-                // $("#ESTADO_EMPRESA").selectpicker("refresh");
+                $("#EPS").val(data.EPS);
+                $("#EPS").selectpicker("refresh");
                 $("#REMUNERACION_BASICA").val(data.REMUNERACION_BASICA);
                 $("#ASIG_FAMILIAR").val(data.ASIG_FAMILIAR);
                 $("#ASIG_FAMILIAR").selectpicker("refresh");
@@ -614,7 +614,7 @@ function getParameter(grupo, columna) {
 
 function getAllParameterDetails() {
     let grupos = [
-        { grupo: "ESTADO_EMPRESA", columna: "ESTADO_EMPRESA" },
+        { grupo: "EPS", columna: "EPS" },
         { grupo: "ASIG_FAMILIAR", columna: "ASIG_FAMILIAR" },
         { grupo: "CENTRO_COSTO", columna: "CENTRO_COSTO" },
         { grupo: "SEXO", columna: "SEXO" },
@@ -652,7 +652,7 @@ function guardaryeditarDetails(e) {
         success: function(datos) {
             data = JSON.parse(datos);
             bootbox.alert(data.mensaje);
-            // mostrarform(false);
+            mostrarform(false);
             $("#tbllistado").bootstrapTable("refresh");
         },
     });

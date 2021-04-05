@@ -27,7 +27,7 @@ if (!isset($_SESSION["nombre"])) {
               <!-- /.box-header -->
               <!-- centro -->
               <div class="panel-body table-responsive" id="listadoregistros">
-                <table id="tbllistado" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-fullscreen="true" data-show-columns="true" data-show-columns-toggle-all="true" data-detail-view="true" data-show-export="true" data-minimum-count-columns="2" data-show-pagination-switch="true" data-pagination="true" data-page-list="[10, 25, 50, 100, all]" data-show-footer="true">
+                <table id="tbllistado" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-fullscreen="true" data-show-columns="true" data-show-columns-toggle-all="true" data-detail-view="true" data-show-export="true" data-minimum-count-columns="2" data-show-pagination-switch="true" data-pagination="true" data-page-list="[10, 25, 50, 100, all]" data-show-footer="true" >
                 </table>
               </div>
               <div class="panel-body" id="formularioregistros">
@@ -181,8 +181,8 @@ if (!isset($_SESSION["nombre"])) {
             <input type="hidden" name="id_personal_detalle" id="id_personal_detalle">
               <input type="hidden" name="personal_id" id="personal_id">
               <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <label>ESTADO_EMPRESA(*):</label>
-                <select id="ESTADO_EMPRESA" name="ESTADO_EMPRESA" class="form-control selectpicker" data-live-search="true" ></select>
+                <label>EPS(*):</label>
+                <select id="EPS" name="EPS" class="form-control selectpicker" data-live-search="true" ></select>
               </div>
               <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <label>REMUNERACION_BASICA(*):</label>
