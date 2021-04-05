@@ -261,7 +261,6 @@ function listar() {
         .bootstrapTable({
             url: url,
             search: true,
-            sidePagination: "server",
             exportTypes: ["json", "csv", "txt", "excel"],
             columns: [{
                     title: "Opciones",
