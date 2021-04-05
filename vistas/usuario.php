@@ -83,7 +83,7 @@ if (!isset($_SESSION["nombre"])) {
                   </div>
                   <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Jefe a cargo(*):</label>
-                    <select id="jefe_cargo" name="jefe_cargo" class="form-control selectpicker" data-live-search="true" required></select>
+                    <select id="jefe_cargo" name="jefe_cargo" class="form-control selectpicker" data-live-search="true"></select>
                   </div>
                   <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Estado Empresa(*):</label>
