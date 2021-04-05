@@ -61,15 +61,13 @@ class JefeCargo
 
     //Implementar un método para listar los registros y mostrar en el select
   
-    public function selectJefeACargo()
+    public function selectJefeACargo($idArea,$idsubarea)
     {
-        $sql = "SELECT id,nombre FROM jefe_cargo where estado=1 ";
-        return ejecutarConsulta($sql);
-    }
-
-    public function selectSubJefeACargo($idArea)
-    {
-        $sql = "SELECT id,nombre FROM jefe_cargo where estado=1";
+        $sql = "SELECT jc.id,jc.personal_id ,CONCAT(p.nombre,' ',p.ape_pat,' ',p.ape_mat)as nombre
+        from jefe_cargo jc 
+        inner join personal p on jc.personal_id =p.id 
+        where jc.area_id =$idArea and jc.subarea_id =$idsubarea
+         and jc.estado=1 ";
         return ejecutarConsulta($sql);
     }
     

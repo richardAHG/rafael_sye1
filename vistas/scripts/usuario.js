@@ -134,6 +134,34 @@ function getSubArea() {
     };
 }
 
+getJefeCargo();
+
+function getJefeCargo() {
+
+    let Csubarea = document.querySelector("#subarea_id");
+    Csubarea.onchange = (e) => {
+        // console.log(e.target.value);
+        let Carea = $("#area_id").val();
+        $("#jefe_cargo").html("");
+        //Cargamos los items al select sub area
+        $.post(
+            "../ajax/usuario.php?op=selectJefeCargo", { idarea: Carea, idsubarea: e.target.value },
+            function(r) {
+                data = JSON.parse(r);
+                options = data.data;
+
+                options.forEach((element) => {
+                    let option = document.createElement("option");
+                    option.value = element.id;
+                    option.textContent = element.nombre;
+                    document.getElementById("jefe_cargo").appendChild(option);
+                });
+                $("#jefe_cargo").selectpicker("refresh");
+            }
+        );
+    };
+}
+
 function showSubArea(idArea) {
     $("#subarea_id").html("");
     //Cargamos los items al select sub area
@@ -150,6 +178,26 @@ function showSubArea(idArea) {
                 document.getElementById("subarea_id").appendChild(option);
             });
             $("#subarea_id").selectpicker("refresh");
+        }
+    );
+}
+
+function showJefeCargo(idArea, idSubarea) {
+    $("#subarea_id").html("");
+    //Cargamos los items al select sub area
+    $.post(
+        "../ajax/usuario.php?op=selectJefeCargo", { idarea: idArea, idsubarea: idSubarea },
+        function(r) {
+            data = JSON.parse(r);
+            options = data.data;
+
+            options.forEach((element) => {
+                let option = document.createElement("option");
+                option.value = element.id;
+                option.textContent = element.nombre;
+                document.getElementById("jefe_cargo").appendChild(option);
+            });
+            $("#jefe_cargo").selectpicker("refresh");
         }
     );
 }
@@ -259,7 +307,7 @@ function listar() {
                     },
                 },
                 { field: "estado_empresa", title: "Est. Empresa" },
-                { field: "jefe_cargo", title: "Jef. a Cargo" },
+                { field: "nombre_jefe", title: "Jef. a Cargo" },
                 { field: "nombre_completo", title: "Nombre" },
                 { field: "documento", title: "Documento" },
                 { field: "cargo", title: "Cargo" },
@@ -346,7 +394,12 @@ function mostrar(idusuario) {
             setTimeout(() => {
                 $("#subarea_id").val(data.subarea_id);
                 $("#subarea_id").selectpicker("refresh");
-            }, 3000);
+            }, 2000);
+            showJefeCargo(data.area_id, data.subarea_id);
+            setTimeout(() => {
+                $("#jefe_cargo").val(data.jefe_cargo);
+                $("#jefe_cargo").selectpicker("refresh");
+            }, 2000);
 
             $("#estado_empresa").val(data.estado_empresa);
             $("#estado_empresa").selectpicker("refresh");

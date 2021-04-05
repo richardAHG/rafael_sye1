@@ -31,6 +31,7 @@ $clave = isset($_POST["clave"]) ? limpiarCadena($_POST["clave"]) : "";
 $imagen = isset($_POST["imagen"]) ? limpiarCadena($_POST["imagen"]) : "";
 $permiso = isset($_POST["permiso"]) ? $_POST["permiso"] : "";
 $estado_empresa = isset($_POST["estado_empresa"]) ? limpiarCadena($_POST["estado_empresa"]) : "";
+$jefe_cargo = isset($_POST["jefe_cargo"]) ? limpiarCadena($_POST["jefe_cargo"]) : "";
 
 // datos de personal detalle
 
@@ -110,7 +111,8 @@ switch ($_GET["op"]) {
 						$clavehash,
 						$imagen,
 						$permiso,
-						$estado_empresa
+						$estado_empresa,
+						$jefe_cargo
 					);
 					if ($rspta['correcto']) {
 						Response::JSON(200, $rspta['mensaje']);
@@ -138,7 +140,8 @@ switch ($_GET["op"]) {
 						$clavehash,
 						$imagen,
 						$permiso,
-						$estado_empresa
+						$estado_empresa,
+						$jefe_cargo
 					);
 					if ($rspta['correcto']) {
 						Response::JSON(200, $rspta['mensaje']);
@@ -295,6 +298,7 @@ switch ($_GET["op"]) {
 						'documento' => $reg->tipoDocumento . ' - ' . $reg->numero_documento,
 						'estado_empresa' => $reg->estado_empresa,
 						'jefe_cargo' => $reg->jefe_cargo,
+						'nombre_jefe' => $reg->nombre_jefe,
 					];
 				}
 				echo json_encode($data);
@@ -658,6 +662,24 @@ switch ($_GET["op"]) {
 		}
 		Response::JSON(200, 'Datos de tipo de peligro', $data);
 		break;
+	case "selectJefeCargo":
+		require_once "../modelos/JefeCargo.php";
+		$idArea = $_POST['idarea'];
+		$idSubarea = $_POST['idsubarea'];
+		// print_r($idArea); die();
+		$obj = new JefeCargo();
+		$rspta = $obj->selectJefeACargo($idArea,$idSubarea);
+
+		$data = [];
+		while ($reg = $rspta->fetch_object()) {
+			$data[] = [
+				'id' => $reg->personal_id,
+				'nombre' => $reg->nombre
+			];
+		}
+		Response::JSON(200, 'Datos de tipo de jefes a cargo', $data);
+		break;
+
 	case "selectParameter":
 		require_once "../modelos/Parametro.php";
 		$grupo = $_POST['grupo'];
