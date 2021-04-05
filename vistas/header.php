@@ -143,6 +143,7 @@ if (strlen(session_id()) < 1)
               </a>
               <ul class="treeview-menu">
               <li id="lParametro"><a href="parametro.php"><i class="fa fa-circle-o"></i> Parametro</a></li>
+              <li id="lJefeCargo"><a href="jefe_cargo.php"><i class="fa fa-circle-o"></i> Jefe a Cargo</a></li>
               <li id="lArea"><a href="area.php"><i class="fa fa-circle-o"></i> Area</a></li>
               <li id="lCargo"><a href="cargo.php"><i class="fa fa-circle-o"></i> Cargo</a></li>
                 <li id="lUsuarios"><a href="usuario.php"><i class="fa fa-circle-o"></i> Usuarios</a></li>
