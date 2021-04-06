@@ -21,8 +21,9 @@ class Usuario
 		try {
 			$null = "NULL";
 			$fecha_ingreso = empty($fecha_ingreso) ? $null : "'$fecha_ingreso'";
+			$jefe_cargo = empty($jefe_cargo) ? 0 : $jefe_cargo;
 			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,estado_empresa,jefe_cargo)
-			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', $fecha_ingreso, '$login', '$clave', '$imagen','$estado_empresa','$jefe_cargo')";
+			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', $fecha_ingreso, '$login', '$clave', '$imagen','$estado_empresa',$jefe_cargo)";
 			//return ejecutarConsulta($sql);
 
 			$idusuarionew = ejecutarConsulta_retornarID($sql);
@@ -72,6 +73,7 @@ class Usuario
 		try {
 			$null = "NULL";
 			$fecha_ingreso = empty($fecha_ingreso) ? $null : "'$fecha_ingreso'";
+			$jefe_cargo = empty($jefe_cargo) ? 0 : $jefe_cargo;
 			$sql = "UPDATE
 					personal
 				SET
@@ -91,10 +93,10 @@ class Usuario
 					login = '$login',
 					imagen = '$imagen',
 					estado_empresa = '$estado_empresa',
-					jefe_cargo = '$jefe_cargo'
+					jefe_cargo = $jefe_cargo
 				WHERE
 					id = '$id'";
-
+			echo $sql; die();
 			$result = ejecutarConsulta($sql);
 			if ($result == 0) {
 				throw new Exception('Error al editar al personal');
