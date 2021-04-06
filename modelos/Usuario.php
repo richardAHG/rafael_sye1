@@ -96,7 +96,7 @@ class Usuario
 					jefe_cargo = $jefe_cargo
 				WHERE
 					id = '$id'";
-			echo $sql; die();
+			
 			$result = ejecutarConsulta($sql);
 			if ($result == 0) {
 				throw new Exception('Error al editar al personal');
