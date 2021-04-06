@@ -21,7 +21,7 @@ if (!isset($_SESSION["nombre"])) {
               <div class="box-header with-border">
                 <h1 class="box-title">Jefe a Cargo </h1>
                 <div class="box-tools pull-right">
-                  <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button> <a href="../reportes/rptArea.php" target="_blank"><button class="btn btn-info"><i class="fa fa-clipboard"></i> Reporte</button></a>
+                  <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button>
                 </div>
               </div>
               <!-- /.box-header -->
