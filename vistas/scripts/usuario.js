@@ -463,7 +463,7 @@ function mostrarDetails() {
                 $("#BANCO_SUELDO").selectpicker("refresh");
                 $("#CUENTA_SUELDO").val(data.CUENTA_SUELDO);
                 $("#INTERBANCARIO_SUELDO").val(data.INTERBANCARIO_SUELDO);
-                $("#INTERBANCARIO_SUELDO").val(data.CUENTA_SUELDO);
+                // $("#INTERBANCARIO_SUELDO").val(data.CUENTA_SUELDO);
                 $("#BANCO_CTS").val(data.BANCO_CTS);
                 $("#BANCO_CTS").selectpicker("refresh");
                 $("#CUENTA_CTS").val(data.CUENTA_CTS);
@@ -624,7 +624,7 @@ function getAllParameterDetails() {
         { grupo: "SISTEMA_PENSION", columna: "SISTEMA_PENSION" },
         { grupo: "TIPO_COMISION", columna: "TIPO_COMISION" },
         { grupo: "BANCO_SUELDO", columna: "BANCO_SUELDO" },
-        { grupo: "INTERBANCARIO_SUELDO", columna: "INTERBANCARIO_SUELDO" },
+        // { grupo: "INTERBANCARIO_SUELDO", columna: "INTERBANCARIO_SUELDO" },
         { grupo: "BANCO_CTS", columna: "BANCO_CTS" },
         { grupo: "TIPO_CONTRATO", columna: "TIPO_CONTRATO" },
         { grupo: "SCTR_SALUD", columna: "SCTR_SALUD" },

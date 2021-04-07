@@ -255,7 +255,7 @@ if (!isset($_SESSION["nombre"])) {
               </div>
               <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <label>INTERBANCARIO_SUELDO(*):</label>
-                <select id="INTERBANCARIO_SUELDO" name="INTERBANCARIO_SUELDO" class="form-control selectpicker" data-live-search="true" ></select>
+                <input type="text" class="form-control" name="INTERBANCARIO_SUELDO" id="INTERBANCARIO_SUELDO" maxlength="30" placeholder="INTERBANCARIO_SUELDO" >
               </div>
               <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <label>BANCO_CTS(*):</label>
