@@ -67,13 +67,13 @@ if (!isset($_SESSION["nombre"])) {
 				$data = [];
 				$fechas = [];
 				$data[0] = [
+					'estadoEmpresa',
+					'jefeCargo',
 					'numero_documento',
 					'area',
 					'subarea',
 					'cargo',
-					'nombre',
-					// 'jefe'
-					// 'fecha'
+					'nombre'
 				];
 
 				$comienzo = new DateTime($fecha_inicio);
@@ -88,11 +88,15 @@ if (!isset($_SESSION["nombre"])) {
 				$cont = 1;
 				while ($reg = $rspta->fetch_object()) {
 					$data[$cont] = [
+						'estadoEmpresa' => $reg->estadoEmpresa,
+						'jefeCargo' => $reg->jefeCargo,
 						'numero_documento' => $reg->numero_documento,
 						'area' => $reg->area,
 						'subarea' => $reg->subarea,
 						'cargo' => $reg->cargo,
 						'nombre' => $reg->nombre,
+						
+						
 						// 'jefe' => $reg->jefe,
 						// 'fecha' => $reg->fecha,
 					];
