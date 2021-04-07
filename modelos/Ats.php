@@ -316,6 +316,11 @@ class Ats
 				group by p.id";
 		return ejecutarConsulta($sql);
 	}
+	public function selectPersonalJC()
+	{
+		$sql = "SELECT p.id, concat(numero_documento,' ',nombre,' ',ape_pat,' ',ape_mat,' ')as nombre FROM `personal` p where estado=1";
+		return ejecutarConsulta($sql);
+	}
 
 	public function allUsuairos()
 	{
@@ -365,5 +370,4 @@ class Ats
 		$sql = "SELECT * from subactividad s  where estado =1";
 		return ejecutarConsulta($sql);
 	}
-
 }

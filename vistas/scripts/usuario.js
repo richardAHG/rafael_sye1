@@ -593,6 +593,7 @@ function editarClave(e) {
 // funciones para cargar combo de datos complementarios del personal
 
 function getParameter(grupo, columna) {
+    document.getElementById(columna).innerHTML = '';
     //Cargamos los items al select de regimen
     $.post(
         "../ajax/usuario.php?op=selectParameter", { grupo: grupo },

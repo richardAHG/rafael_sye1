@@ -9,7 +9,7 @@ function init() {
         guardaryeditar(e);
     });
 
-    $.post("../ajax/ats.php?op=participanteATS", function(r) {
+    $.post("../ajax/ats.php?op=personalJefeCargo", function(r) {
         data = r;
         options = data.data;
 

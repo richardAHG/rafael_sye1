@@ -181,10 +181,6 @@ if (!isset($_SESSION["nombre"])) {
             <input type="hidden" name="id_personal_detalle" id="id_personal_detalle">
               <input type="hidden" name="personal_id" id="personal_id">
               <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <label>EPS(*):</label>
-                <select id="EPS" name="EPS" class="form-control selectpicker" data-live-search="true" ></select>
-              </div>
-              <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <label>REMUNERACION_BASICA(*):</label>
                 <input type="text" class="form-control" name="REMUNERACION_BASICA" id="REMUNERACION_BASICA" maxlength="100" placeholder="REMUNERACION_BASICA" >
               </div>
@@ -312,6 +308,10 @@ if (!isset($_SESSION["nombre"])) {
               <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <label>PLANILLA(*):</label>
                 <select id="PLANILLA" name="PLANILLA" class="form-control selectpicker" data-live-search="true" ></select>
+              </div>
+              <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <label>EPS(*):</label>
+                <select id="EPS" name="EPS" class="form-control selectpicker" data-live-search="true" ></select>
               </div>
               <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <label>EPS_PLAN(*):</label>
