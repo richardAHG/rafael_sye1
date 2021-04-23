@@ -36,7 +36,7 @@ function init() {
         $("#area_id").selectpicker("refresh");
     });
 
-    $("#mAcceso").addClass("treeview active");
+    $("#mAsignar").addClass("treeview active");
     $("#lJefeCargo").addClass("active");
 }
 

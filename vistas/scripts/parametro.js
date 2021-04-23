@@ -44,7 +44,7 @@ function init() {
     // });
 
     // $("#mAlmacen").addClass("treeview active");
-    $("#mAcceso").addClass("treeview active");
+    $("#mAsignar").addClass("treeview active");
     $("#lParametro").addClass("active");
 }
 

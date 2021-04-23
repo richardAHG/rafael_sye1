@@ -134,6 +134,25 @@ if (strlen(session_id()) < 1)
             ?>
 
             <?php 
+            if ($_SESSION['Asignar']==1)
+            {
+              echo '<li id="mAsignar" class="treeview">
+              <a href="#">
+                <i class="fa fa-folder"></i> <span>Administrar Padr&oacute;n</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li id="lParametro"><a href="parametro.php"><i class="fa fa-circle-o"></i> Parametro</a></li>
+                <li id="lJefeCargo"><a href="jefe_cargo.php"><i class="fa fa-circle-o"></i> Jefe a Cargo</a></li>
+                <li id="lArea"><a href="area.php"><i class="fa fa-circle-o"></i> Area</a></li>
+                <li id="lCargo"><a href="cargo.php"><i class="fa fa-circle-o"></i> Cargo</a></li>
+                <li id="lPermisos"><a href="permiso.php"><i class="fa fa-circle-o"></i> Permisos</a></li>
+              </ul>
+            </li>';
+            }
+            ?>
+
+            <?php 
             if ($_SESSION['acceso']==1)
             {
               echo '<li id="mAcceso" class="treeview">
@@ -142,12 +161,7 @@ if (strlen(session_id()) < 1)
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-              <li id="lParametro"><a href="parametro.php"><i class="fa fa-circle-o"></i> Parametro</a></li>
-              <li id="lJefeCargo"><a href="jefe_cargo.php"><i class="fa fa-circle-o"></i> Jefe a Cargo</a></li>
-              <li id="lArea"><a href="area.php"><i class="fa fa-circle-o"></i> Area</a></li>
-              <li id="lCargo"><a href="cargo.php"><i class="fa fa-circle-o"></i> Cargo</a></li>
-                <li id="lUsuarios"><a href="usuario.php"><i class="fa fa-circle-o"></i> Usuarios</a></li>
-                <li id="lPermisos"><a href="permiso.php"><i class="fa fa-circle-o"></i> Permisos</a></li>
+                <li id="lUsuarios"><a href="usuario.php"><i class="fa fa-circle-o"></i> Agregar Personal</a></li>
                 <li id="lCargaMasiva"><a href="carga_masiva.php"><i class="fa fa-circle-o"></i> Carga Masiva</a></li>
                 
               </ul>

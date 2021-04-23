@@ -7,7 +7,7 @@ if (!isset($_SESSION["nombre"])) {
   header("Location: login.html");
 } else {
   require 'header.php';
-  if ($_SESSION['acceso'] == 1) {
+  if ($_SESSION['Asignar'] == 1) {
 ?>
     <!--Contenido-->
     <!-- Content Wrapper. Contains page content -->
