@@ -194,7 +194,7 @@ class Usuario
 				left join personal p3 on p3.id =p.jefe_cargo 
 				inner join area a on p.area_id=a.id and a.tipo_id=1
 				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2
-				left join parametros p2 on p.estado_empresa =p2.valor and p2.grupo ='ESTADO_EMPRESA' limit 10";
+				left join parametros p2 on p.estado_empresa =p2.valor and p2.grupo ='ESTADO_EMPRESA'";
 		return ejecutarConsulta($sql);
 	}
 
