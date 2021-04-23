@@ -21,6 +21,7 @@ if (!isset($_SESSION["nombre"])) {
               <div class="box-header with-border">
                 <h1 class="box-title">Carga Masiva </h1>
                 <div class="box-tools pull-right">
+                  <a href="../ajax/carga_masiva.php?op=descarga" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
                   <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button>
                 </div>
               </div>

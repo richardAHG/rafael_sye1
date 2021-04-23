@@ -10,7 +10,7 @@ class Usuario
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos, $estado_empresa,$jefe_cargo)
+	public function insertar($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos, $estado_empresa, $jefe_cargo)
 	{
 		if (empty($permisos)) {
 			$permisos = [];
@@ -61,7 +61,7 @@ class Usuario
 
 	//Implementamos un método para editar registros
 
-	public function editar($id, $nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos, $estado_empresa,$jefe_cargo)
+	public function editar($id, $nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $permisos, $estado_empresa, $jefe_cargo)
 	{
 		if (empty($permisos)) {
 			$permisos = [];
@@ -96,7 +96,7 @@ class Usuario
 					jefe_cargo = $jefe_cargo
 				WHERE
 					id = '$id'";
-			
+
 			$result = ejecutarConsulta($sql);
 			if ($result == 0) {
 				throw new Exception('Error al editar al personal');
@@ -194,9 +194,30 @@ class Usuario
 				left join personal p3 on p3.id =p.jefe_cargo 
 				inner join area a on p.area_id=a.id and a.tipo_id=1
 				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2
-				left join parametros p2 on p.estado_empresa =p2.valor and p2.grupo ='ESTADO_EMPRESA'";
+				left join parametros p2 on p.estado_empresa =p2.valor and p2.grupo ='ESTADO_EMPRESA' limit 10";
 		return ejecutarConsulta($sql);
 	}
+
+	//Implementar un método para listar los registros
+	public function listarMasivo()
+	{
+		$sql = "SELECT p.id as idpersonal, p.nombre, p.ape_pat, p.ape_mat, p.email, p.cargo_id, p.regimen_id, p.direccion, p.cell, p.tipo_documento, p.numero_documento, p.area_id, p.subarea_id, p.fecha_ingreso, p.fecha_cese, p.login, p.clave, p.imagen, p.estado,p.ats, 
+				c.nombre as cargo, pa.nombre as regimen,pa2.nombre as tipoDocumento,a.nombre as area, sa.nombre as subarea,pa3.nombre as grupo_sanguineo, p.estado_empresa as estado_empresa_id, p2.nombre as estado_empresa,
+				p.jefe_cargo, CONCAT(p3.nombre,' ',p3.ape_pat,' ',p3.ape_mat)as nombre_jefe,pd.*
+				FROM `personal` p 
+				inner join cargo c on p.cargo_id=c.id
+				inner join parametros pa on p.regimen_id=pa.valor and pa.grupo='regimen_laboral'
+				inner join parametros pa2 on p.tipo_documento=pa2.valor and pa2.grupo='tipo_documento'
+				left join parametros pa3 on p.grupo_sanguineo =pa3.valor and pa3.grupo='grupo_sanguineo'
+				left join personal p3 on p3.id =p.jefe_cargo 
+				inner join area a on p.area_id=a.id and a.tipo_id=1
+				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2
+				left join parametros p2 on p.estado_empresa =p2.valor and p2.grupo ='ESTADO_EMPRESA' 
+				left join personal_detalle pd on pd.personal_id =p.id
+				limit 10";
+		return ejecutarConsulta($sql);
+	}
+
 	//Implementar un método para listar los permisos marcados
 	public function listarmarcados($idusuario)
 	{
@@ -243,7 +264,7 @@ class Usuario
 
 	//carga masiva
 
-	public function insertarPersonalMasivo($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $grupoSanguineo = null, $estado_empresa,$jefe_cargo)
+	public function insertarPersonalMasivo($nombre, $ape_pat, $ape_mat, $email, $cargo_id, $regimen_id, $direccion, $cell, $tipo_documento, $numero_documento, $area_id, $subarea_id, $fecha_ingreso, $fecha_cese, $login, $clave, $imagen, $grupoSanguineo = null, $estado_empresa, $jefe_cargo)
 	{
 		$sql = "SELECT id from personal  WHERE numero_documento='$numero_documento' and estado=1";
 		$rpta = ejecutarConsultaSimpleFila($sql);
@@ -253,7 +274,7 @@ class Usuario
 		if (!isset($rpta['id'])) {
 			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,grupo_sanguineo,estado_empresa,jefe_cargo)
 			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen','$grupoSanguineo','$estado_empresa','$jefe_cargo')";
-			
+
 			$idusuarionew = ejecutarConsulta_retornarID($sql);
 			if (!$idusuarionew) {
 				throw new Exception('Error al guardar al personal. Numero Doc: ' . $numero_documento);
@@ -283,7 +304,7 @@ class Usuario
 		'$data[24]','$data[25]','$data[26]','$data[27]',
 		'$data[28]','$data[29]','$data[30]','$data[31]',
 		'$data[32]','$data[33]',$personal_id)";
-		
+
 		$rpta = ejecutarConsulta($sql);
 		if (!$rpta) {
 			throw new Exception('Error al guardar los datos complementarios del personal con Numero de Doc: ' . $numero_documento);
