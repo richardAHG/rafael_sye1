@@ -32,12 +32,15 @@ if (!isset($_SESSION["nombre"])) {
               </div>
               <div class="panel-body" id="formularioregistros">
                 <form name="formulario" id="formulario" method="POST">
-                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Nombre(*):</label>
-                    <input type="hidden" name="idusuario" id="idusuario">
-                    <input type="text" class="form-control" name="nombre" id="nombre" maxlength="100" placeholder="Nombre" required>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Tipo Documento(*):</label>
+                    <select id="tipo_documento" name="tipo_documento" class="form-control selectpicker" data-live-search="true" required></select>
                   </div>
                   <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Número(*):</label>
+                    <input type="text" class="form-control" name="numero_documento" id="numero_documento" maxlength="20" placeholder="Documento" required>
+                  </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Apellido Paterno(*):</label>
                     <input type="text" class="form-control" name="ape_pat" id="ape_pat" maxlength="100" placeholder="Apellido Paterno" required>
                   </div>
@@ -45,6 +48,12 @@ if (!isset($_SESSION["nombre"])) {
                     <label>Apellido Materno(*):</label>
                     <input type="text" class="form-control" name="ape_mat" id="ape_mat" maxlength="100" placeholder="Apellido Materno" required>
                   </div>
+                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Nombre(*):</label>
+                    <input type="hidden" name="idusuario" id="idusuario">
+                    <input type="text" class="form-control" name="nombre" id="nombre" maxlength="100" placeholder="Nombre" required>
+                  </div>
+                  
                   <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Email:</label>
                     <input type="email" class="form-control" name="email" id="email" maxlength="50" placeholder="Email">
@@ -65,14 +74,7 @@ if (!isset($_SESSION["nombre"])) {
                     <label>Celular:</label>
                     <input type="text" class="form-control" name="cell" id="cell" maxlength="20" placeholder="Celular">
                   </div>
-                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Tipo Documento(*):</label>
-                    <select id="tipo_documento" name="tipo_documento" class="form-control selectpicker" data-live-search="true" required></select>
-                  </div>
-                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Número(*):</label>
-                    <input type="text" class="form-control" name="numero_documento" id="numero_documento" maxlength="20" placeholder="Documento" required>
-                  </div>
+                  
                   <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Area(*):</label>
                     <select id="area_id" name="area_id" class="form-control selectpicker" data-live-search="true" required></select>
