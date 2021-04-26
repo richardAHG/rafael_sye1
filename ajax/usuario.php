@@ -277,7 +277,7 @@ switch ($_GET["op"]) {
 						'direccion' => $reg->direccion,
 						'cell' => $reg->cell,
 						'tipo_documento' => $reg->tipo_documento,
-						'numero_documento' => "'" . $reg->numero_documento,
+						'numero_documento' => $reg->numero_documento,
 						'area_id' => $reg->area_id,
 						'subarea_id' => $reg->subarea_id,
 						'fecha_ingreso' => $reg->fecha_ingreso,

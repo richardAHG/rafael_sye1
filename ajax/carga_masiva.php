@@ -195,8 +195,8 @@ if (!isset($_SESSION["nombre"])) {
 					'NIVEL_EDUCATIVO',
 					'SISTEMA_PENSION',
 					'CUSPP',
-					'TIPO_COMISION',
-					'FEHCA_SPP',
+					// 'TIPO_COMISION',
+					// 'FEHCA_SPP',
 					'BANCO_SUELDO',
 					'CUENTA_SUELDO',
 					'INTERBANCARIO_SUELDO',
@@ -224,6 +224,7 @@ if (!isset($_SESSION["nombre"])) {
 				//Vamos a declarar un array
 				$cont = 1;
 				while ($reg = $rspta->fetch_object()) {
+					print_r($reg); die();
 					$data[$cont] = [
 					// 'VINCULO'=>$reg->,
 					'ESTADO_EMPRESA'=>$reg->estado_empresa,
