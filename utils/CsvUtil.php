@@ -577,11 +577,14 @@ class CsvUtil
 
             if ($row['FECHA_NACIMIENTO'] != '00/00/0000') {
                 $fecha_nacimiento = self::format($fecha_nacimiento, 'Y-m-d');
+                $datos['data'][$key]["FECHA_NACIMIENTO"] = $fecha_nacimiento;
+            }else{
+                $datos['data'][$key]["FECHA_NACIMIENTO"] = '0000-00-00';
             }
             // $fecha_spp = self::format($fecha_spp, 'Y-m-d');
 
             $datos['data'][$key]["FECHA_INGRESO"] = $fecha_ingreso;
-            $datos['data'][$key]["FECHA_NACIMIENTO"] = $fecha_nacimiento;
+            
             // $datos['data'][$key]["FEHCA_SPP"] = $fecha_spp;
             // $datos['data'][$key]["FECHA_CESE"] = '0000-00-00';
         }
