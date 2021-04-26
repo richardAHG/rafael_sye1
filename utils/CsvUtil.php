@@ -568,6 +568,7 @@ class CsvUtil
         $rutaArchivojson = self::RUTA_FINAL . $nombre . '.json';
         $str_datos = file_get_contents($rutaArchivojson);
         $datos = json_decode($str_datos, true);
+        $null = "NULL";
         foreach ($datos['data'] as $key => $row) {
 
             $fecha_ingreso = str_replace('/', '-', $row['FECHA_INGRESO']);
@@ -579,7 +580,7 @@ class CsvUtil
                 $fecha_nacimiento = self::format($fecha_nacimiento, 'Y-m-d');
                 $datos['data'][$key]["FECHA_NACIMIENTO"] = $fecha_nacimiento;
             }else{
-                $datos['data'][$key]["FECHA_NACIMIENTO"] = NULL;
+                $datos['data'][$key]["FECHA_NACIMIENTO"] = $null;
             }
             // $fecha_spp = self::format($fecha_spp, 'Y-m-d');
 
