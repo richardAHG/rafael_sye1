@@ -307,6 +307,7 @@ class Usuario
 		
 		$rpta = ejecutarConsulta($sql);
 		if (!$rpta) {
+			echo $numero_documento;
 			echo $sql; die();
 			throw new Exception('Error al guardar los datos complementarios del personal con Numero de Doc: ' . $numero_documento);
 		}
