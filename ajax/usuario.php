@@ -77,7 +77,7 @@ switch ($_GET["op"]) {
 			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
 		} else {
 			//Validamos el acceso solo al usuario logueado y autorizado.
-			if ($_SESSION['Administrar'] == 1) {
+			if ($_SESSION['Administrar'] == 1 || $_SESSION['Asignar'] == 1) {
 				if (!file_exists($_FILES['imagen']['tmp_name']) || !is_uploaded_file($_FILES['imagen']['tmp_name'])) {
 					$imagen = $_POST["imagenactual"];
 				} else {
@@ -161,7 +161,7 @@ switch ($_GET["op"]) {
 			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
 		} else {
 			//Validamos el acceso solo al usuario logueado y autorizado.
-			if ($_SESSION['Administrar'] == 1) {
+			if ($_SESSION['Administrar'] == 1 || $_SESSION['Asignar'] == 1) {
 				$rspta = $usuario->desactivar($idusuario);
 				if ($rspta) {
 					Response::JSON(200, 'Usuario Desactivado');
@@ -181,7 +181,7 @@ switch ($_GET["op"]) {
 			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
 		} else {
 			//Validamos el acceso solo al usuario logueado y autorizado.
-			if ($_SESSION['Administrar'] == 1) {
+			if ($_SESSION['Administrar'] == 1 || $_SESSION['Asignar'] == 1) {
 				$rspta = $usuario->activar($idusuario);
 
 				if ($rspta) {
@@ -202,7 +202,7 @@ switch ($_GET["op"]) {
 			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
 		} else {
 			//Validamos el acceso solo al usuario logueado y autorizado.
-			if ($_SESSION['Administrar'] == 1) {
+			if ($_SESSION['Administrar'] == 1 || $_SESSION['Asignar'] == 1) {
 				$rspta = $usuario->bloquerATS($idusuario);
 				if ($rspta) {
 					Response::JSON(200, 'Usuario bloqueado para ATS');
@@ -222,7 +222,7 @@ switch ($_GET["op"]) {
 			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
 		} else {
 			//Validamos el acceso solo al usuario logueado y autorizado.
-			if ($_SESSION['Administrar'] == 1) {
+			if ($_SESSION['Administrar'] == 1 || $_SESSION['Asignar'] == 1) {
 				$rspta = $usuario->habilitarATS($idusuario);
 
 				if ($rspta) {
@@ -243,7 +243,7 @@ switch ($_GET["op"]) {
 			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
 		} else {
 			//Validamos el acceso solo al usuario logueado y autorizado.
-			if ($_SESSION['Administrar'] == 1) {
+			if ($_SESSION['Administrar'] == 1 || $_SESSION['Asignar'] == 1) {
 				$rspta = $usuario->mostrar($idusuario);
 				//Codificar el resultado utilizando json
 				// echo json_encode($rspta);
@@ -261,7 +261,7 @@ switch ($_GET["op"]) {
 			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
 		} else {
 			//Validamos el acceso solo al usuario logueado y autorizado.
-			if ($_SESSION['Administrar'] == 1) {
+			if ($_SESSION['Administrar'] == 1 || $_SESSION['Asignar'] == 1) {
 				$rspta = $usuario->listar();
 				//Vamos a declarar un array
 				$data = array();
@@ -472,7 +472,7 @@ switch ($_GET["op"]) {
 			header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
 		} else {
 			//Validamos el acceso solo al usuario logueado y autorizado.
-			if ($_SESSION['Administrar'] == 1) {
+			if ($_SESSION['Administrar'] == 1 || $_SESSION['Asignar'] == 1) {
 				$rspta = $usuario->mostrarDetails($idusuario);
 				//Codificar el resultado utilizando json
 				// echo json_encode($rspta);
@@ -492,7 +492,7 @@ switch ($_GET["op"]) {
 			$HIJOS_MENORES = empty($HIJOS_MENORES) ? 0 : $HIJOS_MENORES;
 			$HIJOS_MAYORES = empty($HIJOS_MAYORES) ? 0 : $HIJOS_MAYORES;
 
-			if ($_SESSION['Administrar'] == 1) {
+			if ($_SESSION['Administrar'] == 1 || $_SESSION['Asignar'] == 1) {
 				if (empty($id_personal_detalle)) {
 					$rspta = $usuario->insertarPersonalDetail(
 						$EPS,
