@@ -213,8 +213,7 @@ class Usuario
 				inner join area a on p.area_id=a.id and a.tipo_id=1
 				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2
 				left join parametros p2 on p.estado_empresa =p2.valor and p2.grupo ='ESTADO_EMPRESA' 
-				left join personal_detalle pd on pd.personal_id =p.id
-				limit 10";
+				left join personal_detalle pd on pd.personal_id =p.id";
 		return ejecutarConsulta($sql);
 	}
 
