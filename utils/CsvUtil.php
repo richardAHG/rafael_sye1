@@ -579,7 +579,7 @@ class CsvUtil
                 $fecha_nacimiento = self::format($fecha_nacimiento, 'Y-m-d');
                 $datos['data'][$key]["FECHA_NACIMIENTO"] = $fecha_nacimiento;
             }else{
-                $datos['data'][$key]["FECHA_NACIMIENTO"] = '0000-00-00';
+                $datos['data'][$key]["FECHA_NACIMIENTO"] = NULL;
             }
             // $fecha_spp = self::format($fecha_spp, 'Y-m-d');
 
