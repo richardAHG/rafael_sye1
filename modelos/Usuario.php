@@ -272,9 +272,9 @@ class Usuario
 		// 	throw new Exception('Error al verificar la existencia del Numero de Doc: '.$numero_documento);
 		// }
 		if (!isset($rpta['id'])) {
-			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,grupo_sanguineo,estado_empresa,jefe_cargo)
+			$sql = "INSERT INTO personal ( nombre, ape_pat, ape_mat, email, cargo_id, regimen_id, direccion, cell, tipo_documento, numero_documento, area_id, subarea_id, fecha_ingreso, login, clave, imagen,grupo_sanguineo,estado_empresa,nombre_jefecargo)
 			VALUES ('$nombre', '$ape_pat', '$ape_mat', '$email', '$cargo_id', '$regimen_id', '$direccion', '$cell', '$tipo_documento', '$numero_documento', '$area_id', '$subarea_id', '$fecha_ingreso', '$login', '$clave', '$imagen','$grupoSanguineo','$estado_empresa','$jefe_cargo')";
-
+			
 			$idusuarionew = ejecutarConsulta_retornarID($sql);
 			if (!$idusuarionew) {
 				throw new Exception('Error al guardar al personal. Numero Doc: ' . $numero_documento);
@@ -289,24 +289,25 @@ class Usuario
 	public function insertarPersonalDetalle($data, $personal_id, $numero_documento)
 	{
 		// print_r($data); die();
+		//TIPO_COMISION, FEHCA_SPP,
+		//'$data[15]','$data[16]'
 		$sql = "INSERT INTO personal_detalle(EPS, REMUNERACION_BASICA, ASIG_FAMILIAR, 
 		CENTRO_COSTO, SEXO, NACIONALIDAD, FECHA_NACIMIENTO, ESTADO_CIVIL, TELEFONO_EMERGENCIA, 
-		DEPARTAMENTO, PROVINCIA, DISTRITO, NIVEL_EDUCATIVO, SISTEMA_PENSION, CUSPP, TIPO_COMISION, 
-		FEHCA_SPP, BANCO_SUELDO, CUENTA_SUELDO, INTERBANCARIO_SUELDO, BANCO_CTS, CUENTA_CTS, 
-		CUENTA_INTERBANCARIA_CTS, TIPO_CONTRATO, HIJOS_MENORES, HIJOS_MAYORES, ACTIVIDAD, 
-		TALLA_ZAPATOS, TALLA_CAMISA, TALLA_PANTALON, SCTR_SALUD, SCTR_PENSION, 
-		PLANILLA, EPS_PLAN, personal_id) values('$data[0]','$data[1]','$data[2]','$data[3]',
-		'$data[4]','$data[5]','$data[6]','$data[7]',
-		'$data[8]','$data[9]','$data[10]','$data[11]',
-		'$data[12]','$data[13]','$data[14]','$data[15]',
-		'$data[16]','$data[17]','$data[18]','$data[19]',
-		'$data[20]','$data[21]','$data[22]','$data[23]',
-		'$data[24]','$data[25]','$data[26]','$data[27]',
-		'$data[28]','$data[29]','$data[30]','$data[31]',
-		'$data[32]','$data[33]',$personal_id)";
-
+		DEPARTAMENTO, PROVINCIA, DISTRITO, NIVEL_EDUCATIVO, SISTEMA_PENSION, CUSPP, 
+		BANCO_SUELDO, CUENTA_SUELDO, INTERBANCARIO_SUELDO, BANCO_CTS, 
+		CUENTA_CTS, CUENTA_INTERBANCARIA_CTS, TIPO_CONTRATO, HIJOS_MENORES, HIJOS_MAYORES, ACTIVIDAD, 
+		TALLA_ZAPATOS, TALLA_CAMISA, TALLA_PANTALON, SCTR_SALUD, SCTR_PENSION, PLANILLA, 
+		EPS_PLAN, personal_id) values('$data[0]','$data[1]','$data[2]',
+		'$data[3]','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]',
+		'$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]',
+		'$data[15]','$data[16]','$data[17]','$data[18]',
+		'$data[19]','$data[20]','$data[21]','$data[22]','$data[23]','$data[24]',
+		'$data[25]','$data[26]','$data[27]','$data[28]','$data[29]','$data[30]',
+		'$data[31]',$personal_id)";
+		
 		$rpta = ejecutarConsulta($sql);
 		if (!$rpta) {
+			echo $sql; die();
 			throw new Exception('Error al guardar los datos complementarios del personal con Numero de Doc: ' . $numero_documento);
 		}
 		return true;

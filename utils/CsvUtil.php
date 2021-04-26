@@ -49,8 +49,8 @@ class CsvUtil
             'NIVEL_EDUCATIVO',
             'SISTEMA_PENSIÓN',
             'CUSPP',
-            'TIPO_COMISION',
-            'FEHCA_SPP',
+            // 'TIPO_COMISION',
+            // 'FEHCA_SPP',
             'BANCO_SUELDO',
             'CUENTA_SUELDO',
             'INTERBANCARIO_SUELDO',
@@ -86,7 +86,7 @@ class CsvUtil
             'ESTADO_CIVIL',
             'NIVEL_EDUCATIVO',
             'SISTEMA_PENSION',
-            'TIPO_COMISION',
+            // 'TIPO_COMISION',
             'TIPO_CONTRATO',
             'GRUPO_SANGUINEO',
             'SCTR_SALUD',
@@ -508,7 +508,7 @@ class CsvUtil
             $fechaI = explode('/', $row['FECHA_INGRESO']);
             
             // $fechaF = explode('/', $row['FECHA_NACIMIENTO']);
-            $fechaspp = explode('/', $row['FEHCA_SPP']);
+            // $fechaspp = explode('/', $row['FEHCA_SPP']);
 
             if (
                 count($fechaI) < 3 || 
@@ -570,14 +570,14 @@ class CsvUtil
         $datos = json_decode($str_datos, true);
         foreach ($datos['data'] as $key => $row) {
             $fecha_ingreso = str_replace('/', '-', $row['FECHA_INGRESO']);
-            // $fecha_nacimiento = str_replace('/', '-', $row['FECHA_NACIMIENTO']);
+            $fecha_nacimiento = str_replace('/', '-', $row['FECHA_NACIMIENTO']);
             // $fecha_spp = str_replace('/', '-', $row['FEHCA_SPP']);
             $fecha_ingreso = self::format($fecha_ingreso, 'Y-m-d');
-            // $fecha_nacimiento = self::format($fecha_nacimiento, 'Y-m-d');
+            $fecha_nacimiento = self::format($fecha_nacimiento, 'Y-m-d');
             // $fecha_spp = self::format($fecha_spp, 'Y-m-d');
 
             $datos['data'][$key]["FECHA_INGRESO"] = $fecha_ingreso;
-            // $datos['data'][$key]["FECHA_NACIMIENTO"] = $fecha_nacimiento;
+            $datos['data'][$key]["FECHA_NACIMIENTO"] = $fecha_nacimiento;
             // $datos['data'][$key]["FEHCA_SPP"] = $fecha_spp;
             // $datos['data'][$key]["FECHA_CESE"] = '0000-00-00';
         }

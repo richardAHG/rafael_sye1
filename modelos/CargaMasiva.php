@@ -48,14 +48,15 @@ class CargaMasiva
 
                 //insertar en tabla personal_detalle
                 if ($usuario_id != 0) {
+                    //$value['TIPO_COMISION'],$value['FEHCA_SPP'],
                     $hmenores = empty($value['HIJOS_MENORES']) ? 0 : $value['HIJOS_MENORES'];
                     $hmayores = empty($value['HIJOS_MAYORES']) ? 0 : $value['HIJOS_MAYORES'];
                     $paramDetalle = [
                         $value['EPS'], $value['REMUNERACION_BASICA'], $value['ASIG_FAMILIAR'], $value['CENTRO_COSTO'],
                         $value['SEXO'], $value['NACIONALIDAD'], $value['FECHA_NACIMIENTO'], $value['ESTADO_CIVIL'],
                         $value['TELEFONO_EMERGENCIA'], $value['DEPARTAMENTO'],
-                        $value['PROVINCIA'],  $value['DISTRITO'],   $value['NIVEL_EDUCATIVO'],  $value['SISTEMA_PENSION'],  $value['CUSPP'],  $value['TIPO_COMISION'],
-                        $value['FEHCA_SPP'], $value['BANCO_SUELDO'],  $value['CUENTA_SUELDO'], $value['INTERBANCARIO_SUELDO'],  $value['BANCO_CTS'],
+                        $value['PROVINCIA'],  $value['DISTRITO'],   $value['NIVEL_EDUCATIVO'],  $value['SISTEMA_PENSION'],  $value['CUSPP'], 
+                        $value['BANCO_SUELDO'],  $value['CUENTA_SUELDO'], $value['INTERBANCARIO_SUELDO'],  $value['BANCO_CTS'],
                         $value['CUENTA_CTS'], $value['CUENTA_INTERBANCARIA_CTS'], $value['TIPO_CONTRATO'],  $hmenores, $hmayores,
                         $value['ACTIVIDAD'], $value['TALLA_ZAPATOS'],  $value['TALLA_CAMISA'], $value['TALLA_PANTALON'],  $value['SCTR_SALUD'],
                         $value['SCTR_PENSION'],   $value['PLANILLA'], $value['EPS_PLAN']
