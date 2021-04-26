@@ -506,13 +506,13 @@ class CsvUtil
         foreach ($datos['data'] as $key => $row) {
             // print_r($row);
             $fechaI = explode('/', $row['FECHA_INGRESO']);
-            
+
             // $fechaF = explode('/', $row['FECHA_NACIMIENTO']);
             // $fechaspp = explode('/', $row['FEHCA_SPP']);
 
             if (
-                count($fechaI) < 3 || 
-                count($fechaI) > 3 
+                count($fechaI) < 3 ||
+                count($fechaI) > 3
                 // count($fechaF) < 3 || 
                 // count($fechaF) > 3
             ) {
@@ -569,11 +569,15 @@ class CsvUtil
         $str_datos = file_get_contents($rutaArchivojson);
         $datos = json_decode($str_datos, true);
         foreach ($datos['data'] as $key => $row) {
+
             $fecha_ingreso = str_replace('/', '-', $row['FECHA_INGRESO']);
             $fecha_nacimiento = str_replace('/', '-', $row['FECHA_NACIMIENTO']);
             // $fecha_spp = str_replace('/', '-', $row['FEHCA_SPP']);
             $fecha_ingreso = self::format($fecha_ingreso, 'Y-m-d');
-            $fecha_nacimiento = self::format($fecha_nacimiento, 'Y-m-d');
+
+            if ($row['FECHA_NACIMIENTO'] != '00/00/0000') {
+                $fecha_nacimiento = self::format($fecha_nacimiento, 'Y-m-d');
+            }
             // $fecha_spp = self::format($fecha_spp, 'Y-m-d');
 
             $datos['data'][$key]["FECHA_INGRESO"] = $fecha_ingreso;
@@ -592,7 +596,8 @@ class CsvUtil
     }
     public static function format($fecha = null, $nuevoFormato = null)
     {
-        $fecha = new DateTime($fecha);
+        // $fecha = new DateTime($fecha);
+        $fecha = new DateTime($fecha, new DateTimeZone('America/Lima'));
         return $fecha->format($nuevoFormato);
     }
 }
