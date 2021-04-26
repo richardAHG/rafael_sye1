@@ -507,19 +507,19 @@ class CsvUtil
             // print_r($row);
             $fechaI = explode('/', $row['FECHA_INGRESO']);
             
-            $fechaF = explode('/', $row['FECHA_NACIMIENTO']);
+            // $fechaF = explode('/', $row['FECHA_NACIMIENTO']);
             $fechaspp = explode('/', $row['FEHCA_SPP']);
 
             if (
                 count($fechaI) < 3 || 
-                count($fechaI) > 3 || 
-                count($fechaF) < 3 || 
-                count($fechaF) > 3
+                count($fechaI) > 3 
+                // count($fechaF) < 3 || 
+                // count($fechaF) > 3
             ) {
                 $errors['estado'] = false;
                 $errors['data']['mensaje'] = 'no es una fecha valida';
                 $errors['data']['tipo'] = 1;
-                $errors['data']['response'][] = [
+                $errors['data']['data'][] = [
                     'fila' => $key + 2,
                     'FECHA_INGRESO' => $row['FECHA_INGRESO'],
                     'FECHA_NACIMIENTO' => $row['FECHA_NACIMIENTO'],
@@ -530,14 +530,14 @@ class CsvUtil
                 !is_numeric($fechaI[0])
                 || !is_numeric($fechaI[1])
                 || !is_numeric($fechaI[2])
-                || !is_numeric($fechaF[0])
-                || !is_numeric($fechaF[1])
-                || !is_numeric($fechaF[2])
+                // || !is_numeric($fechaF[0])
+                // || !is_numeric($fechaF[1])
+                // || !is_numeric($fechaF[2])
             ) {
                 $errors['estado'] = false;
                 $errors['data']['mensaje'] = 'no es una fecha valida';
                 $errors['data']['tipo'] = 1;
-                $errors['data']['response'][] = [
+                $errors['data']['data'][] = [
                     'fila' => $key + 2,
                     'FECHA_INGRESO' => $row['FECHA_INGRESO'],
                     'FECHA_NACIMIENTO' => $row['FECHA_NACIMIENTO'],
@@ -547,12 +547,12 @@ class CsvUtil
 
             if (
                 !checkdate($fechaI[1], $fechaI[0], $fechaI[2])
-                || !checkdate($fechaF[1], $fechaF[0], $fechaF[2])
+                // || !checkdate($fechaF[1], $fechaF[0], $fechaF[2])
             ) {
                 $errors['estado'] = false;
                 $errors['data']['mensaje'] = 'no es una fecha valida';
                 $errors['data']['tipo'] = 1;
-                $errors['data']['response'][] = [
+                $errors['data']['data'][] = [
                     'fila' => $key + 2,
                     'FECHA_INGRESO' => $row['FECHA_INGRESO'],
                     'FECHA_NACIMIENTO' => $row['FECHA_NACIMIENTO'],
@@ -570,15 +570,15 @@ class CsvUtil
         $datos = json_decode($str_datos, true);
         foreach ($datos['data'] as $key => $row) {
             $fecha_ingreso = str_replace('/', '-', $row['FECHA_INGRESO']);
-            $fecha_nacimiento = str_replace('/', '-', $row['FECHA_NACIMIENTO']);
-            $fecha_spp = str_replace('/', '-', $row['FEHCA_SPP']);
+            // $fecha_nacimiento = str_replace('/', '-', $row['FECHA_NACIMIENTO']);
+            // $fecha_spp = str_replace('/', '-', $row['FEHCA_SPP']);
             $fecha_ingreso = self::format($fecha_ingreso, 'Y-m-d');
-            $fecha_nacimiento = self::format($fecha_nacimiento, 'Y-m-d');
-            $fecha_spp = self::format($fecha_spp, 'Y-m-d');
+            // $fecha_nacimiento = self::format($fecha_nacimiento, 'Y-m-d');
+            // $fecha_spp = self::format($fecha_spp, 'Y-m-d');
 
             $datos['data'][$key]["FECHA_INGRESO"] = $fecha_ingreso;
-            $datos['data'][$key]["FECHA_NACIMIENTO"] = $fecha_nacimiento;
-            $datos['data'][$key]["FEHCA_SPP"] = $fecha_spp;
+            // $datos['data'][$key]["FECHA_NACIMIENTO"] = $fecha_nacimiento;
+            // $datos['data'][$key]["FEHCA_SPP"] = $fecha_spp;
             // $datos['data'][$key]["FECHA_CESE"] = '0000-00-00';
         }
 
