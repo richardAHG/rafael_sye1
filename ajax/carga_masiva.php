@@ -7,7 +7,7 @@ if (!isset($_SESSION["nombre"])) {
 	header("Location: ../vistas/login.html"); //Validamos el acceso solo a los usuarios logueados al sistema.
 } else {
 	//Validamos el acceso solo al usuario logueado y autorizado.
-	if ($_SESSION['Administrar'] == 1) {
+	if ($_SESSION['Administrar'] == 1 || $_SESSION['Asignar'] == 1) {
 		require_once "../modelos/CargaMasiva.php";
 		require_once "../helper/response/Response.php";
 		require_once "../utils/CsvUtil.php";
