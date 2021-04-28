@@ -203,12 +203,31 @@ class Usuario
 	{
 		$sql = "SELECT p.id as idpersonal, p.nombre, p.ape_pat, p.ape_mat, p.email, p.cargo_id, p.regimen_id, p.direccion, p.cell, p.tipo_documento, p.numero_documento, p.area_id, p.subarea_id, p.fecha_ingreso, p.fecha_cese, p.login, p.clave, p.imagen, p.estado,p.ats, 
 				c.nombre as cargo, pa.nombre as regimen,pa2.nombre as tipoDocumento,a.nombre as area, sa.nombre as subarea,pa3.nombre as grupo_sanguineo, p.estado_empresa as estado_empresa_id, p2.nombre as estado_empresa,
-				p.jefe_cargo, CONCAT(p3.nombre,' ',p3.ape_pat,' ',p3.ape_mat)as nombre_jefe,pd.*
+				p.jefe_cargo, CONCAT(p3.nombre,' ',p3.ape_pat,' ',p3.ape_mat)as nombre_jefe,
+				pa4.nombre as pasig_familiar,pa5.nombre as pcentro_costo,pa6.nombre as psexo,pa7.nombre as pnacionalidad,
+				pa8.nombre as pestado_civil,pa9.nombre as pnivel_educativo,pa10.nombre as psistema_pension,pa11.nombre as pbanco_sueldo,
+				pa12.nombre as pbanco_cts,pa13.nombre as ptipo_contrato,pa14.nombre as psctr_salud,pa15.nombre as psctr_pension,
+				pa16.nombre as pplanilla,pa17.nombre as peps,
+				pd.*
 				FROM `personal` p 
 				inner join cargo c on p.cargo_id=c.id
 				inner join parametros pa on p.regimen_id=pa.valor and pa.grupo='regimen_laboral'
 				inner join parametros pa2 on p.tipo_documento=pa2.valor and pa2.grupo='tipo_documento'
 				left join parametros pa3 on p.grupo_sanguineo =pa3.valor and pa3.grupo='grupo_sanguineo'
+				left join parametros pa4 on p.grupo_sanguineo =pa4.valor and pa4.grupo='ASIG_FAMILIAR'
+				left join parametros pa5 on p.grupo_sanguineo =pa5.valor and pa5.grupo='CENTRO_COSTO'
+				left join parametros pa6 on p.grupo_sanguineo =pa6.valor and pa6.grupo='SEXO'
+				left join parametros pa7 on p.grupo_sanguineo =pa7.valor and pa7.grupo='NACIONALIDAD'
+				left join parametros pa8 on p.grupo_sanguineo =pa8.valor and pa8.grupo='ESTADO_CIVIL'
+				left join parametros pa9 on p.grupo_sanguineo =pa9.valor and pa9.grupo='NIVEL_EDUCATIVO'
+				left join parametros pa10 on p.grupo_sanguineo =pa10.valor and pa10.grupo='SISTEMA_PENSION'
+				left join parametros pa11 on p.grupo_sanguineo =pa11.valor and pa11.grupo='BANCO_SUELDO'
+				left join parametros pa12 on p.grupo_sanguineo =pa12.valor and pa12.grupo='BANCO_CTS'
+				left join parametros pa13 on p.grupo_sanguineo =pa13.valor and pa13.grupo='TIPO_CONTRATO'
+				left join parametros pa14 on p.grupo_sanguineo =pa14.valor and pa14.grupo='SCTR_SALUD'
+				left join parametros pa15 on p.grupo_sanguineo =pa15.valor and pa15.grupo='SCTR_PENSION'
+				left join parametros pa16 on p.grupo_sanguineo =pa16.valor and pa16.grupo='PLANILLA'
+				left join parametros pa17 on p.grupo_sanguineo =pa17.valor and pa17.grupo='EPS'
 				left join personal p3 on p3.id =p.jefe_cargo 
 				inner join area a on p.area_id=a.id and a.tipo_id=1
 				inner join area sa on p.subarea_id=sa.id and sa.tipo_id=2
