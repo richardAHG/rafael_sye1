@@ -224,7 +224,7 @@ if (!isset($_SESSION["nombre"])) {
 				//Vamos a declarar un array
 				$cont = 1;
 				while ($reg = $rspta->fetch_object()) {
-					print_r($reg); die();
+					
 					$data[$cont] = [
 					// 'VINCULO'=>$reg->,
 					'ESTADO_EMPRESA'=>$reg->estado_empresa,
