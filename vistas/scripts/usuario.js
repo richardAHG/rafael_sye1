@@ -66,6 +66,11 @@ function init() {
         data = JSON.parse(r);
         options = data.data;
 
+        let option = document.createElement("option");
+        option.value = 0;
+        option.textContent = 'Seleccione';
+        document.getElementById("area_id").appendChild(option);
+
         options.forEach((element) => {
             let option = document.createElement("option");
             option.value = element.id;
@@ -121,6 +126,11 @@ function getSubArea() {
             function(r) {
                 data = JSON.parse(r);
                 options = data.data;
+
+                let option = document.createElement("option");
+                option.value = 0;
+                option.textContent = 'Seleccione';
+                document.getElementById("subarea_id").appendChild(option);
 
                 options.forEach((element) => {
                     let option = document.createElement("option");

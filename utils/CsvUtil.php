@@ -19,7 +19,6 @@ class CsvUtil
     public static function getStructure()
     {
         return [
-            'VINCULO',
             'ESTADO_EMPRESA',
             'REGIMEN_LABORAL',
             'TIPO_DOC',
@@ -30,8 +29,8 @@ class CsvUtil
             'REMUNERACION_BASICA',
             'ASIG_FAMILIAR',
             'CARGO',
-            'AREA',
             'SUB_AREA',
+            'AREA',
             'CENTRO_COSTO',
             'FECHA_INGRESO',
             'FECHA_CESE',
