@@ -213,7 +213,7 @@ class Ats
 				concat(pj.nombre,' ',pj.ape_pat,' ',pj.ape_mat) as jefe,pa.nombre as tipo_ats ,
 				av.codigo,av.version,av.actividad,a.otros_peligros,a.otros_riesgos,a.otras_medidas
 				FROM ats a 
-				inner join personal p on p.id=a.personal_id and p.estado=1
+				inner join personal p on p.id=a.personal_id
 				inner join cargo c on p.cargo_id=c.id and c.estado=1
 				inner join distritos d on d.id=a.distrito_id and d.estado=1
 				inner join jefe_ats j on j.id=a.jefe_id and j.estado=1
