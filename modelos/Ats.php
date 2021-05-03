@@ -283,7 +283,7 @@ class Ats
 							ar.nombre as area
 						FROM
 							`ats_trabajadores` a 
-							inner join personal p on a.personal_id = p.id and p.estado=1
+							inner join personal p on a.personal_id = p.id
 							INNER JOIN cargo c on p.cargo_id=c.id and c.estado=1
 							INNER JOIN area ar on p.area_id=ar.id and ar.estado=1
 						WHERE
