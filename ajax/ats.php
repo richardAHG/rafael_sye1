@@ -432,7 +432,6 @@ switch ($_GET["op"]) {
 		break;
 	case "participanteATS":
 		$rspta = $ats->selectParticipantes();
-		var_dump($rspta); die();
 		$data = [];
 		while ($reg = $rspta->fetch_object()) {
 			$data[] = [
