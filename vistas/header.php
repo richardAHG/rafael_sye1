@@ -147,6 +147,7 @@ if (strlen(session_id()) < 1)
                 <li id="lArea"><a href="area.php"><i class="fa fa-circle-o"></i> Area</a></li>
                 <li id="lCargo"><a href="cargo.php"><i class="fa fa-circle-o"></i> Cargo</a></li>
                 <li id="lPermisos"><a href="permiso.php"><i class="fa fa-circle-o"></i> Permisos</a></li>
+                <li id="lUbigeo"><a href="ubigeo.php"><i class="fa fa-circle-o"></i> Ubigeo</a></li>
               </ul>
             </li>';
             }

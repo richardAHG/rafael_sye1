@@ -311,7 +311,7 @@ class Ats
 	}
 	public function selectParticipantes()
 	{
-		$sql = "SELECT p.id, concat(numero_documento,' ',nombre,' ',ape_pat,' ',ape_mat,' ')as nombre FROM `ats_trabajadores` t 
+		$sql = "SELECT p.id, concat(p.numero_documento,' ',nombre,' ',ape_pat,' ',ape_mat,' ')as nombre FROM `ats_trabajadores` t 
 				inner join personal p on t.personal_id=p.id
 				group by p.id";
 		return ejecutarConsulta($sql);
