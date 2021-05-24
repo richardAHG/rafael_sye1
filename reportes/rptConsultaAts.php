@@ -275,10 +275,12 @@ if (!isset($_SESSION["nombre"])) {
         <div class="row mt-3">
           <table class="table table-bordered text-center tabla_con_bordes">
             <tr class="table-primary">
-              <th colspan="5">RESPONSABLE DEL TRABAJO</th>
+              <th colspan="3">RESPONSABLE DEL TRABAJO</th>
+              <th colspan="3">JEFE INMEDIATO</th>
             </tr>
             <tr>
-              <td colspan="5">Nombre Apellidos: <?= $personal ?></td>
+              <td colspan="3">Nombre Apellidos: <?= $personal ?></td>
+              <td colspan="3">Nombre Apellidos: <?= $personal ?></td>
             </tr>
             <tr>
               <td class="py-0">Firma:  <img src="<?= $firma_ruta ?>" width="100" height="100" >   </td>
