@@ -49,7 +49,7 @@ class TipoAts
     //Implementamos un método para activar categorías
     public function activar($id)
     {
-        $sql = "UPDATE ats_version SET estado='0' WHERE id='$id'";
+        $sql = "UPDATE ats_version SET estado='1' WHERE id='$id'";
         return ejecutarConsulta($sql);
     }
 
