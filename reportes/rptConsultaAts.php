@@ -292,10 +292,16 @@ if (!isset($_SESSION["nombre"])) {
               <td colspan="4">Nombre Apellidos: <?= $jefe ?></td>
             </tr>
             <tr>
-              <td class="py-0">DNI_CE: <?= $numero_documentoj ?></td>
-              <td class="py-0">Cargo: <?= $cargoj ?></td>
-              <td class="py-0">Área: <?= $areaj ?></td>
-              <td class="py-0">Sub-Área: <?= $subareaj ?></td>
+              <th>DNI_CE</th>
+              <th>Cargo</th>
+              <th>Area</th>
+              <th>Sub-Area</th>
+            </tr>
+            <tr>
+              <td class="py-0"><?= $numero_documentoj ?></td>
+              <td class="py-0"><?= $cargoj ?></td>
+              <td class="py-0"><?= $areaj ?></td>
+              <td class="py-0"><?= $subareaj ?></td>
             </tr>
           </table>
         </div>
@@ -308,11 +314,18 @@ if (!isset($_SESSION["nombre"])) {
               <td colspan="5">Nombre Apellidos: <?= $personal ?></td>
             </tr>
             <tr>
-              <td class="py-0">Firma:  <img src="<?= $firma_ruta ?>" width="100" height="100" >   </td>
-              <td class="py-0">DNI_CE: <?= $numero_documento ?></td>
-              <td class="py-0">Cargo: <?= $cargo ?></td>
-              <td class="py-0">Área: <?= $area ?></td>
-              <td class="py-0">Sub-Área: <?= $subarea ?></td>
+              <th>FIRMA</th>
+              <th>DNI_CE</th>
+              <th>CARGO</th>
+              <th>AREA</th>
+              <th>SUB-AREA</th>
+            </tr>
+            <tr>
+              <td class="py-0"><img src="<?= $firma_ruta ?>" width="100" height="100" >   </td>
+              <td class="py-0"><?= $numero_documento ?></td>
+              <td class="py-0"><?= $cargo ?></td>
+              <td class="py-0"><?= $area ?></td>
+              <td class="py-0"><?= $subarea ?></td>
             </tr>
           </table>
         </div>
