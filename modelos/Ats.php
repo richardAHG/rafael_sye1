@@ -210,7 +210,9 @@ class Ats
 				date(fecha_creacion) as fecha_creacion, a.estado,
 				concat(p.nombre,' ',p.ape_pat,' ',p.ape_mat) as personal,p.numero_documento,c.nombre as cargo,
 				d.nombre as distrito,
-				concat(pj.nombre,' ',pj.ape_pat,' ',pj.ape_mat) as jefe,pa.nombre as tipo_ats ,
+				concat(pj.nombre,' ',pj.ape_pat,' ',pj.ape_mat) as jefe,pj.numero_documento as numero_documentoj,cj.nombre as cargoj,
+				aj.nombre as areaj, saj.nombre as subareaj,ar.nombre as area, sa.nombre as subarea,
+				pa.nombre as tipo_ats ,
 				av.codigo,av.version,av.actividad,a.otros_peligros,a.otros_riesgos,a.otras_medidas
 				FROM ats a 
 				inner join personal p on p.id=a.personal_id
@@ -218,6 +220,13 @@ class Ats
 				inner join distritos d on d.id=a.distrito_id and d.estado=1
 				inner join jefe_ats j on j.id=a.jefe_id and j.estado=1
 				inner join personal pj on pj.id=j.personal_id and pj.estado=1
+				inner join cargo cj on pj.cargo_id=cj.id and cj.estado=1
+				inner join area aj on pj.area_id=aj.id and aj.estado=1
+				inner join area saj on pj.subarea_id=saj.id and saj.estado=1
+				
+				inner join area ar on p.area_id=ar.id and ar.estado=1
+				inner join area sa on p.subarea_id=sa.id and sa.estado=1
+				
 				inner join parametros pa on pa.valor=a.tipo_ats_id and pa.estado=1 and grupo='tipo_ats'
 				inner join ats_version av on a.tipo_ats_id=av.tipo_ats 
 				where a.estado=1 and a.id=$ats_id";
@@ -280,12 +289,13 @@ class Ats
 							a.`id`,
 							a.`ats_id`,
 							p.numero_documento,c.nombre as cargo,concat(p.nombre,' ',p.ape_pat,' ',p.ape_mat)as nombre,
-							ar.nombre as area
+							ar.nombre as area,sa.nombre as subarea
 						FROM
 							`ats_trabajadores` a 
 							inner join personal p on a.personal_id = p.id
 							INNER JOIN cargo c on p.cargo_id=c.id and c.estado=1
 							INNER JOIN area ar on p.area_id=ar.id and ar.estado=1
+							INNER JOIN area sa on p.subarea_id=sa.id and sa.estado=1
 						WHERE
 							a.ats_id= $ats_id";
 

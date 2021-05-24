@@ -63,6 +63,15 @@ if (!isset($_SESSION["nombre"])) {
       $cargo = isset($dataAts['ats']['cargo']) ? $dataAts['ats']['cargo'] : '';
       $tipo_ats = isset($dataAts['ats']['tipo_ats']) ? $dataAts['ats']['tipo_ats'] : '';
 
+      $jefe = isset($dataAts['ats']['jefe']) ? $dataAts['ats']['jefe'] : '';
+      $numero_documentoj = isset($dataAts['ats']['numero_documentoj']) ? $dataAts['ats']['numero_documentoj'] : '';
+      $cargoj = isset($dataAts['ats']['cargoj']) ? $dataAts['ats']['cargoj'] : '';
+      $areaj = isset($dataAts['ats']['areaj']) ? $dataAts['ats']['areaj'] : '';
+      $subareaj = isset($dataAts['ats']['subareaj']) ? $dataAts['ats']['subareaj'] : '';
+
+      $area = isset($dataAts['ats']['area']) ? $dataAts['ats']['area'] : '';
+      $subarea = isset($dataAts['ats']['subarea']) ? $dataAts['ats']['subarea'] : '';
+
       ?>
       <div class="container">
         <div class="row mt-3">
@@ -251,6 +260,7 @@ if (!isset($_SESSION["nombre"])) {
               <th>DNI_CE</th>
               <th>Cargo</th>
               <th>Area</th>
+              <th>Sub-Area</th>
               <th>Nombre Apellidos</th>
             </tr>
             <!-- <tr>
@@ -266,7 +276,8 @@ if (!isset($_SESSION["nombre"])) {
               <td class='py-0'>{$reg->numero_documento}</td>  
               <td class='py-0'>{$reg->cargo}</td>
               <td class='py-0'>{$reg->area}</td>
-                <td class='py-0'>{$reg->nombre}</td>
+              <td class='py-0'>{$reg->subarea}</td>
+              <td class='py-0'>{$reg->nombre}</td>
               </tr>";
             }
             ?>
@@ -275,18 +286,33 @@ if (!isset($_SESSION["nombre"])) {
         <div class="row mt-3">
           <table class="table table-bordered text-center tabla_con_bordes">
             <tr class="table-primary">
-              <th colspan="3">RESPONSABLE DEL TRABAJO</th>
-              <th colspan="3">JEFE INMEDIATO</th>
+              <th colspan="5">JEFE INMEDIATO</th>
             </tr>
             <tr>
-              <td colspan="3">Nombre Apellidos: <?= $personal ?></td>
-              <td colspan="3">Nombre Apellidos: <?= $personal ?></td>
+              <td colspan="4">Nombre Apellidos: <?= $jefe ?></td>
+            </tr>
+            <tr>
+              <td class="py-0">DNI_CE: <?= $numero_documentoj ?></td>
+              <td class="py-0">Cargo: <?= $cargoj ?></td>
+              <td class="py-0">Área: <?= $areaj ?></td>
+              <td class="py-0">Sub-Área: <?= $subareaj ?></td>
+            </tr>
+          </table>
+        </div>
+        <div class="row mt-3">
+          <table class="table table-bordered text-center tabla_con_bordes">
+            <tr class="table-primary">
+              <th colspan="5">RESPONSABLE DEL TRABAJO</th>
+            </tr>
+            <tr>
+              <td colspan="5">Nombre Apellidos: <?= $personal ?></td>
             </tr>
             <tr>
               <td class="py-0">Firma:  <img src="<?= $firma_ruta ?>" width="100" height="100" >   </td>
               <td class="py-0">DNI_CE: <?= $numero_documento ?></td>
               <td class="py-0">Cargo: <?= $cargo ?></td>
-              <td class="py-0">Área: <?= $tipo_ats ?></td>
+              <td class="py-0">Área: <?= $area ?></td>
+              <td class="py-0">Sub-Área: <?= $subarea ?></td>
             </tr>
           </table>
         </div>
