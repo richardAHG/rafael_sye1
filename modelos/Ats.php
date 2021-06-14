@@ -213,7 +213,7 @@ class Ats
 				concat(pj.nombre,' ',pj.ape_pat,' ',pj.ape_mat) as jefe,pj.numero_documento as numero_documentoj,cj.nombre as cargoj,
 				aj.nombre as areaj, saj.nombre as subareaj,ar.nombre as area, sa.nombre as subarea,
 				pa.nombre as tipo_ats ,
-				av.codigo,av.version,av.actividad,a.otros_peligros,a.otros_riesgos,a.otras_medidas
+				av.codigo,av.version,av.fecha,av.actividad,a.otros_peligros,a.otros_riesgos,a.otras_medidas
 				FROM ats a 
 				inner join personal p on p.id=a.personal_id
 				inner join cargo c on p.cargo_id=c.id and c.estado=1

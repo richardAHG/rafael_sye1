@@ -46,6 +46,7 @@ if (!isset($_SESSION["nombre"])) {
       $tipo_ats = isset($dataAts['ats']['tipo_ats']) ? $dataAts['ats']['tipo_ats'] : '';
       $fecha_hora_inicio = isset($dataAts['ats']['fecha_hora_inicio']) ? $dataAts['ats']['fecha_hora_inicio'] : '';
       $version = isset($dataAts['ats']['version']) ? $dataAts['ats']['version'] : '';
+      $fechaversion = isset($dataAts['ats']['fecha']) ? $dataAts['ats']['fecha'] : '';
       $actividad = isset($dataAts['ats']['actividad']) ? $dataAts['ats']['actividad'] : '';
       $tipo_ats = isset($dataAts['ats']['tipo_ats']) ? $dataAts['ats']['tipo_ats'] : '';
       $distrito = isset($dataAts['ats']['distrito']) ? $dataAts['ats']['distrito'] : '';
@@ -96,7 +97,7 @@ if (!isset($_SESSION["nombre"])) {
             <tr>
 
               <td class="py-0">Fecha</td>
-              <td class="py-0">25/08/2020</td>
+              <td class="py-0"><?= $fechaversion; ?></td>
             </tr>
             <tr>
               <td class="py-0">Página</td>
